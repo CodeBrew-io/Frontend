@@ -1,5 +1,5 @@
 app.factory('fullscreen' ,function($rootScope, keyboardManager) {
-	var zen = false;
+	var _zen = false;
 	var ev = "zen";
 
 	function requestFullScreen(element){
@@ -39,23 +39,28 @@ app.factory('fullscreen' ,function($rootScope, keyboardManager) {
 	}
 
 	function applyZenMode(){
-		if (zen) {
+		if (_zen) {
 			requestFullScreen(null);
 		} else {
 			cancelFullScreen();
 		}
-		$rootScope.$broadcast(ev, zen);
+		$rootScope.$broadcast(ev, _zen);
 	}
 
 	return {
-		zen: ev,
+		zen: _zen,
+		event: ev,
+		apply: function(z){
+			_zen = z;
+			applyZenMode();
+		},
 		bindKeyboard: function(){
 			keyboardManager.bind('f11',function(){
-				zen = !zen;
+				_zen = !_zen;
 				applyZenMode();
 			});
 			keyboardManager.bind('esc',function(){
-				zen = false;
+				_zen = false;
 				applyZenMode();
 			});
 		}

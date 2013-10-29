@@ -3,7 +3,7 @@ app.controller('header', function header($scope, $timeout, keyboardManager, full
 
 	$scope.header = true;
 	$scope.user = false;
-	$scope.zen = false;
+	$scope.zen = fullscreen.zen;
 
 	$scope.onUserClick = function() {
 		$scope.user = !$scope.user;
@@ -25,7 +25,7 @@ app.controller('header', function header($scope, $timeout, keyboardManager, full
 		applyHeader(false);
 	}
 
-	$scope.$on(fullscreen.zen, function(_, zen){
+	$scope.$on(fullscreen.event, function(_, zen){
 		$scope.zen = zen;
 	});
 });	

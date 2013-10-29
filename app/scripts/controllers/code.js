@@ -2,11 +2,15 @@ app.controller('code', function code($scope, $timeout, insight, fullscreen) {
 	'use strict';
 	
 	var cmLeft, cmRight = null;
-	$scope.zen = false;
+	$scope.zen = fullscreen.zen;
 
-	$scope.$on(fullscreen.zen, function(_, zen){
+	$scope.$on(fullscreen.event, function(_, zen){
 		$scope.zen = zen;
 	});
+
+	$scope.fullscreen = function(){
+		fullscreen.apply(true);
+	}
 
 	$scope.optionsCode = {
 		fixedGutter: false,
