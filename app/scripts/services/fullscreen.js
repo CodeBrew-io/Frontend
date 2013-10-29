@@ -12,7 +12,7 @@ app.factory('fullscreen' ,function($rootScope, keyboardManager) {
 		} else if (element.mozRequestFullScreen) {
 			element.mozRequestFullScreen();
 		} else if (element.webkitRequestFullScreen) {
-			element.webkitRequestFullScreen();
+			element.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
 		}else{
 			return false;
 		}

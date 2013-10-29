@@ -1,14 +1,10 @@
-<div ng-controller="code" class="app" ng-class="{'zen': zen}">
+<div ng-controller="code" class="app">
     <div class="code" ng-class="{'expanded': withInsight==false}">
         <div class="expand-collapse">
-            <i 	class="fa" 
+            <i class="fa" 
             	ng-class="{'fa-chevron-right': withInsight, 'fa-chevron-left': !withInsight}"
-            	ng-show="!zen"
             	ng-click="toogleInsight()"></i>
-            <i 	class="fa" 
-            	ng-class="{'fa-resize-full': !zen, 'fa-resize-small': zen}"
-            	ng-show="!zen"
-            	ng-click="fullscreen()"></i>
+            <i class="fa fa-resize-full" ng-click="fullscreen()"></i>
         </div>
         <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
     </div><div class="insight" ng-class="{'' : !isEditorPending, 'fetching': isEditorPending}" ng-show="withInsight">
