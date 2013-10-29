@@ -1,7 +1,12 @@
-app.controller('code', function code($scope, $timeout, insight, keyboardManager) {
+app.controller('code', function code($scope, $timeout, insight, fullscreen) {
 	'use strict';
 	
 	var cmLeft, cmRight = null;
+	$scope.zen = false;
+
+	$scope.$on(fullscreen.zen, function(_, zen){
+		$scope.zen = zen;
+	});
 
 	$scope.optionsCode = {
 		fixedGutter: false,
