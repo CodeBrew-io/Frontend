@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Frontend</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- build:css styles/dep.css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css">
+    <!-- endbuild -->
+
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+  <body ng-app="CodeBrew">
+    <ng-include src="'views/header.html'"></ng-include>
+    <ng-include src="'views/code.html'"></ng-include>
+  
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    
+    <!-- build:js scripts/codemirror.js -->
+    <script src="bower_components/codemirror/lib/codemirror.js"></script>
+    <script src="bower_components/codemirror/mode/clike/clike.js"></script>
+    <script src="bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/services/scaladoc.js"></script>
+    <script src="scripts/services/snippets.js"></script>
+    <script src="scripts/services/insight.js"></script>
+    <script src="scripts/services/keyboardManager.js"></script>
+    <script src="scripts/directives/typeahead.js"></script>
+    <script src="scripts/directives/ui-codemirror.js"></script>
+    <script src="scripts/controllers/code.js"></script>
+    <script src="scripts/controllers/searchbar.js"></script>
+    <!-- endbuild -->
+
+</body>
+</html>
