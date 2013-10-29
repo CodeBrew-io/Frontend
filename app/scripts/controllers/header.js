@@ -18,11 +18,13 @@ app.controller('header', function header($scope, $timeout, keyboardManager, full
 	}
 
 	$scope.onMouseEnterHeader = function() {
-		applyHeader(true);
+		// applyHeader(true);
+		$scope.header = true;
 	}
 
 	$scope.onMouseLeaveHeader = function() {
-		applyHeader(false);
+		// applyHeader(false);
+		$scope.header = false;
 	}
 
 	$scope.$on(fullscreen.event, function(_, zen){
