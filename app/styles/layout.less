@@ -5,7 +5,7 @@ html, body {
 	background-color: @metal-blue;
 }
 
-@header-height: 40px;
+@header-height: 54px;
 
 .app {
 
@@ -16,20 +16,9 @@ html, body {
 	}
 }
 
-// .splash {               
-//     position: absolute;
-//     height: 100px;
-//     width: 100px;    
-//     left: 50%;
-//     top: 50%;
-//     transform: translate(-50%, -50%);    
-//     -webkit-transform: translate(-50%, -50%);
-//     -moz-transform: translate(-50%, -50%);
-//     -ms-transform: translate(-50%, -50%);
-// }
-
 header {
 	padding: 5px;
+	position: relative;
 
 	height: @header-height;
 	@title-width: 40px;
@@ -38,10 +27,29 @@ header {
 		height: 2px;
 	}
 
+	nav {
+		.navbar-brand {
+			font-size: 32px;
+		}
+		.nav > li {
+			display: inline-block;
+		}
+
+		.nav > li > a:hover {
+			background-color: inherit;
+		}
+
+		.nav > li > a, .nav > li {
+			color: white;
+		}
+	}
+
 	.search {
-		position: relative;
-		float: right;
+		position: absolute;
+		right: 0;
+		top:0;
 		width: 40%;
+		padding: 10px;
 
 		.dropdown {
 			z-index: 10;
@@ -108,57 +116,49 @@ header {
 		}
 	}
 
-	div.element {
-		color: whitesmoke;
-		display: inline-block;
-		cursor: pointer;
-		text-align: center;
-		padding-left: 10px;
-		padding-right: 10px;
+	// .element {
+	// 	color: @metal-blue;
+	// 	display: inline-block;
+	// 	cursor: pointer;
+	// 	text-align: center;
+	// 	padding-left: 10px;
+	// 	padding-right: 10px;
 
-		a {
-			text-decoration: none;
-			color: whitesmoke;
-		}
+	// 	a {
+	// 		text-decoration: none;
+	// 		// color: @metal-blue;
+	// 	}
 
-		a:hover {
-			color: @sky;
-		}
+	// 	a:hover {
+	// 		color: @sky;
+	// 	}
 
-		div.userddl {
-			margin-top: 2px;
-			float: left;
-			position: absolute;
-			background-color: @light-earth;
-			border: 1px solid whitesmoke;
-			z-index: 200;
+	// 	.userddl {
+	// 		margin-top: 2px;
+	// 		float: left;
+	// 		position: absolute;
+	// 		background-color: @light-earth;
+	// 		// border: 1px solid @metal-blue;
+	// 		z-index: 200;
 
 
-			ul {
-				color: whitesmoke;
-				margin: 0;
-				padding: 0;
-				list-style: none;
-				text-align: left;
-			}
+	// 		ul {
+	// 			// color: @metal-blue;
+	// 			margin: 0;
+	// 			padding: 0;
+	// 			list-style: none;
+	// 			text-align: left;
+	// 		}
 
-			ul li:hover,
-			ul li:hover a {
-				color: @sky;
-				background-color: @earth;
-			}
+	// 		ul li:hover,
+	// 		ul li:hover a {
+	// 			// color: @sky;
+	// 			// background-color: @earth;
+	// 		}
 
-			ul li div {
-				padding: 1px 10px 1px 10px;
-			}
-		}
-	}
-
-	div.element.open {
-		color: @sky;
-	}
-
-	div.element:hover {
-		color: @sky;
-	}
+	// 		ul li div {
+	// 			padding: 1px 10px 1px 10px;
+	// 		}
+	// 	}
+	// }
 }

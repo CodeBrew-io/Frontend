@@ -1,8 +1,7 @@
-'use strict';
-
 app.controller('code', function code($scope, $timeout, insight, keyboardManager) {
+	'use strict';
+	
 	var cmLeft, cmRight = null;
-
 
 	$scope.optionsCode = {
 		fixedGutter: false,
@@ -52,4 +51,25 @@ app.controller('code', function code($scope, $timeout, insight, keyboardManager)
 	$scope.toogleInsight = function() {
 		$scope.withInsight = !$scope.withInsight;
 	}
+
+	// (function() { /* The pace of the keyboard before sending data to the server */
+	// 	$scope.isEditorPending = false;
+	// 	$scope.editorPendingPromise = null;
+
+	// 	function sendDataToServer() {
+	// 		$scope.isEditorPending = false;
+	// 		$scope.editorPendingPromise = null;
+	// 	}
+
+	// 	$scope.onEditorCodeChange = function() {
+	// 		if ($scope.isEditorPending && $scope.editorPendingPromise != null) {
+	// 			$timeout.cancel($scope.editorPendingPromise);
+	// 			$scope.editorPendingPromise = $timeout(sendDataToServer, 2000);
+	// 		} else {
+	// 			$scope.isEditorPending = true;
+	// 			$scope.editorPendingPromise = $timeout(sendDataToServer, 2000);
+	// 		}
+	// 		$scope.insightCode = "";
+	// 	}
+	// })();
 });

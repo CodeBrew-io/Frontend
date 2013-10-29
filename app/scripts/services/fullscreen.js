@@ -1,4 +1,4 @@
-app.factory('fullscreen' ,[function() {
+app.factory('fullscreen' ,function() {
 	return {
 		requestFullScreen: function(element){
 			if(element == null) {
@@ -34,4 +34,4 @@ app.factory('fullscreen' ,[function() {
 			|| (document.webkitIsFullScreen != undefined && document.webkitIsFullScreen === true)); // webkit
 		}
 	}
-}]);
+});
