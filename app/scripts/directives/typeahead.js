@@ -54,7 +54,7 @@ app.directive('typeahead', ["$timeout", function($timeout) {
 
         link: function(scope, element, attrs, controller) {
 
-            var $input = element.find('form > input');
+            var $input = element.find('input');
             var $list = element.find('> div');
 
             $input.bind('focus', function() {
