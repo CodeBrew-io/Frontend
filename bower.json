@@ -2,16 +2,16 @@
   "name": "CodeBrew",
   "version": "0.0.0",
   "dependencies": {
-    "angular": "https://github.com/angular/bower-angular.git#1.2.0-rc.3",
-    "bootstrap": "https://github.com/twbs/bootstrap.git#~3.0.0",
-    "jquery": "https://github.com/components/jquery.git#~2.0.3",
-    "lodash": "https://github.com/lodash/lodash.git#~2.2.0",
-    "font-awesome": "https://github.com/FortAwesome/Font-Awesome.git#~4.0.1",
-    "codemirror": "https://github.com/marijnh/CodeMirror.git#~3.19.0",
-    "angular-ui-codemirror": "~0.0.5"
+    "angular": "~1.2.0-rc.3",
+    "bootstrap": "~3.0.0",
+    "jquery": "~2.0.3",
+    "font-awesome": "~4.0.1",
+    "codemirror": "~3.19.0",
+    "angular-ui-codemirror": "~0.0.5",
+    "angular-mocks": "~1.2.0-rc.3"
   },
   "resolutions": {
-    "angular": "1.2.0-rc.3",
+    "angular": "~1.2.0-rc.3",
     "codemirror": "~3.19.0"
   }
 }
