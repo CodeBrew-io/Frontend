@@ -1,13 +1,13 @@
-app.controller('header', function header($scope) {
+app.controller('header', function header($scope, user) {
 	'use strict';
 
 	$scope.user = null;
 	$scope.init = function(){
-		$scope.user = user;
+		$scope.user = user.info();
 	}
 
 	$scope.loggedIn = function(){
-		return null !== $scope.user;
+		return undefined !== $scope.user.name;
 	}
 
 	$scope.profileOpen = false;

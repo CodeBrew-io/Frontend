@@ -16,6 +16,8 @@ module.exports = function (grunt) {
     dist: 'dist'
   };
 
+  var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
+
   try {
     yeomanConfig.app = require('./bower.json').appPath || yeomanConfig.app;
   } catch (e) {}
@@ -59,10 +61,16 @@ module.exports = function (grunt) {
         port: 9002,
         hostname: 'localhost'
       },
+      proxies: [{
+        context: ['/webjars', '/assets', '/user', '/login', '/logout', '/authenticate', '/not-authorized','/snippets'],
+        port: 9000,
+        host: 'localhost'
+      }],
       livereload: {
         options: {
           middleware: function (connect) {
             return [
+              proxySnippet,
               lrSnippet,
               mountFolder(connect, '.tmp'),
               mountFolder(connect, yeomanConfig.app)
@@ -277,6 +285,7 @@ module.exports = function (grunt) {
       'clean:server',
       'concurrent:server',
       'autoprefixer',
+      'configureProxies',
       'connect:livereload',
       'open',
       'watch'

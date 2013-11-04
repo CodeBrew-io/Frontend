@@ -1,4 +1,4 @@
-app.controller('code', function code($scope, $timeout, insight, fullscreen) {
+app.controller('code', function code($scope, $timeout, insight, fullscreen, snippets) {
 	'use strict';
 	
 	var cmLeft, cmRight = null;
@@ -14,8 +14,10 @@ app.controller('code', function code($scope, $timeout, insight, fullscreen) {
 		theme: 'solarized light',
 		smartIndent: false,
 		autofocus: true,
-		onChange: function(cm,event) {
-			$scope.insight = insight($scope.code);
+		onChange: function() {
+			insight($scope.code).then(function(result){
+				$scope.insight = result;
+			})
 		},
 		onScroll: function(cm) {
 			if ($scope.cmLeft === null) {

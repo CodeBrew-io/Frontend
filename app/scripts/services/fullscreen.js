@@ -1,4 +1,4 @@
-app.factory('fullscreen' ,function($rootScope, keyboardManager) {
+app.factory('fullscreen', function($rootScope, keyboardManager) {
 	var _zen = false;
 	var ev = "zen";
 
