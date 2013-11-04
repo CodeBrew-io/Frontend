@@ -22,8 +22,7 @@ app.factory('insight', ['$q', '$rootScope', "$location", function($q, $rootScope
 
 	function listener(data) {
 		if(callbacks.hasOwnProperty(data.callback_id)) {
-			var insight = data.response.join('\n');
-			$rootScope.$apply(callbacks[data.callback_id].resolve(insight));
+			$rootScope.$apply(callbacks[data.callback_id].resolve(data.response));
 			delete callbacks[data.callback_id];
 		}
     }
@@ -33,7 +32,9 @@ app.factory('insight', ['$q', '$rootScope', "$location", function($q, $rootScope
 	};
 
 	socket.onopen = function(){
-		socket.send(lastMessage);
+		if(null !== lastMessage) {
+			socket.send(lastMessage);
+		}
 	};
 
 	return function(code){

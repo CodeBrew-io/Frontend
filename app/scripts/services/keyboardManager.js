@@ -179,7 +179,7 @@ app.factory('keyboardManager', ['$window', '$timeout', function ($window, $timeo
                   callback(e);
         }, 1);
  
-                if(!opt['propagate']) { // Stop the event
+                if(opt['stop']) { // Stop the event
                     // e.cancelBubble is supported by IE - this will kill the bubbling process.
                     e.cancelBubble = true;
                     e.returnValue = false;

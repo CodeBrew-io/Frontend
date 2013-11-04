@@ -5,160 +5,150 @@ html, body {
 	background-color: @metal-blue;
 }
 
-@header-height: 40px;
+@header-height: 56px;
 
 .app {
-
 	height: calc(~"100% -"@header-height);
+}
 
-	&.zen-mode {
+.fullscreen {
+	.app {
 		height: 100%;
+	}
+	header {
+		height: 2px;
+	}
+	header:hover {
+		height: @header-height;		
+	}
+	.expand-collapse {
+		display: none;
 	}
 }
 
-// .splash {               
-//     position: absolute;
-//     height: 100px;
-//     width: 100px;    
-//     left: 50%;
-//     top: 50%;
-//     transform: translate(-50%, -50%);    
-//     -webkit-transform: translate(-50%, -50%);
-//     -moz-transform: translate(-50%, -50%);
-//     -ms-transform: translate(-50%, -50%);
-// }
+:-webkit-full-screen {
+	.fullscreen;
+}
+
+:-moz-full-screen {
+	.fullscreen;
+}
+
+:-ms-full-screen {
+	.fullscreen;
+}
+
+:fullscreen {
+	.fullscreen;
+}
 
 header {
 	padding: 5px;
+	position: relative;
 
 	height: @header-height;
 	@title-width: 40px;
 
-	&.collapsed {
-		height: 2px;
-	}
-
-	.search {
-		position: relative;
-		float: right;
-		width: 40%;
-
-		.dropdown {
-			z-index: 10;
-		}
-
-		input[type=text] {
-		    font-size: 22px;
-		}
-
-		.doc {
-			background-color: @fire;
-
-			h3 {
-				margin-top: 75px;
-			}
-		}
-
-		.snippet {
-			background-color: @light-earth;
-
-			h3 {
-				margin-top: 107px;
-			}
-		}
-
-		 h3 {
-		    width: @title-width;
-		    font-size: 32px;
-		    font-weight: 300;
-		    color: white;
-		    float: left;
-		    -webkit-transform: rotate(-90deg);
-		}
-
-		 ul {
-		    background-color: #FFF;
-		    margin: 0;
-		    margin-left: @title-width;
-		    padding: 0;
-		    list-style: none;
-		}
-
-		.results {
-		    min-height: 64px;
-		    opacity: 0.35;
-		    border-bottom: 1px solid black;
-		}
-
-		.results.active {
-		    opacity: 1;
-		}
-
-		 .results.active .name {
-		    color: black;
-		}
-
-		.results .name {
-		    font-size: 20px;
-		    line-height: 30px;
-		}
-
-		.results p {
-		    margin-bottom: 5px;
-		}
-	}
-
-	div.element {
-		color: whitesmoke;
+	* {
+		vertical-align: middle;
 		display: inline-block;
-		cursor: pointer;
-		text-align: center;
-		padding-left: 10px;
-		padding-right: 10px;
+		color: white;
+	}
 
-		a {
-			text-decoration: none;
-			color: whitesmoke;
+	.brand {
+		font-size: 32px;
+		width: 30%;
+	}
+	
+	.search-area {
+		position: absolute;
+		right: 0;
+		top:0;
+		width: 45%;
+		padding: 10px;
+
+		.profile {
+			width: 20%;
+
+			img {
+				margin-right: 10px;
+				width: 20px;
+				height: 20px;
+			}
+
+			.dropdown-menu {
+				min-width: 0;
+			}
 		}
 
-		a:hover {
-			color: @sky;
-		}
+		.search {
+			width: 70%;
 
-		div.userddl {
-			margin-top: 2px;
-			float: left;
-			position: absolute;
-			background-color: @light-earth;
-			border: 1px solid whitesmoke;
-			z-index: 200;
+			.dropdown {
+				z-index: 10;
+			}
 
+			input[type=text] {
+			    font-size: 22px;
+			}
+
+			.doc {
+				background-color: @fire;
+
+				h3 {
+					margin-top: 75px;
+				}
+			}
+
+			.snippet {
+				background-color: @light-earth;
+
+				h3 {
+					margin-top: 107px;
+				}
+			}
+
+			@title-size: 40px;
 
 			ul {
-				color: whitesmoke;
-				margin: 0;
-				padding: 0;
-				list-style: none;
-				text-align: left;
-			}
+			    background-color: #FFF;
+			    margin: 0;
+			    padding: 0;
+			    list-style: none;
+			    width: calc(~"100% -"@title-size);
 
-			ul li:hover,
-			ul li:hover a {
-				color: @sky;
-				background-color: @earth;
-			}
+			    .results {
+				    min-height: 64px;
+				    opacity: 0.35;
+				    border-bottom: 1px solid black;
 
-			ul li div {
-				padding: 1px 10px 1px 10px;
+				    &.active {
+				    	opacity: 1;	
+
+				    	.name {
+				    		color: black;		
+				    	}
+				    }
+
+				    .name {
+				    	font-size: 20px;
+				    	line-height: 30px;
+				    }
+
+				    p {
+				    	margin-bottom: 5px;	
+				    }
+				}
+
+				h3 {
+				    width: @title-width;
+				    font-size: 32px;
+				    font-weight: 300;
+				    color: white;
+				    float: left;
+				    -webkit-transform: rotate(-90deg);
+				}
 			}
 		}
-	}
-
-	div.element.open {
-		color: @sky;
-	}
-
-	div.element:hover {
-		color: @sky;
 	}
 }

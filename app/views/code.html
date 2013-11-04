@@ -1,11 +1,14 @@
-<div ng-controller="code" class="app" ng-class="{'zen-mode': isZenMode==true}">
+<div ng-controller="code" class="app">
     <div class="code" ng-class="{'expanded': withInsight==false}">
-        <div class="expand-collapse" ng-class="{'anchorRight': withInsight==false}" ng-click="toogleInsight()">
-            <i ng-class="{'fa fa-chevron-right': withInsight==true, 'fa fa-chevron-left': withInsight==false}" ng-show="true"></i>
-            <i ng-class="{'fa fa-resize-full': withInsight==true, 'fa fa-resize-small-left': withInsight==false}" ng-show="true"></i>
+        <div class="expand-collapse">
+            <i class="fa" 
+                ng-class="{'fa-chevron-right': withInsight, 'fa-chevron-left': !withInsight}"
+                ng-click="toogleInsight()"></i>
+            <i class="fa fa-resize-full" ng-click="fullscreen()"></i>
+            <i class="fa fa-floppy-o" ng-click="publish()"></i>
         </div>
-        <textarea ui-codemirror="optionsCode" ng-model="code" ng-change="onEditorCodeChange()" ></textarea>
-    </div><div class="insight" ng-class="{'' : isEditorPending==false, 'fetching': isEditorPending==true}" ng-show="withInsight">
+        <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
+    </div><div class="insight" ng-class="{'' : !isEditorPending, 'fetching': isEditorPending}" ng-show="withInsight">
         <textarea ui-codemirror="optionsInsight" ng-model="insight"></textarea>
     </div>
 </div>

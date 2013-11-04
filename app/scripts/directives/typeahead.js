@@ -3,7 +3,7 @@ app.directive('typeahead', ["$timeout", function($timeout) {
         restrict: 'E',
         transclude: true,
         replace: true,
-        template: '<div><form><input class="form-control" ng-model="term" ng-change="query()" type="text" autocomplete="off" /></form><div class="dropdown" ng-transclude></div></div>',
+        template: '<div><input class="form-control" ng-model="term" ng-change="query()" type="text" autocomplete="off" /><div class="dropdown" ng-transclude></div></div>',
         scope: {
             search: "&",
             select: "&",
@@ -54,7 +54,7 @@ app.directive('typeahead', ["$timeout", function($timeout) {
 
         link: function(scope, element, attrs, controller) {
 
-            var $input = element.find('form > input');
+            var $input = element.find('input');
             var $list = element.find('> div');
 
             $input.bind('focus', function() {
