@@ -1,23 +1,47 @@
 app.controller('code', function code($scope, $timeout, insight, fullscreen, snippets) {
 	'use strict';
-	
+	$scope.code = "";
+	var compilationInfo = [];
 	var cmLeft, cmRight = null;
+
 
 	$scope.fullscreen = function(){
 		fullscreen.apply(true);
 	}
 
+	function updateMirrors(cm, f){
+		var cur = cm.getCursor();
+		var lines = $scope.code.split("\n");
+		var pos = cur.ch;
+		for (var i = 0; i < cur.line; i++){
+			pos += lines[i].length + 1;
+		}
+		insight($scope.code, pos).then(f);        
+	}
+
+	CodeMirror.commands.autocomplete = function(cm) {
+		updateMirrors(cm, function(data){
+			$scope.insight = data.insight;
+			CodeMirror.showHint(cm, function(cm, options){
+				var inner = {from: cm.getCursor(), to: cm.getCursor(), list: data.completions};
+				return inner;
+			});                
+		});
+	};
+
 	$scope.optionsCode = {
+		extraKeys: {"Ctrl-Space": "autocomplete"},
 		fixedGutter: false,
 		lineNumbers: true,
 		mode: 'text/x-scala',
 		theme: 'solarized light',
 		smartIndent: false,
 		autofocus: true,
-		onChange: function() {
-			insight($scope.code).then(function(result){
-				$scope.insight = result;
-			})
+		onChange: function(cm) {
+			updateMirrors(cm, function(data){
+				$scope.insight = data.insight;
+				compilationInfo = data.CompilationInfo;
+			});
 		},
 		onScroll: function(cm) {
 			if ($scope.cmLeft === null) {

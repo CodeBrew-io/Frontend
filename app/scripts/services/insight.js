@@ -22,7 +22,7 @@ app.factory('insight', ['$q', '$rootScope', "$location", function($q, $rootScope
 
 	function listener(data) {
 		if(callbacks.hasOwnProperty(data.callback_id)) {
-			$rootScope.$apply(callbacks[data.callback_id].resolve(data.response));
+			$rootScope.$apply(callbacks[data.callback_id].resolve(data));
 			delete callbacks[data.callback_id];
 		}
     }
@@ -37,13 +37,14 @@ app.factory('insight', ['$q', '$rootScope', "$location", function($q, $rootScope
 		}
 	};
 
-	return function(code){
+	return function(code, position){
 		var request = {};
 		var defer = $q.defer();
 		var callbackId = getCallbackId();
 		callbacks[callbackId] = defer;
 		request.callback_id = callbackId;
 		request.code = code;
+		request.position = position;
 
 		if( socket.readyState === socket.CONNECTING ) {
 			lastMessage = JSON.stringify(request)
