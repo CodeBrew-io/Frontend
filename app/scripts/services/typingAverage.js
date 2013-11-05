@@ -11,8 +11,8 @@ app.factory('typingAverage', ['$q', '$rootScope', function($q, $rootScope) {
 	var timeoutHandle = null;
 
 	var _timeToWaitConst = 500; // even the fastest will always have to wait at least 0.5 second
-	var $data = null;
-
+	
+	// This function will calculate the new average with the new variance.
 	function calculateAverage() {
 		var diffSum = 0;
 		var previousTime = 0;
@@ -42,18 +42,16 @@ app.factory('typingAverage', ['$q', '$rootScope', function($q, $rootScope) {
 			}
 
 			variance = Math.sqrt(cummulVariance / size);
+			cummulValues = [];
 		}
-		cummulValues = [];
 	}
 
+	// this function resets the data, and resolve the defer.
 	function sendDataInner() {
 		timeoutHandle = null;
 		cummulValues = [];
 
-		console.log('average: ' + average);
-		console.log('variance: ' + variance);
-
-		defer.resolve($data);	
+		defer.resolve();	
 		defer = $q.defer();
 	}
 
@@ -63,18 +61,14 @@ app.factory('typingAverage', ['$q', '$rootScope', function($q, $rootScope) {
 	})();
 
 	return {
-		onKeyPressed: function(data) {
+		onKeyPressed: function() {
 			cummulValues.push(new Date().getTime());
-			console.log("cummulValues.length:  " + cummulValues.length);
 
-			$data = data;
-			console.log('new $data == ' + $data);
-
-			defer.notify($data);
-
+			// if we already have a timeout of setted, we clear it.
 			if (timeoutHandle !== null) {
 				window.clearTimeout(timeoutHandle);
 			}
+			// assign the new timeout before sending the data.
 			timeoutHandle = window.setTimeout(sendDataInner, _timeToWaitConst + average + 2 * variance);
 
 			return defer.promise;

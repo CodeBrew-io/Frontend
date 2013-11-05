@@ -39,7 +39,11 @@ app.controller('code', function code($scope, $timeout, insight, fullscreen, snip
 		});
 	};
 
-	$scope.isEditorPending = false;
+	$scope.editorSending = {
+		canShowInsight: true,
+		isEditorPending: false
+	};
+	//$scope.isEditorPending = false;
 
 	$scope.optionsCode = {
 		extraKeys: {"Ctrl-Space": "autocomplete"},
@@ -50,36 +54,27 @@ app.controller('code', function code($scope, $timeout, insight, fullscreen, snip
 		smartIndent: false,
 		autofocus: true,
 		onChange: function(cm) {
-			/*updateMirrors(cm, function(data){
-				$scope.insight = data.insight;
-				compilationInfo = data.CompilationInfo;
-			});
-*/
-			typingAverage.onKeyPressed(cm.getDoc().getValue()).then(
-				function successSending(codemirrorContent) {
-					insight(codemirrorContent, getCursorPosition(cm)).then(function(data){
-						if ($scope.isEditorPending) {
-							console.log('data has been sent!');
-							console.log('data: ' + codemirrorContent);
+			$scope.editorSending.canShowInsight = false;
 
-							$scope.insight = data.insight;
-							compilationInfo = data.CompilationInfo;
+			if (!$scope.editorSending.isEditorPending) {
+				$scope.editorSending.isEditorPending = true;
+			}
 
-							$scope.isEditorPending = false;
-						}
+			typingAverage.onKeyPressed().then(function() {
+				if ($scope.editorSending.isEditorPending) {
+					$scope.editorSending.isEditorPending = true;
+
+					updateMirrors(cm, function(data) {
+						console.log('data has been sent!');
+						console.log('data: ' + cm.getDoc().getValue());
+
+						$scope.insight = data.insight;
+						compilationInfo = data.CompilationInfo;
+					
+						$scope.editorSending.canShowInsight = true;
 					});
-				},
-				function errorSending() {
-					/*
-					The error is actually not handled.
-					*/
-				},
-				function notifySending() {
-					if (!$scope.isEditorPending) { 
-						$scope.isEditorPending = true;
-					}
 				}
-			);
+			});
 		},
 		onScroll: function(cm) {
 			if ($scope.cmLeft === null) {
