@@ -51,13 +51,13 @@ header {
 
 	* {
 		vertical-align: middle;
-		display: inline-block;
-		color: white;
+		display: inline-block;		
 	}
 
 	.brand {
 		font-size: 32px;
 		width: 30%;
+		color: white;
 	}
 	
 	.search-area {
@@ -92,6 +92,15 @@ header {
 			    font-size: 22px;
 			}
 
+			h3 {
+				    width: @title-width;
+				    font-size: 32px;
+				    font-weight: 300;
+				    color: white;
+				    float: left;
+				    -webkit-transform: rotate(-90deg);
+				}
+
 			.doc {
 				background-color: @fire;
 
@@ -116,12 +125,11 @@ header {
 			    padding: 0;
 			    list-style: none;
 			    width: calc(~"100% -"@title-size);
-
 			    .results {
+			    	width:100%;
 				    min-height: 64px;
 				    opacity: 0.35;
 				    border-bottom: 1px solid black;
-
 				    &.active {
 				    	opacity: 1;	
 
@@ -139,16 +147,8 @@ header {
 				    	margin-bottom: 5px;	
 				    }
 				}
-
-				h3 {
-				    width: @title-width;
-				    font-size: 32px;
-				    font-weight: 300;
-				    color: white;
-				    float: left;
-				    -webkit-transform: rotate(-90deg);
-				}
 			}
+			
 		}
 	}
 }

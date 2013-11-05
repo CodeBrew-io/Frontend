@@ -117,12 +117,12 @@ app.directive('typeahead', ["$timeout", function($timeout) {
                     $list.css({
                         // top: pos.top + height,
                         // left: pos.left,
-                        width: '100%',
-                        position: 'absolute',
+                        //width: '100%',
+                        //position: 'relative',
                         display: 'block'
                     });
                 } else {
-                    $list.css('display', 'none');
+                    //$list.css('display', 'none');
                 }
             });
         }

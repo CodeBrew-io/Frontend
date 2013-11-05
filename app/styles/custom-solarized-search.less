@@ -4,7 +4,7 @@ Solarized color pallet: http://ethanschoonover.com/solarized/img/solarized-palet
 less version: gui
 */
 
-.cm-s-solarized {
+.cm-s-solarizedsearch {
   @base00:    #657b83;
   @base01:    #586e75;
   @base02:    #073642;
@@ -12,7 +12,7 @@ less version: gui
   @base0:     #839496;
   @base1:     #93a1a1;
   @base2:     #eee8d5;
-  @base3:     #fdf6e3;
+  @base3:     #ffffff;
   @yellow:    #b58900;
   @orange:    #cb4b16;
   @red:       #dc322f;
@@ -22,8 +22,8 @@ less version: gui
   @cyan:      #2aa198;
   @green:     #859900;
 
-  line-height: 1.45em;
-  font-size: 18px;
+  line-height: 1em;
+  font-size: 1em;
   font-family: Menlo,Monaco,"Andale Mono","lucida console","Courier New", monospace !important;
   color-profile: sRGB;
   rendering-intent: auto;
@@ -103,7 +103,6 @@ less version: gui
 
   /* Gutter border and some shadow from it  */
   .CodeMirror-gutters {
-    padding: 0 15px 0 10px;
     border-right: none;
   }
 
@@ -141,7 +140,6 @@ less version: gui
   view-port
   */
   .activeline {
-    margin-left: -20px;
   }
 
   &.cm-s-dark .activeline {
