@@ -9,10 +9,9 @@
                 <li><a href="/settings">Settings</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
-        </div>
-        <a class="btn btn-primary" ng-show="!loggedIn()" href="/login">Login</a>
-
-        <typeahead class="search" items="all"
+        </div><!--
+        --><a class="btn btn-primary" ng-show="!loggedIn()" href="/login">Login</a><!--
+        --><typeahead class="search" items="all"
             term="term" search="search(term)" select="select(item)">
             <div ng-show="hasDocs()" class="doc">
                 <h3>Doc</h3>
@@ -26,7 +25,7 @@
             <div ng-show="hasSnippets()" class="snippet">
                 <h3>Snippet</h3>
                 <ul>
-                    <li typeahead-item="snippet" ng-repeat="s in snippets" class="results">
+                    <li typeahead-item="s" ng-repeat="s in snippets" class="results">
                         <syntaxhighlight syntaxtype="text/x-scala" ng-model='s.snippet["code.origin"]'></syntaxhighlight>
                     </li>
                 </ul>
