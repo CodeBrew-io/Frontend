@@ -18,7 +18,8 @@
                 <ul>
                     <li typeahead-item="doc" ng-repeat="doc in docs" class="results">
                         <syntaxhighlight syntaxtype="text/x-scala" ng-model='doc.qualifiedName'></syntaxhighlight>
-                        <syntaxhighlight syntaxtype="text/x-scala" ng-model='doc.signature'></syntaxhighlight
+                        <syntaxhighlight syntaxtype="text/x-scala" ng-model='doc.signature'></syntaxhighlight>
+                        <pre class="text" ng-show="doc.comment.source">{{ doc.comment.source }}</pre>
                     </li>
                 </ul>
             </div>

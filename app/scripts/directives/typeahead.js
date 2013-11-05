@@ -113,7 +113,7 @@ app.directive('typeahead', ["$timeout", function($timeout) {
                 if (visible) {
                     $list.css('display', 'block');
                 } else {
-                    $list.css('display', 'none');
+                    // $list.css('display', 'none');
                 }
             });
         }

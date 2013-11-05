@@ -21,6 +21,8 @@ app.controller('header', function header($scope, user, snippets, scaladoc) {
 	$scope.snippets = [];
 	$scope.all = [];
 
+	$scope.term = "map";
+
 	$scope.search = function(term){
 		if(term == '') {
 			$scope.docs = [];
@@ -36,6 +38,8 @@ app.controller('header', function header($scope, user, snippets, scaladoc) {
 			});
 		}
 	};
+
+	$scope.search($scope.term);
 
 	$scope.hasDocs = function(){
 		return $scope.docs.length > 0;

@@ -92,6 +92,8 @@ header {
 
 			.dropdown {
 				z-index: 10;
+				box-shadow: 3px 3px 5px #888888;
+				margin: 0 2px;
 			}
 
 			input[type=text] {
@@ -115,6 +117,12 @@ header {
 				h3 {
 					margin-top: 75px;
 				}
+
+				.text {
+					font-family: sans-serif;
+					font-size: 16px;
+					line-height: inherit;
+				}
 			}
 
 			.snippet {
@@ -135,13 +143,23 @@ header {
 			    width: calc(~"100% -"@title-width);
 
 			    .results {
+			    	pre {
+			    		line-height: 1em;
+			    		font-size: 14px;
+			    		background-color: white;
+			    		border: none;
+			    		padding: 0;
+			    	}
 			    	width:100%;
 				    min-height: 64px;
-				    opacity: 0.35;
 				    border-bottom: 1px solid black;
+				    padding: 5px;
 
 				    &.active {
-				    	opacity: 1;
+				    	background-color: #E1E2E4 !important;
+				    	* {
+				    		background-color: #E1E2E4 !important;
+				    	}
 				    }
 				}
 			}
