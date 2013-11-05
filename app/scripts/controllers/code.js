@@ -37,6 +37,7 @@ app.controller('code', function code($scope, $timeout, insight, fullscreen, snip
 		theme: 'solarized light',
 		smartIndent: false,
 		autofocus: true,
+		autoCloseBrackets: true,
 		onChange: function(cm) {
 			updateMirrors(cm, function(data){
 				$scope.insight = data.insight;
