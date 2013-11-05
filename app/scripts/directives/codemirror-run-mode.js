@@ -5,39 +5,23 @@
 app.directive('syntaxhighlight', function($timeout) {
 'use strict';
 
-
-  
   return {
     restrict: 'E',
     require: '?ngModel',
+    template: '<pre class=\"cm-s-solarized cm-s-light\"></pre>',
     link: function (scope, elm, attrs, ngModel) {
 
       $timeout(function() {
         var value = ngModel.$modelValue;
+        var a_output = elm.find('pre');
 
-        if (value) {
-          var accum = [], gutter = [], size = 0;
-
-          CodeMirror.runMode(value, attrs.syntaxtype , function(string, style) {
-            
-              if (string == "\n") {
-                  accum.push("<br>");
-                  gutter.push('<pre>'+(++size)+'</pre>');
-              }
-              else if (style)
-                  accum.push("<span class=\"cm-" + (style) + "\">" + (string) + "</span>");
-              else
-                  accum.push((string));
-
-              elm.html(accum.join(''));
-          });
-        
-
-          
-         // numbers.innerHTML = gutter.join('');
+        if (value){
+          CodeMirror.runMode(value, attrs.syntaxtype , a_output[0]); 
         }
-
+          
       });
+
+      }
     }
   }
-});
+);
