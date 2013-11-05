@@ -1,4 +1,4 @@
-app.controller('code', function code($scope, $timeout, insight, fullscreen, snippets) {
+app.controller('code', function code($scope, $timeout, insight, fullscreen, snippets, typingAverage) {
 	'use strict';
 	$scope.code = "";
 	var compilationInfo = [];
@@ -7,6 +7,16 @@ app.controller('code', function code($scope, $timeout, insight, fullscreen, snip
 
 	$scope.fullscreen = function(){
 		fullscreen.apply(true);
+	}
+
+	function getCursorPosition(cm) {
+		var cur = cm.getCursor();
+		var lines = $scope.code.split("\n");
+		var pos = cur.ch;
+		for (var i = 0; i < cur.line; i++){
+			pos += lines[i].length + 1;
+		}
+		return pos;
 	}
 
 	function updateMirrors(cm, f){
@@ -29,6 +39,8 @@ app.controller('code', function code($scope, $timeout, insight, fullscreen, snip
 		});
 	};
 
+	$scope.isEditorPending = false;
+
 	$scope.optionsCode = {
 		extraKeys: {"Ctrl-Space": "autocomplete"},
 		fixedGutter: false,
@@ -38,10 +50,36 @@ app.controller('code', function code($scope, $timeout, insight, fullscreen, snip
 		smartIndent: false,
 		autofocus: true,
 		onChange: function(cm) {
-			updateMirrors(cm, function(data){
+			/*updateMirrors(cm, function(data){
 				$scope.insight = data.insight;
 				compilationInfo = data.CompilationInfo;
 			});
+*/
+			typingAverage.onKeyPressed(cm.getDoc().getValue()).then(
+				function successSending(codemirrorContent) {
+					insight(codemirrorContent, getCursorPosition(cm)).then(function(data){
+						if ($scope.isEditorPending) {
+							console.log('data has been sent!');
+							console.log('data: ' + codemirrorContent);
+
+							$scope.insight = data.insight;
+							compilationInfo = data.CompilationInfo;
+
+							$scope.isEditorPending = false;
+						}
+					});
+				},
+				function errorSending() {
+					/*
+					The error is actually not handled.
+					*/
+				},
+				function notifySending() {
+					if (!$scope.isEditorPending) { 
+						$scope.isEditorPending = true;
+					}
+				}
+			);
 		},
 		onScroll: function(cm) {
 			if ($scope.cmLeft === null) {
