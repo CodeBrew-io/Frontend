@@ -111,16 +111,7 @@ app.directive('typeahead', ["$timeout", function($timeout) {
 
             scope.$watch('isVisible()', function(visible) {
                 if (visible) {
-                    // var pos = $input.position();
-                    // var height = $input[0].offsetHeight;
-
-                    $list.css({
-                        // top: pos.top + height,
-                        // left: pos.left,
-                        width: '100%',
-                        position: 'absolute',
-                        display: 'block'
-                    });
+                    $list.css('display', 'block');
                 } else {
                     $list.css('display', 'none');
                 }

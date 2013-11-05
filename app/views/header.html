@@ -14,21 +14,20 @@
 
         <typeahead class="search" items="all"
             term="term" search="search(term)" select="select(item)">
-            <div class="doc">
-                <h3 ng-show="hasDocs()">Doc</h3>
+            <div ng-show="hasDocs()" class="doc">
+                <h3>Doc</h3>
                 <ul>
                     <li typeahead-item="doc" ng-repeat="doc in docs" class="results">
-                        <span class="class">{{doc.qualifiedName}}</span>
-                        <span class="signature">{{doc.signature}}</span>
-                        <textarea ui-codemirror="codemirrorOptions" ng-model="doc.comment.example"></textarea>
+                        <syntaxhighlight syntaxtype="text/x-scala" ng-model='doc.qualifiedName'></syntaxhighlight>
+                        <syntaxhighlight syntaxtype="text/x-scala" ng-model='doc.signature'></syntaxhighlight
                     </li>
                 </ul>
             </div>
-            <div class="snippet">
+            <div ng-show="hasSnippets()" class="snippet">
                 <h3>Snippet</h3>
                 <ul>
                     <li typeahead-item="snippet" ng-repeat="s in snippets" class="results">
-                        <textarea ui-codemirror="codemirrorOptions" ng-model="s.snippet['code.origin']"></textarea>
+                        <syntaxhighlight syntaxtype="text/x-scala" ng-model='s.snippet["code.origin"]'></syntaxhighlight>
                     </li>
                 </ul>
             </div>
