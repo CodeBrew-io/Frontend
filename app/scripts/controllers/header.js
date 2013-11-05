@@ -1,14 +1,8 @@
 app.controller('header', function header($scope, user, snippets, scaladoc) {
 	'use strict';
 
-	$scope.user = null;
-	$scope.init = function(){
-		$scope.user = user.info();
-	}
-
-	$scope.loggedIn = function(){
-		return undefined !== $scope.user.name;
-	}
+	$scope.user = user.get();
+	$scope.loggedIn = user.loggedIn;
 
 	$scope.profileOpen = false;
 	$scope.outProfile = function(){

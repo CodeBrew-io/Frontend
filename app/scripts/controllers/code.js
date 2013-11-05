@@ -1,9 +1,10 @@
-app.controller('code', function code($scope, $timeout, insight, fullscreen, snippets) {
+app.controller('code', function code($scope, $timeout, insight, fullscreen, snippets, user) {
 	'use strict';
 	$scope.code = "";
 	var compilationInfo = [];
 	var cmLeft, cmRight = null;
 
+	$scope.loggedIn = user.loggedIn;
 
 	$scope.fullscreen = function(){
 		fullscreen.apply(true);

@@ -47,13 +47,7 @@ header {
 	position: relative;
 
 	height: @header-height;
-	@title-width: 40px;
-
-	* {
-		vertical-align: middle;
-		display: inline-block;		
-	}
-
+	
 	.brand {
 		font-size: 32px;
 		width: 30%;
@@ -66,6 +60,11 @@ header {
 		top:0;
 		width: 45%;
 		padding: 10px;
+
+		& > * {
+			vertical-align: middle;
+			display: inline-block;		
+		}
 
 		.profile {
 			width: 20%;
@@ -92,6 +91,8 @@ header {
 			    font-size: 22px;
 			}
 
+			@title-width: 40px;
+
 			h3 {
 				    width: @title-width;
 				    font-size: 32px;
@@ -111,20 +112,20 @@ header {
 
 			.snippet {
 				background-color: @light-earth;
+				min-height: 150px;
 
 				h3 {
 					margin-top: 107px;
 				}
 			}
 
-			@title-size: 40px;
-
 			ul {
 			    background-color: #FFF;
 			    margin: 0;
+			    margin-left: @title-width;
 			    padding: 0;
 			    list-style: none;
-			    width: calc(~"100% -"@title-size);
+			    width: calc(~"100% -"@title-width);
 			    .results {
 			    	width:100%;
 				    min-height: 64px;
