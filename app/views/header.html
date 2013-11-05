@@ -14,8 +14,8 @@
 
         <typeahead class="search" items="all"
             term="term" search="search(term)" select="select(item)">
-            <div class="doc">
-                <h3 ng-show="hasDocs()">Doc</h3>
+            <div ng-show="hasDocs()" class="doc">
+                <h3>Doc</h3>
                 <ul>
                     <li typeahead-item="doc" ng-repeat="doc in docs" class="results">
                         <syntaxhighlight syntaxtype="text/x-scala" ng-model='doc.qualifiedName'></syntaxhighlight>
@@ -23,7 +23,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="snippet">
+            <div ng-show="hasSnippets()" class="snippet">
                 <h3>Snippet</h3>
                 <ul>
                     <li typeahead-item="snippet" ng-repeat="s in snippets" class="results">
