@@ -49,28 +49,30 @@ app.controller('code', function code($scope, $timeout, $q, insight, fullscreen, 
 		autofocus: true,
 		onChange: function(cm) {
 			$scope.editorSending.canShowInsight = false;
-			$scope.editorSending.numberOfChanges += 1;
 
-			console.log('counter before: ' + $scope.editorSending.numberOfChanges);
+			var mightBePromise = typingAverage.onKeyPressed();
 
-			typingAverage.onKeyPressed().then(function() {
-				$scope.editorSending.numberOfChanges -= 1;
+			console.log('mightBePromise value: ');
+			console.log(mightBePromise);
 
-				console.log('counter end: ' + $scope.editorSending.numberOfChanges);
-
-				if ($scope.editorSending.numberOfChanges == 0) {
-
+			if (mightBePromise !== null) {
+				mightBePromise.then(function(totalPromise) {
 					updateMirrors(cm, function(data) {
 						console.log('data has been sent!');
 						console.log('data: ' + cm.getDoc().getValue());
+						console.log('total promises: ' + totalPromise);
 
 						$scope.insight = data.insight;
 						compilationInfo = data.CompilationInfo;
 					
 						$scope.editorSending.canShowInsight = true;
+
+						if (totalPromise > 0) { 
+							typingAverage.reset();
+						}
 					});
-				}
-			});
+				});	
+			}
 		},
 		onScroll: function(cm) {
 			if ($scope.cmLeft === null) {

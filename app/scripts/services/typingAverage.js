@@ -1,15 +1,15 @@
 
-app.factory('typingAverage', ['$q', function($q) {
+app.factory('typingAverage', ['$q', '$rootScope', function($q, $rootScope) {
 	var defer = $q.defer();
 
 	var average = 1000;
 	var variance = 500;
 
 	var cummulValues = [];
-	var totalTime = 0;
+	var totalPromise = -1;
 
 	var timeoutHandle = null;
-
+	
 	var _timeToWaitConst = 500; // even the fastest will always have to wait at least 0.5 second
 	
 	// This function will calculate the new average with the new variance.
@@ -51,16 +51,17 @@ app.factory('typingAverage', ['$q', function($q) {
 		timeoutHandle = null;
 		cummulValues = [];
 
-		defer.resolve();
+		defer.resolve(totalPromise);
 	}
 
 	(function(){
 		// at each 1 second, we recalculate the values of the typing.
-		window.setInterval(calculateAverage, 1000);
+		intervalHandle = window.setInterval(calculateAverage, 1000);
 	})();
 
 	return {
 		onKeyPressed: function() {
+			totalPromise += 1;
 			cummulValues.push(new Date().getTime());
 
 			// if we already have a timeout of setted, we clear it.
@@ -70,7 +71,15 @@ app.factory('typingAverage', ['$q', function($q) {
 			// assign the new timeout before sending the data.
 			timeoutHandle = window.setTimeout(sendDataInner, _timeToWaitConst + average + 2 * variance);
 
-			return defer.promise;
+			if (totalPromise == 0) {
+				return defer.promise;
+			} else {
+				return null;
+			}
+		},
+
+		reset: function() {
+			totalPromise = -1;
 		}
 	};
 }]);
