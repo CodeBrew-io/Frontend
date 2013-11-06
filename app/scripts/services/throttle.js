@@ -64,7 +64,6 @@ app.factory('throttle', ['$timeout', '$interval', function($timeout, $interval) 
 
 			timeout = $timeout(function(){
 				events = [];
-				console.log("resolved");
 				f();
 			}, interval);
 		}
