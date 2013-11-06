@@ -26,8 +26,8 @@
             <div ng-show="hasSnippets()" class="snippet">
                 <h3>Snippet</h3>
                 <ul>
-                    <li typeahead-item="s" ng-repeat="s in snippets" class="results">
-                        <syntaxhighlight syntaxtype="text/x-scala" ng-model='s.snippet["code.origin"]'></syntaxhighlight>
+                    <li typeahead-item="s" ng-repeat="snippet in snippets | snippetCode" class="results">
+                        <syntaxhighlight syntaxtype="text/x-scala" ng-model='snippet'></syntaxhighlight>
                     </li>
                 </ul>
             </div>
