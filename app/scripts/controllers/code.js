@@ -1,6 +1,6 @@
 app.controller('code', function code($scope, $rootScope, $timeout, insight, fullscreen, snippets, user, throttle) {
 	'use strict';
-	$scope.code = "Welcome to Code Brew. Search for tutorial >>";
+	$scope.code = "// Welcome to Code Brew. Search for tutorial >>";
 	var compilationInfo = [];
 	var cmLeft, cmRight = null;
 
