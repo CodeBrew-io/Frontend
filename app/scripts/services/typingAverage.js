@@ -1,5 +1,5 @@
 
-app.factory('typingAverage', ['$q', '$rootScope', function($q, $rootScope) {
+app.factory('typingAverage', ['$q', function($q) {
 	var defer = $q.defer();
 
 	var average = 1000;

@@ -1,4 +1,4 @@
-app.controller('code', function code($scope, $timeout, $q, insight, fullscreen, snippets, typingAverage) {
+app.controller('code', function code($scope, $timeout, insight, fullscreen, snippets, typingAverage) {
 	'use strict';
 	$scope.code = "";
 	var compilationInfo = [];
@@ -51,16 +51,9 @@ app.controller('code', function code($scope, $timeout, $q, insight, fullscreen, 
 			$scope.editorSending.canShowInsight = false;
 
 			var mightBePromise = typingAverage.onKeyPressed();
-
-			console.log('mightBePromise value: ');
-			console.log(mightBePromise);
-
 			if (mightBePromise !== null) {
 				mightBePromise.then(function(totalPromise) {
 					updateMirrors(cm, function(data) {
-						console.log('data has been sent!');
-						console.log('data: ' + cm.getDoc().getValue());
-						console.log('total promises: ' + totalPromise);
 
 						$scope.insight = data.insight;
 						compilationInfo = data.CompilationInfo;
