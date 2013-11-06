@@ -1,4 +1,4 @@
-app.controller('header', function header($scope, user, snippets, scaladoc) {
+app.controller('header', function header($scope, $rootScope, user, snippets, scaladoc) {
 	'use strict';
 
 	$scope.user = user.get();
@@ -46,8 +46,8 @@ app.controller('header', function header($scope, user, snippets, scaladoc) {
 	};
 
 	$scope.select = function(item){
-		// todo select
-		// $scope.code += '\n\n' + item.code;
-		// $scope.term = "";
+		if(item.snippet) {
+			$rootScope.$emit('selectedCode', item.snippet['code.origin']);
+		}
 	};
 });	

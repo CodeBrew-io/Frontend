@@ -1,4 +1,4 @@
-app.factory('throttle', ['$q', '$timeout', '$interval', function($q, $timeout, $interval) {
+app.factory('throttle', ['$timeout', '$interval', function($timeout, $interval) {
 	var defaults = {
 		average: 1000,
 		variance: 500,

@@ -1,8 +1,14 @@
-app.controller('code', function code($scope, $timeout, insight, fullscreen, snippets, user, throttle) {
+app.controller('code', function code($scope, $rootScope, $timeout, insight, fullscreen, snippets, user, throttle) {
 	'use strict';
 	$scope.code = "";
 	var compilationInfo = [];
 	var cmLeft, cmRight = null;
+
+	$rootScope.$on('selectedCode', function(event, code){
+		if(code){
+			$scope.code = [$scope.code, code].join('\n\n').trim();
+		}
+	});
 
 	$scope.loggedIn = user.loggedIn;
 
