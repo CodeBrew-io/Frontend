@@ -1,4 +1,5 @@
-app.controller('code', function code($scope, $timeout, insight, fullscreen, snippets, user) {
+
+app.controller('code', function code($scope, $timeout, insight, fullscreen, snippets, user, typingAverage) {
 	'use strict';
 	$scope.code = "";
 	var compilationInfo = [];
@@ -9,6 +10,12 @@ app.controller('code', function code($scope, $timeout, insight, fullscreen, snip
 	$scope.fullscreen = function(){
 		fullscreen.apply(true);
 	}
+
+	// for the pending of the insight
+	$scope.editorSending = {
+		canShowInsight: true,
+		numberOfChanges: 0
+	};
 
 	function updateMirrors(cm, f){
 		var cur = cm.getCursor();
@@ -21,8 +28,12 @@ app.controller('code', function code($scope, $timeout, insight, fullscreen, snip
 	}
 
 	CodeMirror.commands.autocomplete = function(cm) {
+		$scope.editorSending.canShowInsight = false;
+
 		updateMirrors(cm, function(data){
 			$scope.insight = data.insight;
+			$scope.editorSending.canShowInsight = true;
+
 			CodeMirror.showHint(cm, function(cm, options){
 				var inner = {from: cm.getCursor(), to: cm.getCursor(), list: data.completions};
 				return inner;
@@ -40,10 +51,24 @@ app.controller('code', function code($scope, $timeout, insight, fullscreen, snip
 		autofocus: true,
 		autoCloseBrackets: true,
 		onChange: function(cm) {
-			updateMirrors(cm, function(data){
-				$scope.insight = data.insight;
-				compilationInfo = data.CompilationInfo;
-			});
+			$scope.editorSending.canShowInsight = false;
+
+			var mightBePromise = typingAverage.onKeyPressed();
+			if (mightBePromise !== null) {
+				mightBePromise.then(function(totalPromise) {
+					updateMirrors(cm, function(data) {
+
+						$scope.insight = data.insight;
+						compilationInfo = data.CompilationInfo;
+					
+						$scope.editorSending.canShowInsight = true;
+
+						if (totalPromise > 0) { 
+							typingAverage.reset();
+						}
+					});
+				});	
+			}
 		},
 		onScroll: function(cm) {
 			if ($scope.cmLeft === null) {
