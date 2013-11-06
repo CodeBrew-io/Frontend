@@ -47,17 +47,11 @@ header {
 	position: relative;
 
 	height: @header-height;
-	@title-width: 40px;
-
-	* {
-		vertical-align: middle;
-		display: inline-block;
-		color: white;
-	}
-
+	
 	.brand {
 		font-size: 32px;
 		width: 30%;
+		color: white;
 	}
 	
 	.search-area {
@@ -67,9 +61,21 @@ header {
 		width: 45%;
 		padding: 10px;
 
+		& > * {
+			vertical-align: middle;
+			display: inline-block;		
+		}
+
+		[href='/login'] {
+			margin-right: 30px;
+		}
+
+		[href='/login'], .profile {
+			vertical-align: top;
+		}
+
 		.profile {
 			width: 20%;
-
 			img {
 				margin-right: 10px;
 				width: 20px;
@@ -82,65 +88,21 @@ header {
 		}
 
 		.search {
-			width: 70%;
+			width: 80%;
 
 			.dropdown {
 				z-index: 10;
+				box-shadow: 3px 3px 5px #888888;
+				margin: 0 2px;
 			}
 
 			input[type=text] {
 			    font-size: 22px;
 			}
 
-			.doc {
-				background-color: @fire;
+			@title-width: 40px;
 
-				h3 {
-					margin-top: 75px;
-				}
-			}
-
-			.snippet {
-				background-color: @light-earth;
-
-				h3 {
-					margin-top: 107px;
-				}
-			}
-
-			@title-size: 40px;
-
-			ul {
-			    background-color: #FFF;
-			    margin: 0;
-			    padding: 0;
-			    list-style: none;
-			    width: calc(~"100% -"@title-size);
-
-			    .results {
-				    min-height: 64px;
-				    opacity: 0.35;
-				    border-bottom: 1px solid black;
-
-				    &.active {
-				    	opacity: 1;	
-
-				    	.name {
-				    		color: black;		
-				    	}
-				    }
-
-				    .name {
-				    	font-size: 20px;
-				    	line-height: 30px;
-				    }
-
-				    p {
-				    	margin-bottom: 5px;	
-				    }
-				}
-
-				h3 {
+			h3 {
 				    width: @title-width;
 				    font-size: 32px;
 				    font-weight: 300;
@@ -148,7 +110,60 @@ header {
 				    float: left;
 				    -webkit-transform: rotate(-90deg);
 				}
+
+			.doc {
+				background-color: @fire;
+
+				h3 {
+					margin-top: 75px;
+				}
+
+				.text {
+					font-family: sans-serif;
+					font-size: 16px;
+					line-height: inherit;
+				}
 			}
+
+			.snippet {
+				background-color: @light-earth;
+				min-height: 150px;
+
+				h3 {
+					margin-top: 107px;
+				}
+			}
+
+			ul {
+			    background-color: #FFF;
+			    margin: 0;
+			    margin-left: @title-width;
+			    padding: 0;
+			    list-style: none;
+			    width: calc(~"100% -"@title-width);
+
+			    .results {
+			    	pre {
+			    		line-height: 1em;
+			    		font-size: 14px;
+			    		background-color: white;
+			    		border: none;
+			    		padding: 0;
+			    	}
+			    	width:100%;
+				    min-height: 64px;
+				    border-bottom: 1px solid black;
+				    padding: 5px;
+
+				    &.active {
+				    	background-color: #E1E2E4 !important;
+				    	* {
+				    		background-color: #E1E2E4 !important;
+				    	}
+				    }
+				}
+			}
+			
 		}
 	}
 }

@@ -5,7 +5,7 @@
                 ng-class="{'fa-chevron-right': withInsight, 'fa-chevron-left': !withInsight}"
                 ng-click="toogleInsight()"></i>
             <i class="fa fa-resize-full" ng-click="fullscreen()"></i>
-            <i class="fa fa-floppy-o" ng-click="publish()"></i>
+            <i class="fa fa-floppy-o" ng-show="loggedIn()" ng-click="publish()"></i>
         </div>
         <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
     </div><div class="insight" ng-class="{'' : editorSending.canShowInsight, 'fetching': !editorSending.canShowInsight}" ng-show="withInsight">

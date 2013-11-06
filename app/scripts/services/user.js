@@ -1,5 +1,15 @@
 app.factory('user', function($http, $resource, $location) {
-	return $resource('/user',{},{
+	var rest = $resource('/user',{},{
 		"info": { method: 'GET', url: '/user' }
 	})
+	var user = rest.info();
+
+	return {
+		loggedIn: function(){
+			return undefined !== user.name;
+		},
+		get: function(){
+			return user;
+		}
+	}
 });

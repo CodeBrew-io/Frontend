@@ -62,7 +62,7 @@ module.exports = function (grunt) {
         hostname: 'localhost'
       },
       proxies: [{
-        context: ['/webjars', '/assets', '/user', '/login', '/logout', '/authenticate', '/not-authorized','/snippets'],
+        context: ['/webjars', '/assets', '/user', '/login', '/logout', '/authenticate', '/not-authorized','/snippets', '/@evolutions'],
         port: 9000,
         host: 'localhost'
       }],

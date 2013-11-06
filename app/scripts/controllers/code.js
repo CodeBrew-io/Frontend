@@ -1,9 +1,11 @@
-app.controller('code', function code($scope, $timeout, insight, fullscreen, snippets, typingAverage) {
+
+app.controller('code', function code($scope, $timeout, insight, fullscreen, snippets, user, typingAverage) {
 	'use strict';
 	$scope.code = "";
 	var compilationInfo = [];
 	var cmLeft, cmRight = null;
 
+	$scope.loggedIn = user.loggedIn;
 
 	$scope.fullscreen = function(){
 		fullscreen.apply(true);
@@ -47,6 +49,7 @@ app.controller('code', function code($scope, $timeout, insight, fullscreen, snip
 		theme: 'solarized light',
 		smartIndent: false,
 		autofocus: true,
+		autoCloseBrackets: true,
 		onChange: function(cm) {
 			$scope.editorSending.canShowInsight = false;
 
