@@ -45,9 +45,9 @@ app.controller('header', function header($scope, $rootScope, user, snippets, sca
 		return $scope.snippets.length > 0;
 	};
 
-	$scope.select = function(item){
-		if(item.snippet) {
-			$rootScope.$emit('selectedCode', item.snippet['code.origin']);
+	$scope.select = function(code){
+		if(code){
+			$rootScope.$emit('selectedCode', code);
 		}
 	};
 });	
