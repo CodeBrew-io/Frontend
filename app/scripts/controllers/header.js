@@ -46,6 +46,7 @@ app.controller('header', function header($scope, $rootScope, user, snippets, sca
 	};
 
 	$scope.select = function(code){
+		$scope.term = "";
 		if(code){
 			$rootScope.$emit('selectedCode', code);
 		}
