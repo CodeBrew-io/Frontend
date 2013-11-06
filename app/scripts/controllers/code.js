@@ -1,5 +1,4 @@
-
-app.controller('code', function code($scope, $timeout, insight, fullscreen, snippets, user, typingAverage) {
+app.controller('code', function code($scope, $timeout, insight, fullscreen, snippets, user, throttle) {
 	'use strict';
 	$scope.code = "";
 	var compilationInfo = [];
@@ -53,22 +52,13 @@ app.controller('code', function code($scope, $timeout, insight, fullscreen, snip
 		onChange: function(cm) {
 			$scope.editorSending.canShowInsight = false;
 
-			var mightBePromise = typingAverage.onKeyPressed();
-			if (mightBePromise !== null) {
-				mightBePromise.then(function(totalPromise) {
-					updateMirrors(cm, function(data) {
-
-						$scope.insight = data.insight;
-						compilationInfo = data.CompilationInfo;
-					
-						$scope.editorSending.canShowInsight = true;
-
-						if (totalPromise > 0) { 
-							typingAverage.reset();
-						}
-					});
-				});	
-			}
+			throttle.event(function() {
+				updateMirrors(cm, function(data) {
+					$scope.insight = data.insight;
+					compilationInfo = data.CompilationInfo;
+					$scope.editorSending.canShowInsight = true;
+				});
+			});
 		},
 		onScroll: function(cm) {
 			if ($scope.cmLeft === null) {
