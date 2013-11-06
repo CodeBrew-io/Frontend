@@ -1,4 +1,4 @@
-app.controller('code', function code($scope, $timeout, insight, fullscreen, snippets, typingAverage) {
+app.controller('code', function code($scope, $timeout, $q, insight, fullscreen, snippets, typingAverage) {
 	'use strict';
 	$scope.code = "";
 	var compilationInfo = [];
@@ -9,15 +9,11 @@ app.controller('code', function code($scope, $timeout, insight, fullscreen, snip
 		fullscreen.apply(true);
 	}
 
-	function getCursorPosition(cm) {
-		var cur = cm.getCursor();
-		var lines = $scope.code.split("\n");
-		var pos = cur.ch;
-		for (var i = 0; i < cur.line; i++){
-			pos += lines[i].length + 1;
-		}
-		return pos;
-	}
+	// for the pending of the insight
+	$scope.editorSending = {
+		canShowInsight: true,
+		numberOfChanges: 0
+	};
 
 	function updateMirrors(cm, f){
 		var cur = cm.getCursor();
@@ -30,20 +26,18 @@ app.controller('code', function code($scope, $timeout, insight, fullscreen, snip
 	}
 
 	CodeMirror.commands.autocomplete = function(cm) {
+		$scope.editorSending.canShowInsight = false;
+
 		updateMirrors(cm, function(data){
 			$scope.insight = data.insight;
+			$scope.editorSending.canShowInsight = true;
+
 			CodeMirror.showHint(cm, function(cm, options){
 				var inner = {from: cm.getCursor(), to: cm.getCursor(), list: data.completions};
 				return inner;
 			});                
 		});
 	};
-
-	$scope.editorSending = {
-		canShowInsight: true,
-		isEditorPending: false
-	};
-	//$scope.isEditorPending = false;
 
 	$scope.optionsCode = {
 		extraKeys: {"Ctrl-Space": "autocomplete"},
@@ -55,14 +49,16 @@ app.controller('code', function code($scope, $timeout, insight, fullscreen, snip
 		autofocus: true,
 		onChange: function(cm) {
 			$scope.editorSending.canShowInsight = false;
+			$scope.editorSending.numberOfChanges += 1;
 
-			if (!$scope.editorSending.isEditorPending) {
-				$scope.editorSending.isEditorPending = true;
-			}
+			console.log('counter before: ' + $scope.editorSending.numberOfChanges);
 
 			typingAverage.onKeyPressed().then(function() {
-				if ($scope.editorSending.isEditorPending) {
-					$scope.editorSending.isEditorPending = true;
+				$scope.editorSending.numberOfChanges -= 1;
+
+				console.log('counter end: ' + $scope.editorSending.numberOfChanges);
+
+				if ($scope.editorSending.numberOfChanges == 0) {
 
 					updateMirrors(cm, function(data) {
 						console.log('data has been sent!');
