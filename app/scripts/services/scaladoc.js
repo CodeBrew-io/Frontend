@@ -6,10 +6,16 @@ app.factory('scaladoc', ['$q', '$rootScope', function($q, $rootScope) {
  
     return {
         query: function(term){
-            var defer = $q.defer();
+            var rurl, defer = $q.defer();
+
+            if($location.host() === "codebrew.io") {
+                rurl = "https://codebrew.io/scalex";
+            } else {
+                rurl = "http://api.scalex.org/";
+            }
  
             $.ajax({
-                url: "http://api.scalex.org/",
+                url: rurl,
                 data: {
                     q: term,
                     callback: "identity",
