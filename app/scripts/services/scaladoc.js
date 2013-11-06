@@ -2,7 +2,7 @@
 
 function identity(a){ return a; }
 
-app.factory('scaladoc', ['$q', '$rootScope', function($q, $rootScope) {
+app.factory('scaladoc', ['$q', '$rootScope', '$location', function($q, $rootScope, $location) {
  
     return {
         query: function(term){

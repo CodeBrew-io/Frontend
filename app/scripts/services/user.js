@@ -1,4 +1,4 @@
-app.factory('user', function($http, $resource, $location) {
+app.factory('user', function($resource) {
 	var rest = $resource('/user',{},{
 		"info": { method: 'GET', url: '/user' }
 	})

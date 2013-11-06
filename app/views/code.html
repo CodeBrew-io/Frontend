@@ -4,7 +4,7 @@
             <i class="fa" 
                 ng-class="{'fa-chevron-right': withInsight, 'fa-chevron-left': !withInsight}"
                 ng-click="toogleInsight()"></i>
-            <i class="fa fa-resize-full" ng-click="fullscreen()"></i>
+            <i class="fa fa-expand" ng-click="fullscreen()"></i>
             <i class="fa fa-floppy-o" ng-show="loggedIn()" ng-click="publish()"></i>
         </div>
         <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
