@@ -109,6 +109,33 @@ app.controller('code', function code($scope, $rootScope, $timeout, insight, full
 		snippets.save({code: $scope.code});
 	}
 
+	$scope.mySnippets = [];
+	$scope.viewMySnippets = false;
+
+	$scope.showMySnippets = function(){
+		snippets.queryUser(function(data){
+				$scope.mySnippets = data;
+			});
+		if($scope.mySnippets.length > 0){
+			$scope.viewMySnippets = !$scope.viewMySnippets
+		}else{
+			$scope.viewMySnippets = false
+		}
+		
+	};
+
+	$scope.insertSnippet = function(){
+		
+	};
+
+	$scope.deleteSnippet = function(snippet){
+		mySnippets.drop(snippet);
+
+		if($scope.mySnippets.length = 0){
+			$scope.viewMySnippets = false;
+		}		
+	};
+
 	// (function() { /* The pace of the keyboard before sending data to the server */
 	// 	$scope.isEditorPending = false;
 	// 	$scope.editorPendingPromise = null;

@@ -6,9 +6,22 @@
                 ng-click="toogleInsight()"></i>
             <i class="fa fa-expand" ng-click="fullscreen()"></i>
             <i class="fa fa-floppy-o" ng-show="loggedIn()" ng-click="publish()"></i>
+            <i class= "getMySnippets" ng-show="loggedIn()" ng-click="showMySnippets()"></i>
         </div>
         <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
     </div><div class="insight" ng-class="{'' : editorSending.canShowInsight, 'fetching': !editorSending.canShowInsight}" ng-show="withInsight">
-        <textarea ui-codemirror="optionsInsight" ng-model="insight"></textarea>
+        <textarea ui-codemirror="optionsInsight" ng-model="insight">
+        <div ng-show="viewMySnippets" class="mySnippet">
+            <h1>My Snippet</h1>
+            <ul>
+                <li ng-repeat="mySnippet in mySnippets track by mySnippet.id" class="results">
+                    <syntaxhighlight syntaxtype="text/x-scala" ng-model='mySnippet.code'>
+                    </syntaxhighlight>
+                    <i class= "insert" ng-click="insertSnippet(mySnippet)"></i>
+                    <i class= "delete" ng-click="deleteSnippet(mySnippet)"></i>
+                </li>
+            </ul>
+        </div>
+        </textarea>
     </div>
 </div>
