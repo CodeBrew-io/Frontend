@@ -3,6 +3,11 @@ app.controller('code', function code($scope, $rootScope, $timeout, insight, full
 	$scope.code = "// Welcome to Code Brew. Search for tutorial >>";
 	var compilationInfo = [];
 	var cmLeft, cmRight = null;
+	$scope.mySnippets = [];
+
+	$scope.init = function(){
+		$scope.mySnippets = snippets.queryUser();
+	}
 
 	$rootScope.$on('selectedCode', function(event, code){
 		if(code){
@@ -109,31 +114,27 @@ app.controller('code', function code($scope, $rootScope, $timeout, insight, full
 		snippets.save({code: $scope.code});
 	}
 
-	$scope.mySnippets = [];
-	$scope.viewMySnippets = false;
+	$scope.hasSnippets = function(){
+		return $scope.mySnippets.length > 0;
+	}
+	$scope.viewingMySnippets = false;
+	$scope.toogleMySnippets = function(){
+		$scope.viewingMySnippets = !$scope.viewingMySnippets;
+	}
 
-	$scope.showMySnippets = function(){
-		snippets.queryUser(function(data){
-				$scope.mySnippets = data;
-			});
-		if($scope.mySnippets.length > 0){
-			$scope.viewMySnippets = !$scope.viewMySnippets
-		}else{
-			$scope.viewMySnippets = false
-		}
-		
+	$scope.insertSnippet = function(snippet){
+		$scope.code = $scope.code + '\n' + snippet.code;
 	};
 
-	$scope.insertSnippet = function(){
-		
+	$scope.editSnippet = function(snippet){
+		// save current ?
 	};
 
 	$scope.deleteSnippet = function(snippet){
-		mySnippets.drop(snippet);
-
-		if($scope.mySnippets.length = 0){
-			$scope.viewMySnippets = false;
-		}		
+		snippets.delete({id: snippet.id});
+		$scope.mySnippets = $scope.mySnippets.filter(function(s){
+			return s != snippet;
+		})
 	};
 
 	// (function() { /* The pace of the keyboard before sending data to the server */
