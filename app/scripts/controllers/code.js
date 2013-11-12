@@ -1,4 +1,4 @@
-app.controller('code', function code($scope, $rootScope, $timeout, insight, fullscreen, snippets, user, throttle) {
+app.controller('code', function code($scope, $rootScope, $timeout, insight, fullscreen, snippets, user, throttle, errormessage) {
 	'use strict';
 	$scope.code = "// Welcome to Code Brew. Search for tutorial >>";
 	var compilationInfo = [];
@@ -40,7 +40,21 @@ app.controller('code', function code($scope, $rootScope, $timeout, insight, full
 			$scope.editorSending.canShowInsight = true;
 
 			CodeMirror.showHint(cm, function(cm, options){
-				var inner = {from: cm.getCursor(), to: cm.getCursor(), list: data.completions};
+				var curFrom = cm.getCursor();
+				var curTo = cm.getCursor();
+				var lines = $scope.code.split("\n");
+				//We need to find the boundaries of the word to replace once
+				//we use the auto complete. Boundaries are set by finding the first
+				//caracters on both side that isnt alphanumerical or '_'
+				for (var i = curFrom.ch-1; i >= 0 
+					&& /^[a-zA-Z0-9\_]$/.test(lines[curFrom.line][i]); i--){
+					curFrom.ch = i;
+				}
+				for (var i = curTo.ch; i < lines[curTo.line].length
+					&& /^[a-zA-Z0-9\_]$/.test(lines[curTo.line][i]); i++ ){
+					curTo.ch = i + 1;
+				}
+				var inner = {from: curFrom, to: curTo, list: data.completions};
 				return inner;
 			});                
 		});
@@ -129,4 +143,12 @@ app.controller('code', function code($scope, $rootScope, $timeout, insight, full
 	// 		$scope.insightCode = "";
 	// 	}
 	// })();
+
+ 	/* Make the squiggly line in the code editor for error message */    
+    function SetErrorSquigglyLines(lineNumber, positionInit, rangeCharacters) {
+      errormessage.waitingCodeMirror().then(function(codeMirror) {
+      var markedText = codeMirror.markText({line: lineNumber, ch: positionInit}, {line: lineNumber, ch: rangeCharacters + positionInit });
+      markedText.className = "error";
+    });
+  }
 });
