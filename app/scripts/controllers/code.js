@@ -1,8 +1,13 @@
-app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fullscreen, snippets, user, throttle) {
+app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fullscreen, snippets, user, throttle, errormessage) {
 	'use strict';
-	$scope.code = "List(1,2,3)";
+	$scope.code = "case class A(a: Int); List(A(1),A(2),A(3))";
 	var compilationInfo = [];
 	var cmLeft, cmRight = null;
+	$scope.mySnippets = [];
+
+	$scope.init = function(){
+		$scope.mySnippets = snippets.queryUser();
+	}
 
 	$rootScope.$on('selectedCode', function(event, code){
 		if(code){
@@ -35,14 +40,32 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 			$scope.editorSending.canShowInsight = true;
 
 			CodeMirror.showHint(cm, function(cm, options){
-				var completions = data.completions.map(function(c){ return {
+				var i;
+				var curFrom = cm.getCursor();
+				var curTo = cm.getCursor();
+				var currentLine = $scope.code.split("\n")[curFrom.line];
+
+				function delimiter(c){
+					return c == ' ' || c == '.'
+				}
+
+				for (i = curFrom.ch-1; i >= 0 && !delimiter(currentLine[i]); i--){
+					curFrom.ch = i;
+				}
+
+				var term = currentLine.substr(curFrom.ch, curTo.ch - curFrom.ch);
+
+				var completions = data.completions.filter(function(c){
+					return c.name.toLowerCase().indexOf(term.toLowerCase()) != -1;
+				}).map(function(c){ return {
 					text: c.name,
 					completion: c,
+					alignWithWord: true,
 					render: function(el, _, _1){
 						$(el).text(c.signature);
 					},
 				}});
-				return {from: cur, to: cur, list: completions};
+				return {from: curFrom, to: curTo, list: completions};
 			});
 		})
 	};
@@ -108,6 +131,39 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	}
 
 	$scope.publish = function(){
-		snippets.save({code: $scope.code});
+		snippets.save({"code": $scope.code}).$promise.then(function(data){
+			$scope.mySnippets = $scope.mySnippets.concat({
+				"id": data.id,
+				"code": $scope.code
+			});
+		})
 	}
+
+	$scope.hasSnippets = function(){
+		return $scope.mySnippets.length > 0;
+	}
+
+	$scope.viewingMySnippets = false;
+	$scope.toogleMySnippets = function(){
+		$scope.viewingMySnippets = !$scope.viewingMySnippets;
+	}
+
+	$scope.insertSnippet = function(snippet){
+		$scope.code = $scope.code + '\n' + snippet.code;
+	};
+
+	$scope.deleteSnippet = function(snippet){
+		snippets.delete({id: snippet.id});
+		$scope.mySnippets = $scope.mySnippets.filter(function(s){
+			return s != snippet;
+		})
+	};
+	
+ 	/* Make the squiggly line in the code editor for error message */    
+    function SetErrorSquigglyLines(lineNumber, positionInit, rangeCharacters) {
+		errormessage.waitingCodeMirror().then(function(codeMirror) {
+			var markedText = codeMirror.markText({line: lineNumber, ch: positionInit}, {line: lineNumber, ch: rangeCharacters + positionInit });
+			markedText.className = "error";
+		});
+  	}
 });

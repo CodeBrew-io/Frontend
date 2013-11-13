@@ -1,4 +1,4 @@
-<div ng-controller="code" class="app">
+<div ng-controller="code" ng-init="init()" class="app">
     <div class="code" ng-class="{'expanded': withInsight==false}">
         <div class="expand-collapse">
             <i class="fa" 
@@ -6,9 +6,27 @@
                 ng-click="toogleInsight()"></i>
             <i class="fa fa-expand" ng-click="fullscreen()"></i>
             <i class="fa fa-floppy-o" ng-show="loggedIn()" ng-click="publish()"></i>
+            <i class= "fa" 
+                ng-class="{'fa-folder-o' : !viewingMySnippets, 'fa-folder-open-o': viewingMySnippets}"
+                ng-show="loggedIn()" ng-click="toogleMySnippets()"></i>
         </div>
         <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
     </div><div class="insight" ng-class="{'' : editorSending.canShowInsight, 'fetching': !editorSending.canShowInsight}" ng-show="withInsight">
-        <textarea ui-codemirror="optionsInsight" ng-model="insight"></textarea>
+        <div class="mirror" ng-show="!viewingMySnippets">
+            <textarea ui-codemirror="optionsInsight" ng-model="insight"></textarea>
+        </div>
+        <div class="user-snippet">
+            <h1>My Snippet</h1>
+            <ul>
+                <li ng-repeat="mySnippet in mySnippets track by mySnippet.id">
+                    <syntaxhighlight  syntaxtype="text/x-scala" ng-model='mySnippet.code' ng-click="insertSnippet(mySnippet)">
+                    </syntaxhighlight>
+                    <div class="crud">
+                        <i class= "fa fa-times delete" ng-click="deleteSnippet(mySnippet)"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
+
 </div>
