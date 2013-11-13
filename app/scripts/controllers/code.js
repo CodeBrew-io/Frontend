@@ -59,7 +59,19 @@ app.controller('code', function code($scope, $rootScope, $timeout, insight, full
 					&& /^[a-zA-Z0-9\_]$/.test(lines[curTo.line][i]); i++ ){
 					curTo.ch = i + 1;
 				}
-				var inner = {from: curFrom, to: curTo, list: data.completions};
+
+				var term = lines[curFrom.line].substr(curFrom.ch, curTo.ch - curFrom.ch);
+				var displayedCompletions = new Array();
+
+				for (var i = 0; i < data.completions.length; i++)
+				{
+					if (data.completions[i].toLowerCase().indexOf(term.toLowerCase()) != -1)
+					{
+						displayedCompletions.push(data.completions[i]);
+					}
+				}
+
+				var inner = {from: curFrom, to: curTo, list: displayedCompletions};
 				return inner;
 			});                
 		});
