@@ -15,18 +15,18 @@
         <div class="mirror" ng-show="!viewingMySnippets">
             <textarea ui-codemirror="optionsInsight" ng-model="insight"></textarea>
         </div>
-        <div ng-show="viewingMySnippets" class="user-snippet">
+        <div class="user-snippet">
             <h1>My Snippet</h1>
             <ul>
                 <li ng-repeat="mySnippet in mySnippets track by mySnippet.id">
                     <syntaxhighlight  syntaxtype="text/x-scala" ng-model='mySnippet.code' ng-click="insertSnippet(mySnippet)">
                     </syntaxhighlight>
                     <div class="crud">
-                        <i class= "fa fa-pencil edit" ng-click="editSnippet(mySnippet)"></i>
                         <i class= "fa fa-times delete" ng-click="deleteSnippet(mySnippet)"></i>
                     </div>
                 </li>
             </ul>
         </div>
     </div>
+
 </div>

@@ -111,7 +111,12 @@ app.controller('code', function code($scope, $rootScope, $timeout, insight, full
 	}
 
 	$scope.publish = function(){
-		snippets.save({code: $scope.code});
+		snippets.save({"code": $scope.code}).$promise.then(function(data){
+			$scope.mySnippets = $scope.mySnippets.concat({
+				"id": data.id,
+				"code": $scope.code
+			});
+		})
 	}
 
 	$scope.hasSnippets = function(){
@@ -126,35 +131,10 @@ app.controller('code', function code($scope, $rootScope, $timeout, insight, full
 		$scope.code = $scope.code + '\n' + snippet.code;
 	};
 
-	$scope.editSnippet = function(snippet){
-		// save current ?
-	};
-
 	$scope.deleteSnippet = function(snippet){
 		snippets.delete({id: snippet.id});
 		$scope.mySnippets = $scope.mySnippets.filter(function(s){
 			return s != snippet;
 		})
 	};
-
-	// (function() { /* The pace of the keyboard before sending data to the server */
-	// 	$scope.isEditorPending = false;
-	// 	$scope.editorPendingPromise = null;
-
-	// 	function sendDataToServer() {
-	// 		$scope.isEditorPending = false;
-	// 		$scope.editorPendingPromise = null;
-	// 	}
-
-	// 	$scope.onEditorCodeChange = function() {
-	// 		if ($scope.isEditorPending && $scope.editorPendingPromise != null) {
-	// 			$timeout.cancel($scope.editorPendingPromise);
-	// 			$scope.editorPendingPromise = $timeout(sendDataToServer, 2000);
-	// 		} else {
-	// 			$scope.isEditorPending = true;
-	// 			$scope.editorPendingPromise = $timeout(sendDataToServer, 2000);
-	// 		}
-	// 		$scope.insightCode = "";
-	// 	}
-	// })();
 });
