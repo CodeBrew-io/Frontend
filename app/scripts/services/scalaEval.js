@@ -1,10 +1,10 @@
 // based on http://clintberry.com/2013/angular-js-websocket-service/
-app.factory('insight', ['$q', '$rootScope', "$location", function($q, $rootScope, $location) {
+app.factory("scalaEval", ['$q', '$rootScope', "$location", function($q, $rootScope, $location) {
 	var url;
 	if($location.host() === "codebrew.io") {
-		url = "wss://codebrew.io/eval"
+		url = "wss://codebrew.io/eval";
 	} else {
-		url = "ws://localhost:9000/eval"
+		url = "ws://localhost:9000/eval";
 	}
 	var socket = new WebSocket(url);
 	var callbacks = {};
@@ -37,14 +37,11 @@ app.factory('insight', ['$q', '$rootScope', "$location", function($q, $rootScope
 		}
 	};
 
-	return function(code, position){
-		var request = {};
+	function send(request, serviceName){
 		var defer = $q.defer();
 		var callbackId = getCallbackId();
 		callbacks[callbackId] = defer;
-		request.callback_id = callbackId;
-		request.code = code;
-		request.position = position;
+		request[serviceName].callback_id = callbackId;
 
 		if( socket.readyState === socket.CONNECTING ) {
 			lastMessage = JSON.stringify(request)
@@ -52,6 +49,20 @@ app.factory('insight', ['$q', '$rootScope', "$location", function($q, $rootScope
 			socket.send(JSON.stringify(request));
 		}
 		
-		return defer.promise;		  
+		return defer.promise;
 	}
+
+	return {
+		"insight": function(code){
+			return send({ "insight": {
+				"code": code
+			}}, "insight");
+		},
+		"autocomplete": function(code, position){
+			return send({ "autocomplete": {
+				"code": code,
+				"position": position
+			}}, "autocomplete");
+		}
+	};
 }]);

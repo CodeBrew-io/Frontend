@@ -1,6 +1,6 @@
-app.controller('code', function code($scope, $rootScope, $timeout, insight, fullscreen, snippets, user, throttle) {
+app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fullscreen, snippets, user, throttle) {
 	'use strict';
-	$scope.code = "// Welcome to Code Brew. Search for tutorial >>";
+	$scope.code = "List(1,2,3)";
 	var compilationInfo = [];
 	var cmLeft, cmRight = null;
 
@@ -22,28 +22,29 @@ app.controller('code', function code($scope, $rootScope, $timeout, insight, full
 		numberOfChanges: 0
 	};
 
-	function updateMirrors(cm, f){
+	CodeMirror.commands.autocomplete = function(cm) {
+		var i;
 		var cur = cm.getCursor();
 		var lines = $scope.code.split("\n");
 		var pos = cur.ch;
-		for (var i = 0; i < cur.line; i++){
+		for (i = 0; i < cur.line; i++){
 			pos += lines[i].length + 1;
 		}
-		insight($scope.code, pos).then(f);        
-	}
-
-	CodeMirror.commands.autocomplete = function(cm) {
 		$scope.editorSending.canShowInsight = false;
-
-		updateMirrors(cm, function(data){
-			$scope.insight = data.insight;
+		scalaEval.autocomplete($scope.code, pos).then(function(data){
 			$scope.editorSending.canShowInsight = true;
 
 			CodeMirror.showHint(cm, function(cm, options){
-				var inner = {from: cm.getCursor(), to: cm.getCursor(), list: data.completions};
-				return inner;
-			});                
-		});
+				var completions = data.completions.map(function(c){ return {
+					text: c.name,
+					completion: c,
+					render: function(el, _, _1){
+						$(el).text(c.signature);
+					},
+				}});
+				return {from: cur, to: cur, list: completions};
+			});
+		})
 	};
 
 	$scope.optionsCode = {
@@ -59,7 +60,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, insight, full
 			$scope.editorSending.canShowInsight = false;
 
 			throttle.event(function() {
-				updateMirrors(cm, function(data) {
+				scalaEval.insight($scope.code).then(function(data){
 					$scope.insight = data.insight;
 					compilationInfo = data.CompilationInfo;
 					$scope.editorSending.canShowInsight = true;
@@ -80,6 +81,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, insight, full
 			$scope.cmLeft = cm;
 		}
 	};
+
 	$scope.optionsInsight = {
 		fixedGutter: false,
 		lineNumbers: true,
@@ -108,25 +110,4 @@ app.controller('code', function code($scope, $rootScope, $timeout, insight, full
 	$scope.publish = function(){
 		snippets.save({code: $scope.code});
 	}
-
-	// (function() { /* The pace of the keyboard before sending data to the server */
-	// 	$scope.isEditorPending = false;
-	// 	$scope.editorPendingPromise = null;
-
-	// 	function sendDataToServer() {
-	// 		$scope.isEditorPending = false;
-	// 		$scope.editorPendingPromise = null;
-	// 	}
-
-	// 	$scope.onEditorCodeChange = function() {
-	// 		if ($scope.isEditorPending && $scope.editorPendingPromise != null) {
-	// 			$timeout.cancel($scope.editorPendingPromise);
-	// 			$scope.editorPendingPromise = $timeout(sendDataToServer, 2000);
-	// 		} else {
-	// 			$scope.isEditorPending = true;
-	// 			$scope.editorPendingPromise = $timeout(sendDataToServer, 2000);
-	// 		}
-	// 		$scope.insightCode = "";
-	// 	}
-	// })();
 });
