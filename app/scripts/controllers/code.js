@@ -46,11 +46,14 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 				var currentLine = $scope.code.split("\n")[curFrom.line];
 
 				function delimiter(c){
-					return c == ' ' || c == '.'
+					return  /^[a-zA-Z0-9\_]$/.test(c);
 				}
 
-				for (i = curFrom.ch-1; i >= 0 && !delimiter(currentLine[i]); i--){
+				for (i = curFrom.ch-1; i >= 0 && delimiter(currentLine[i]); i--){
 					curFrom.ch = i;
+				}
+				for (i = curTo.ch; i < currentLine.length && delimiter(currentLine[i]); i++){
+					curTo.ch = i+1;
 				}
 
 				var term = currentLine.substr(curFrom.ch, curTo.ch - curFrom.ch);
