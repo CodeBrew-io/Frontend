@@ -1,4 +1,4 @@
-app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fullscreen, snippets, user, throttle, errormessage) {
+app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fullscreen, snippets, user, throttle) {
 	'use strict';
 	$scope.code = "case class A(a: Int); List(A(1),A(2),A(3))";
 	var compilationInfo = [];
@@ -29,14 +29,8 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 
 	CodeMirror.commands.autocomplete = function(cm) {
 		var i;
-		var cur = cm.getCursor();
-		var lines = $scope.code.split("\n");
-		var pos = cur.ch;
-		for (i = 0; i < cur.line; i++){
-			pos += lines[i].length + 1;
-		}
 		$scope.editorSending.canShowInsight = false;
-		scalaEval.autocomplete($scope.code, pos).then(function(data){
+		scalaEval.autocomplete($scope.code, cm.getDoc().indexFromPos(cm.getCursor())).then(function(data){
 			$scope.editorSending.canShowInsight = true;
 
 			CodeMirror.showHint(cm, function(cm, options){
@@ -88,10 +82,23 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 			throttle.event(function() {
 				scalaEval.insight($scope.code).then(function(data){
 					$scope.insight = data.insight;
-					compilationInfo = data.CompilationInfo;
 					$scope.editorSending.canShowInsight = true;
+					if (data.compilationInfo){
+						data.compilationInfo.forEach(function(value, index, ar) {
+							SetErrorSquigglyLines(value.pos);
+						})
+					}
+					/* Make the squiggly line in the code editor for error message */    
+				    function SetErrorSquigglyLines(posIndex) {
+				    	var cur = cm.getDoc().posFromIndex(value.pos);
+						var currentLine = $scope.code.split("\n")[cur.line];
+				    	var markedText = codeMirror.markText({line: cur.line, ch: cur.ch}, {line: cur.line, ch: currentLine.length-cur.ch });
+							markedText.className = "error";
+				  	}
 				});
 			});
+
+
 		},
 		onScroll: function(cm) {
 			if ($scope.cmLeft === null) {
@@ -161,12 +168,4 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 			return s != snippet;
 		})
 	};
-	
- 	/* Make the squiggly line in the code editor for error message */    
-    function SetErrorSquigglyLines(lineNumber, positionInit, rangeCharacters) {
-		errormessage.waitingCodeMirror().then(function(codeMirror) {
-			var markedText = codeMirror.markText({line: lineNumber, ch: positionInit}, {line: lineNumber, ch: rangeCharacters + positionInit });
-			markedText.className = "error";
-		});
-  	}
 });
