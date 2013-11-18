@@ -1,6 +1,6 @@
 app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fullscreen, snippets, user, throttle) {
 	'use strict';
-	$scope.code = "case class A(a: Int); List(A(1),A(2),A(3))";
+	$scope.code = "(1 to 20).foreach(println)";
 	var compilationInfo = [];
 	var cmLeft, cmRight = null;
 	$scope.mySnippets = [];
@@ -83,6 +83,18 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 				scalaEval.insight($scope.code).then(function(data){
 					$scope.insight = data.insight;
 					$scope.editorSending.canShowInsight = true;
+
+					if (data.output){
+						if (!$scope.manuallyClosedConsole){
+							$scope.withConsole = true;
+						}
+						if ($scope.lastExecutionOutput != data.output){
+
+							$scope.lastExecutionOutput = data.output;
+							AddToConsole($scope.lastExecutionOutput);	
+						}
+					}
+
 					if (data.compilationInfo){
 						data.compilationInfo.forEach(function(value, index, ar) {
 							SetErrorSquigglyLines(value.pos);
@@ -94,6 +106,14 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 						var currentLine = $scope.code.split("\n")[cur.line];
 				    	var markedText = codeMirror.markText({line: cur.line, ch: cur.ch}, {line: cur.line, ch: currentLine.length-cur.ch });
 							markedText.className = "error";
+				  	}
+
+				  	function AddToConsole(value) {
+			  			if (!$scope.console){
+							$scope.console = value;
+						}else{
+							$scope.console = $scope.console + "\n-----\n"+ value;
+						}
 				  	}
 				});
 			});
@@ -135,6 +155,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		}
 	};
 
+
 	$scope.withInsight = true;
 	$scope.toogleInsight = function() {
 		$scope.withInsight = !$scope.withInsight;
@@ -168,4 +189,23 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 			return s != snippet;
 		})
 	};
+
+	$scope.withConsole = false;
+	$scope.manuallyClosedConsole = false;
+	$scope.lastExecutionOutput = "";
+	$scope.console = "";
+	$scope.toogleConsole = function() {
+		$scope.withConsole = !$scope.withConsole;
+		if (!$scope.withConsole){
+			$scope.manuallyClosedConsole = true;
+		}
+	}
+	$scope.consoleIsEmpty = function () {
+		return !$scope.console;
+	}
+
+	$scope.clearConsole = function() {
+		$scope.console = "";
+		$scope.lastExecutionOutput = "";
+	}
 });

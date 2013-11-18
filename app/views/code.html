@@ -1,5 +1,5 @@
 <div ng-controller="code" ng-init="init()" class="app">
-    <div class="code" ng-class="{'expanded': withInsight==false}">
+    <div class="code" ng-class="{'expandedWidth': withInsight==false, 'expandedHeight' : withConsole==false}">
         <div class="expand-collapse">
             <i class="fa" 
                 ng-class="{'fa-chevron-right': withInsight, 'fa-chevron-left': !withInsight}"
@@ -11,11 +11,11 @@
                 ng-show="loggedIn()" ng-click="toogleMySnippets()"></i>
         </div>
         <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
-    </div><div class="insight" ng-class="{'' : editorSending.canShowInsight, 'fetching': !editorSending.canShowInsight}" ng-show="withInsight">
+    </div><div class="insight" ng-class="{'expandedHeight' : withConsole==false, '' : editorSending.canShowInsight, 'fetching': !editorSending.canShowInsight}" ng-show="withInsight">
         <div class="mirror" ng-show="!viewingMySnippets">
             <textarea ui-codemirror="optionsInsight" ng-model="insight"></textarea>
         </div>
-        <div class="user-snippet">
+        <div class="user-snippet" ng-show="viewingMySnippets">
             <h1>My Snippet</h1>
             <ul>
                 <li ng-repeat="mySnippet in mySnippets track by mySnippet.id">
@@ -28,5 +28,16 @@
             </ul>
         </div>
     </div>
-
+    <div class="console cm-s-solarized cm-s-light">
+        <div class="handle">
+            <div class="menu">
+            <i class="fa fa-eraser" ng-show="!consoleIsEmpty()" ng-click="clearConsole()"></i>
+            <i class="fa" 
+                ng-class="{'fa-chevron-down': withConsole, 'fa-chevron-up': !withConsole}"
+                 ng-click="toogleConsole()"></i> 
+            </div>
+        </div>
+        <textarea class="output" ng-model="console" ng-show="withConsole">
+        </textarea>
+    </div>
 </div>
