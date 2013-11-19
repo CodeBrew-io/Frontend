@@ -95,16 +95,18 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 						}
 					}
 
-					if (data.compilationInfo){
-						data.compilationInfo.forEach(function(value, index, ar) {
-							SetErrorSquigglyLines(value.pos);
-						})
+					if (data.errors){
+						data.errors.forEach(function(value) {
+							$timeout(function(){
+								SetErrorSquigglyLines(value);
+							})
+						});
 					}
 					/* Make the squiggly line in the code editor for error message */    
-				    function SetErrorSquigglyLines(posIndex) {
-				    	var cur = cm.getDoc().posFromIndex(value.pos);
+				    function SetErrorSquigglyLines(value) {
+				    	var cur = cm.getDoc().posFromIndex(value.position);
 						var currentLine = $scope.code.split("\n")[cur.line];
-				    	var markedText = codeMirror.markText({line: cur.line, ch: cur.ch}, {line: cur.line, ch: currentLine.length-cur.ch });
+				    	var markedText = cm.markText({line: cur.line, ch: cur.ch}, {line: cur.line, ch: currentLine.length});
 							markedText.className = "error";
 				  	}
 
