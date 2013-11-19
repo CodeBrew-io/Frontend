@@ -90,12 +90,11 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 						if (!$scope.manuallyClosedConsole){
 							$scope.withConsole = true;
 						}
-						if ($scope.lastExecutionOutput != data.output){
-
-							$scope.lastExecutionOutput = data.output;
-							AddToConsole($scope.lastExecutionOutput);	
-						}
+						$scope.console = data.output;
+					}else{
+						$scope.console = "";
 					}
+
 					ClearErrorWidgetLines();
 					ClearErrorSquigglyLines();
 					if (data.errors){
@@ -140,14 +139,6 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 				  		});
 					    $scope.errorWidgetLines = [];
 				  	}
-				  	function AddToConsole(value) {
-			  			if (!$scope.console){
-							$scope.console = value;
-						}else{
-							$scope.console = $scope.console + "\n-----\n"+ value;
-						}
-				  	}
-
 
 				});
 			});
@@ -226,8 +217,6 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 
 	$scope.withConsole = false;
 	$scope.manuallyClosedConsole = false;
-	$scope.lastExecutionOutput = "";
-	$scope.console = "";
 	$scope.toogleConsole = function() {
 		$scope.withConsole = !$scope.withConsole;
 		if (!$scope.withConsole){
