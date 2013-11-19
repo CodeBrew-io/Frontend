@@ -20,6 +20,8 @@
 }
 
 .code, .insight {	
+/*	resize:both;
+	overflow:auto;*/
 	position: relative;
 	display: inline-block;
 	vertical-align: top;
@@ -89,6 +91,12 @@
 		display: inline-block;
 		border-bottom: 1px dashed red;
 	}
+	.lint-error-icon {
+		background-color: red; font-weight: bold; border-radius: 50%; padding: 0 3px; margin-right: 7px;
+	}
+	.lint-error{
+		font-size: 70%; background: #ffa; color: #a00;
+	}
 
 }
 
@@ -118,19 +126,19 @@
 }
 
 .console {
-	
+	/*resize:both;*/
 	.output{
 		width:100%;
 		height:100%;
 		height:@console-height;
 		background-color: inherit;		
 		border:none;
+		resize:none;
 	}
 
 	.handle{
 		width:100%;
 		height:@handle-height;
-
 		.menu{
 			text-align:right;
 		}
