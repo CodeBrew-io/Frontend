@@ -222,6 +222,10 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		if (!$scope.withConsole){
 			$scope.manuallyClosedConsole = true;
 		}
+		$timeout(function() {
+			$scope.cmLeft.refresh();
+			$scope.cmRight.refresh();
+		});
 	}
 	$scope.consoleIsEmpty = function () {
 		return !$scope.console;
