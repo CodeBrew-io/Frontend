@@ -121,15 +121,14 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 				  		$scope.errorMarkedTexts.forEach(function (value){
 				  			value.clear();
 				  		});
-					    $scope.errorMarkedTexts.length = 0;
+					    $scope.errorMarkedTexts = [];
 				  	}
 				  	function AddErrorWidgetLines(value){
 				  		var cur = cm.getDoc().posFromIndex(value.position);
 						var currentLine = $scope.code.split("\n")[cur.line];
 				  		var msg = document.createElement("div");
-				      	var icon = msg.appendChild(document.createElement("span"));
-				      	icon.innerHTML = "!";
-				      	icon.className = "lint-error-icon";
+				      	var icon = msg.appendChild(document.createElement("i"));
+				      	icon.className = "fa fa-exclamation-circle lint-error-icon";
 				      	msg.appendChild(document.createTextNode(value.message));
 				      	msg.className = "lint-error";
 						var errorLineWidget = cm.addLineWidget(cur.line, msg);
@@ -139,7 +138,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 				  		$scope.errorWidgetLines.forEach(function (value){
 				  			cm.removeLineWidget(value);
 				  		});
-					    $scope.errorWidgetLines.length = 0;
+					    $scope.errorWidgetLines = [];
 				  	}
 				  	function AddToConsole(value) {
 			  			if (!$scope.console){
