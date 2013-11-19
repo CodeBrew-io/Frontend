@@ -11,8 +11,8 @@
                 ng-show="loggedIn()" ng-click="toogleMySnippets()"></i>
         </div>
         <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
-    </div><div class="insight" ng-class="{'expandedHeight' : withConsole==false, '' : editorSending.canShowInsight, 'fetching': !editorSending.canShowInsight}" ng-show="withInsight">
-        <div class="mirror" ng-show="!viewingMySnippets">
+    </div><div class="insight"  ng-show="withInsight" ng-class="{'expandedHeight' : withConsole==false}">
+        <div class="mirror" ng-show="!viewingMySnippets" ng-class="{'' : editorSending.canShowInsight, 'fetching': !editorSending.canShowInsight}">
             <textarea ui-codemirror="optionsInsight" ng-model="insight"></textarea>
         </div>
         <div class="user-snippet" ng-show="viewingMySnippets">
