@@ -15,7 +15,7 @@
         <div class="mirror" ng-show="!viewingMySnippets">
             <textarea ui-codemirror="optionsInsight" ng-model="insight"></textarea>
         </div>
-        <div class="user-snippet">
+        <div class="user-snippet" ng-show="viewingMySnippets">
             <h1>My Snippet</h1>
             <ul>
                 <li ng-repeat="mySnippet in mySnippets track by mySnippet.id">

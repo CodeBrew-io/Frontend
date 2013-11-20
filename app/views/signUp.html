@@ -1,0 +1,22 @@
+<div ng-controller="signUp" ng-init="init()" ng-show ="signUpWindow" class="signUp">
+	<div class="form-group">
+	<label>
+		Username
+		<input type="text" required class="form-control" placeholder="Your Username" ng-model="username">
+	</label>
+	</div>
+	<div class="form-group">
+	<label>
+		Email address
+		<input type="email" class="form-control" placeholder="Enter email" ng-model="email">
+	</label>
+	</div>
+	<div class ="takedUsername" ng-show ="takedUsername">
+		<p>This username is already taked.</p>
+		<p> Please try another one!</p>
+	</div>
+	<div class="actions">
+	  <button ng-click="cancel()" class="btn btn-default">Cancel</button>
+	  <button ng-click="save()" class="btn btn-primary">Save</button>
+	</div>
+</div>

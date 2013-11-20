@@ -1,6 +1,7 @@
 app.factory('user', function($resource) {
 	var rest = $resource('/user',{},{
-		"info": { method: 'GET', url: '/user' }
+		"info": { method: 'GET', url: '/user' },
+		"exists": { method: 'GET', url: '/user/exists' }
 	})
 	var user = rest.info();
 
