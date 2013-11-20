@@ -186,13 +186,21 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		$scope.withInsight = !$scope.withInsight;
 	}
 
-	$scope.publish = function(){
-		snippets.save({"code": $scope.code}).$promise.then(function(data){
-			$scope.mySnippets = $scope.mySnippets.concat({
-				"id": data.id,
-				"code": $scope.code
-			});
-		})
+	$scope.savingMessage = "saving...";
+	$scope.isSavingEnabled = true;
+	$scope.publish = function($event){
+		if ($scope.isSavingEnabled) {
+			$scope.isSavingEnabled = false
+			snippets.save({"code": $scope.code}).$promise.then(function(data){
+				$scope.mySnippets = $scope.mySnippets.concat({
+					"id": data.id,
+					"code": $scope.code
+				});
+				$timeout(function() {
+					$scope.isSavingEnabled = true;
+				}, 1000);
+			})
+		}
 	}
 
 	$scope.hasSnippets = function(){
@@ -222,6 +230,10 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		if (!$scope.withConsole){
 			$scope.manuallyClosedConsole = true;
 		}
+		$timeout(function() {
+			$scope.cmLeft.refresh();
+			$scope.cmRight.refresh();
+		});
 	}
 	$scope.consoleIsEmpty = function () {
 		return !$scope.console;
