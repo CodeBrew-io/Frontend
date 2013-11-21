@@ -1,5 +1,5 @@
-app.controller('signUp', function code($scope, $timeout, user){
-	$scope.showSignUp = false;
+app.controller('signIn', function code($scope, $timeout, user){
+	$scope.showSignIn = false;
 	$scope.takedUsername = false;
 
 	function present(field){
@@ -11,7 +11,7 @@ app.controller('signUp', function code($scope, $timeout, user){
 	}
 
 	$scope.cancel = function(){
-		$scope.showSignUp = false;
+		$scope.showSignIn = false;
 		user.logout();
 	}
 
@@ -23,7 +23,7 @@ app.controller('signUp', function code($scope, $timeout, user){
 				u.email = $scope.email;
 			}
 			user.save(u).$promise.then(function(){
-				$scope.showSignUp = false;
+				$scope.showSignIn = false;
 			});
 		}
 	}
@@ -32,7 +32,7 @@ app.controller('signUp', function code($scope, $timeout, user){
 		if(angular.isDefined(u.secureSocialUser)){
 			$timeout(function(){
 				$scope.$apply(function(){
-					$scope.showSignUp = true;
+					$scope.showSignIn = true;
 				});
 			});
 			
@@ -59,7 +59,7 @@ app.controller('signUp', function code($scope, $timeout, user){
 				}
 			});
 		} else {
-			$scope.showSignUp = false;
+			$scope.showSignIn = false;
 		}
 	});
 });

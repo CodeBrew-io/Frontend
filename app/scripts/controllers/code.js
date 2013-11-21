@@ -8,7 +8,9 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	$scope.errorMarkedTexts = [];
 
 	$scope.$watch('user.get',function(){
-		$scope.mySnippets = snippets.queryUser();
+		if(angular.isDefined(user.get.codeBrewUser)) {
+			$scope.mySnippets = snippets.queryUser();
+		}
 	})
 
 	$rootScope.$on('selectedCode', function(event, code){
