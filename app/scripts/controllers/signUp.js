@@ -12,6 +12,7 @@ app.controller('signUp', function code($scope, $timeout, user){
 
 	$scope.cancel = function(){
 		$scope.showSignUp = false;
+		user.logout();
 	}
 
 	$scope.save = function(){
