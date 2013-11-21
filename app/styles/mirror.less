@@ -1,6 +1,8 @@
 @import 'val.less';
 @import 'custom-solarized.less';
 
+@console-height: 200px;
+@handle-height: 27px;
 .CodeMirror, .CodeMirror-scroll {
     height: 100%;
 }
@@ -18,13 +20,15 @@
 }
 
 .code, .insight {	
+/*	resize:both;
+	overflow:auto;*/
 	position: relative;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 28px;
 
 	width: (100% / 2);
-	height: 100%;
+	height: calc(~"100% -"@console-height + @handle-height);
 	.mirror {
 		height: 100%;
 	}
@@ -51,6 +55,14 @@
 			right: 0;
 		}
 	}
+	&.expandedHeight {
+		height: calc(~"100% -" @handle-height);
+	}
+
+	&.expandedWidth {
+		width: 100%;
+	}
+	
 }
 
 
@@ -72,6 +84,22 @@
 			&:hover {
 				color: @sky;
 			}
+
+			&.disabled {
+				color: @disabled-grey;
+
+				&:hover {
+					color: @disabled-grey;
+				}
+			}
+
+			.message {
+				top: 105px;
+				left: -55px;
+				position: absolute;
+				color: @metal-blue;
+				font-size: 12px;
+			}
 		}		
 	}
 
@@ -79,10 +107,16 @@
 		display: inline-block;
 		border-bottom: 1px dashed red;
 	}
-
-	&.expanded {
-		width: 100%;
+	.lint-error-icon {
+		margin-right: 5px;
+		margin-left: 5px;
 	}
+	.lint-error{
+		font-size: 70%; 
+		background: #ffa; 
+		color: #a00;
+	}
+
 }
 
 .insight {
@@ -105,8 +139,27 @@
 		z-index: 1000;
 	}
 
-	&.fetching {
-		opacity: 0.6;
+	& .mirror.fetching {
+		opacity: 0.95;
 	}
 }
 
+.console {
+	/*resize:both;*/
+	.output{
+		width:100%;
+		height:100%;
+		height:@console-height;
+		background-color: inherit;		
+		border:none;
+		resize:none;
+	}
+
+	.handle{
+		width:100%;
+		height:@handle-height;
+		.menu{
+			text-align:right;
+		}
+	}
+}
