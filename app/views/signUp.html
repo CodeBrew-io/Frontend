@@ -1,22 +1,23 @@
-<div ng-controller="signUp" ng-init="init()" ng-show ="signUpWindow" class="signUp">
+<form ng-controller="signUp" name="signUp" ng-init="init()" ng-show ="showSignUp" class="signUp">
 	<div class="form-group">
 	<label>
 		Username
-		<input type="text" required class="form-control" placeholder="Your Username" ng-model="username">
+		<span class="error" ng-show="signUp.userName.$error.required">is required</span>
+		<span class="error" ng-show="signUp.userName.$error.taken">is already taken</span>
+		<i class="fa" ng-class="{'fa-check valid': signUp.userName.$valid, 'fa-exclamation invalid': !signUp.userName.$valid}"></i>
+		<input ng-model="userName" name="userName" type="text" placeholder="username" required class="form-control" ng-class="{'valid': signUp.userName.$valid, 'invalid': !signUp.userName.$valid}">
 	</label>
 	</div>
 	<div class="form-group">
 	<label>
-		Email address
-		<input type="email" class="form-control" placeholder="Enter email" ng-model="email">
+		Email 
+		<span class="error" ng-show="signUp.email.$error.email">is not valid</span>
+		<i class="fa" ng-class="{'fa-check valid': signUp.email.$valid, 'fa-exclamation invalid': !signUp.email.$valid}"></i>
+		<input ng-model="email" name="email" type="email" placeholder="email" class="form-control" ng-class="{'valid': signUp.email.$valid, 'invalid': !signUp.email.$valid}">
 	</label>
-	</div>
-	<div class ="takedUsername" ng-show ="takedUsername">
-		<p>This username is already taked.</p>
-		<p> Please try another one!</p>
 	</div>
 	<div class="actions">
 	  <button ng-click="cancel()" class="btn btn-default">Cancel</button>
 	  <button ng-click="save()" class="btn btn-primary">Save</button>
 	</div>
-</div>
+</form>

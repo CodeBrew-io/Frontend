@@ -1,8 +1,8 @@
 app.controller('header', function header($scope, $rootScope, user, snippets, scaladoc) {
 	'use strict';
 
-	$scope.user = user.get();
-	$scope.loggedIn = user.loggedIn;
+	// $scope.user = user.get();
+	// $scope.loggedIn = user.loggedIn;
 
 	$scope.profileOpen = false;
 	$scope.outProfile = function(){
@@ -14,7 +14,7 @@ app.controller('header', function header($scope, $rootScope, user, snippets, sca
 
 	$scope.codemirrorOptions = {
 		mode: 'text/x-scala',
-		theme: 'solarizedsearch light',
+		theme: 'solarized light',
 		readOnly: 'true'
 	};
 	$scope.docs = [];

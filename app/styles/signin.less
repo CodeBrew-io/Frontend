@@ -9,22 +9,39 @@
 	top: 50%;
 	left: 50%;
 	margin-top: -100px;
-	margin-left: -100px;
-	width:  300px;
-	height: 250px;
+	margin-left: -200px;
+	width:  400px;
+	height: 200px;
 
 	border: 1px solid black;
 
-	.form-group {
-		margin-bottom: 7px;
+	label, input {
+		width: 100%;
 	}
 
-	.form-group input {
-		margin-top: 5px; 
+	@red: #b94a48;
+
+	.fa {
+		&.valid {
+			color: green;
+		}
+
+		&.invalid {
+			color: @red;
+		}		
 	}
 
-	input{
-		width: 288px;
+	input {
+		color: white;
+
+		&.invalid {
+			background-color: @red;
+		}
+
+		&.valid {
+			background-color: green;
+		}
+
 	}
 
 	.actions {

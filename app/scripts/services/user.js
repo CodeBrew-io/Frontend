@@ -1,16 +1,14 @@
 app.factory('user', function($resource) {
 	var rest = $resource('/user',{},{
-		"info": { method: 'GET', url: '/user' },
-		"exists": { method: 'GET', url: '/user/exists' }
+		"exists": { method: 'GET', url: '/user/exists/:user', isArray: false }
 	})
-	var user = rest.info();
+	var user = rest.get();
 
 	return {
-		loggedIn: function(){
-			return undefined !== user.name;
+		get: user,
+		exists: function(userName){
+			return rest.exists({user: userName});
 		},
-		get: function(){
-			return user;
-		}
-	}
+		save: rest.save
+	};
 });
