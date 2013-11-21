@@ -12,8 +12,9 @@
 		<label class="control-label">
 			Email 
 			<span class="error" ng-show="signUp.email.$error.email">is not valid</span>
+			<span class="error" ng-show="signUp.email.$error.required">is required</span>
 			<i class="fa" ng-class="{'fa-check valid': signUp.email.$valid, 'fa-exclamation invalid': !signUp.email.$valid}"></i>
-			<input ng-model="email" name="email" type="email" placeholder="bob@example.com" class="form-control">
+			<input ng-model="email" name="email" type="email" placeholder="bob@example.com" required class="form-control">
 		</label>
 	</div>
 	<div class="actions">

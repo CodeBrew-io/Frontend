@@ -29,9 +29,6 @@
 
 	width: (100% / 2);
 	height: calc(~"100% -"@console-height + @handle-height);
-	.mirror {
-		height: 100%;
-	}
 	.user-snippet {
 		h1 {
 			margin-top: 0;
@@ -141,6 +138,10 @@
 
 	& .mirror.fetching {
 		opacity: 0.95;
+	}
+
+	.mirror {
+		height: 100%;
 	}
 }
 
