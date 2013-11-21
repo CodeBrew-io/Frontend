@@ -5,9 +5,9 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	var cmLeft, cmRight = null;
 	$scope.mySnippets = [];
 
-	$scope.init = function(){
+	$scope.$watch('user.get',function(){
 		$scope.mySnippets = snippets.queryUser();
-	}
+	})
 
 	$rootScope.$on('selectedCode', function(event, code){
 		if(code){
