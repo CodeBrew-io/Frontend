@@ -1,8 +1,12 @@
 app.controller('header', function header($scope, $rootScope, user, snippets, scaladoc) {
 	'use strict';
 
-	// $scope.user = user.get();
-	// $scope.loggedIn = user.loggedIn;
+	$scope.user = user.get;
+	$scope.loggedIn = user.loggedIn;
+
+	$scope.logOut = function(){
+		user.logout();
+	}
 
 	$scope.profileOpen = false;
 	$scope.outProfile = function(){

@@ -6,6 +6,10 @@ app.controller('signUp', function code($scope, $timeout, user){
 		return angular.isDefined(field) && field.length > 0
 	}
 
+	function defined(field){
+		return angular.isDefined(field) && field !== null;
+	}
+
 	$scope.cancel = function(){
 		$scope.showSignUp = false;
 	}
@@ -23,7 +27,7 @@ app.controller('signUp', function code($scope, $timeout, user){
 		}
 	}
 
-	user.get.$promise.then(function(u){
+	user.get().$promise.then(function(u){
 		if(angular.isDefined(u.secureSocialUser)){
 			$timeout(function(){
 				$scope.$apply(function(){
@@ -32,7 +36,7 @@ app.controller('signUp', function code($scope, $timeout, user){
 			});
 			
 			// use email as starting username
-			if(angular.isDefined(u.secureSocialUser.email)){
+			if(defined(u.secureSocialUser.email)){
 				$scope.userName = u.secureSocialUser.email.split("@")[0];
 				$scope.email = u.secureSocialUser.email;
 			}

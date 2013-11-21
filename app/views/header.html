@@ -3,10 +3,10 @@
     <div class="search-area">
         <div class="btn-group profile" ng-show="loggedIn()" ng-class="{ 'open': profileOpen }">
             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" ng-click="toogleProfile()">
-                <img class="img-rounded" ng-src="{{ user.gravatar }}">{{ user.name }}<span class="caret"></span>
+                <img class="img-rounded" ng-src="{{ user().codeBrewUser.avatarUrl }}">{{ user().codeBrewUser.userName }}<span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="/logout">Logout</a></li>
+                <li><a ng-click="logOut()">Logout</a></li>
             </ul>
         </div><!--
         --><a class="btn btn-primary" ng-show="!loggedIn()" href="/login">Login</a><!--

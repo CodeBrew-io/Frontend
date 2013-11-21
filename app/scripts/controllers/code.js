@@ -1,6 +1,6 @@
 app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fullscreen, snippets, user, throttle, errormessage) {
 	'use strict';
-	$scope.code = "case class A(a: Int); List(A(1),A(2),A(3))";
+	$scope.code = "1+1";
 	var compilationInfo = [];
 	var cmLeft, cmRight = null;
 	$scope.mySnippets = [];
