@@ -9,16 +9,16 @@
                 <span ng-show="!isSavingEnabled" class="message">{{savingMessage}}</span>
             </i>
             <i class= "fa" 
-                ng-class="{'fa-folder-o' : !viewingMySnippets, 'fa-folder-open-o': viewingMySnippets}"
+                ng-class="{'fa-folder-o' : !viewingMySnippets(), 'fa-folder-open-o': viewingMySnippets()}"
                 ng-show="loggedIn()" ng-click="toogleMySnippets()">
             </i>
         </div>
         <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
     </div><div class="insight"  ng-show="withInsight" ng-class="{'expandedHeight' : withConsole==false}">
-        <div class="mirror" ng-show="!viewingMySnippets" ng-class="{ 'fetching': !editorSending.canShowInsight}">
+        <div class="mirror" ng-show="!viewingMySnippets()" ng-class="{ 'fetching': !editorSending.canShowInsight}">
             <textarea ui-codemirror="optionsInsight" ng-model="insight"></textarea>
         </div>
-        <div class="user-snippet" ng-show="viewingMySnippets">
+        <div class="user-snippet" ng-show="viewingMySnippets()">
             <h1>My Snippet</h1>
             <ul>
                 <li ng-repeat="mySnippet in mySnippets track by mySnippet.id">
