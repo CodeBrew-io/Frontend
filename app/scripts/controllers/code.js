@@ -7,8 +7,10 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	$scope.errorWidgetLines = [];
 	$scope.errorMarkedTexts = [];
 
-	$scope.$watch('user.get',function(){
-		$scope.mySnippets = snippets.queryUser();
+	$scope.$watch('user.loggedIn()',function(){
+		if(user.loggedIn()) {
+			$scope.mySnippets = snippets.queryUser();
+		}
 	})
 
 	$rootScope.$on('selectedCode', function(event, code){
@@ -207,9 +209,12 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		return $scope.mySnippets.length > 0;
 	}
 
-	$scope.viewingMySnippets = false;
+	var viewingMySnippets = false;
+	$scope.viewingMySnippets = function(){
+		return user.loggedIn() && viewingMySnippets;
+	}
 	$scope.toogleMySnippets = function(){
-		$scope.viewingMySnippets = !$scope.viewingMySnippets;
+		viewingMySnippets = !viewingMySnippets;
 	}
 
 	$scope.insertSnippet = function(snippet){
