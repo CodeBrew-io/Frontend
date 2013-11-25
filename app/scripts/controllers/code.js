@@ -8,7 +8,9 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	$scope.errorMarkedTexts = [];
 
 	$scope.$watch('user.loggedIn()',function(){
-		$scope.mySnippets = snippets.queryUser();
+		if(user.loggedIn()) {
+			$scope.mySnippets = snippets.queryUser();
+		}
 	})
 
 	$rootScope.$on('selectedCode', function(event, code){
