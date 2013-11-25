@@ -1,11 +1,14 @@
 app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fullscreen, snippets, user, throttle) {
 	'use strict';
-	$scope.code = "1+1";
 	var compilationInfo = [];
 	var cmLeft, cmRight = null;
+
+	$scope.code = "1+1";
 	$scope.mySnippets = [];
 	$scope.errorWidgetLines = [];
 	$scope.errorMarkedTexts = [];
+	$scope.loggedIn = user.loggedIn;
+	$scope.fetching = false;
 
 	$scope.$watch('user.loggedIn()',function(){
 		if(user.loggedIn()) {
@@ -19,23 +22,22 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		}
 	});
 
-	$scope.loggedIn = user.loggedIn;
 
 	$scope.fullscreen = function(){
 		fullscreen.apply(true);
 	}
 
-	// for the pending of the insight
-	$scope.editorSending = {
-		canShowInsight: true,
-		numberOfChanges: 0
-	};
 
 	CodeMirror.commands.autocomplete = function(cm) {
 		var i;
-		$scope.editorSending.canShowInsight = false;
+		$scope.fetching = true;
 		scalaEval.autocomplete($scope.code, cm.getDoc().indexFromPos(cm.getCursor())).then(function(data){
-			$scope.editorSending.canShowInsight = true;
+			$scope.fetching = false;
+
+			if(angular.isString(data.completions)) {
+				$scope.insight = data.completions;
+				return;
+			}
 
 			CodeMirror.showHint(cm, function(cm, options){
 				var i;
@@ -81,12 +83,11 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		autofocus: true,
 		autoCloseBrackets: true,
 		onChange: function(cm) {
-			$scope.editorSending.canShowInsight = false;
-
+			$scope.fetching = true;
 			throttle.event(function() {
 				scalaEval.insight($scope.code).then(function(data){
 					$scope.insight = data.insight;
-					$scope.editorSending.canShowInsight = true;
+					$scope.fetching = false;
 
 					if (data.output){
 						if (!$scope.manuallyClosedConsole){
