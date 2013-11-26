@@ -17,6 +17,7 @@ module.exports = function (grunt) {
   };
 
   var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
+  var rewriteRulesSnippet = require('grunt-connect-rewrite/lib/utils').rewriteRequest;
 
   try {
     yeomanConfig.app = require('./bower.json').appPath || yeomanConfig.app;
@@ -61,6 +62,14 @@ module.exports = function (grunt) {
         port: 9002,
         hostname: 'localhost'
       },
+      rules: [
+        {from: "^/c/(.*)$", to: "$1"},
+        {from: "^/bower_components/(.*)$", to: "/bower_components/$1"},
+        {from: "^/scripts/(.*)$", to: "/scripts/$1"},
+        {from: "^/styles/(.*)$", to: "/styles/$1"},
+        {from: "^/views/(.*)$", to: "/views/$1"},
+        {from: "^/([a-bd-z])([a-z]*)/([0-9a-z]*)$", to: "/index.html"}
+      ],
       proxies: [{
         context: ['/webjars', '/assets', '/user', '/login', '/logout', '/authenticate', '/not-authorized','/snippets', '/@evolutions'],
         port: 9000,
@@ -71,6 +80,7 @@ module.exports = function (grunt) {
           middleware: function (connect) {
             return [
               proxySnippet,
+              rewriteRulesSnippet,
               lrSnippet,
               mountFolder(connect, '.tmp'),
               mountFolder(connect, yeomanConfig.app)
@@ -100,7 +110,7 @@ module.exports = function (grunt) {
     },
     open: {
       server: {
-        url: 'http://localhost:<%= connect.options.port %>/index.html'
+        url: 'http://localhost:<%= connect.options.port %>/masgui/dfw4534sdgf'
       }
     },
     clean: {
@@ -286,6 +296,7 @@ module.exports = function (grunt) {
       'concurrent:server',
       'autoprefixer',
       'configureProxies',
+      'configureRewriteRules',
       'connect:livereload',
       'open',
       'watch'
