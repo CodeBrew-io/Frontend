@@ -31,7 +31,7 @@ app.controller('header', function header($scope, $rootScope, user, snippets, sca
 			$scope.snippets = [];
 			$scope.all = [];
 		} else {
-			snippets.query({terms: term}, function(data){
+			snippets.queryDistinct({terms: term}, function(data){
 				$scope.snippets = data;
 				scaladoc.query(term).then(function(data){
 					$scope.docs = data;
