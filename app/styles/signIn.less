@@ -14,8 +14,22 @@
 	
 	border: 1px solid black;
 
-	label, input {
+	label, [name="email"], [name="username"] {
 		width: 100%;
+	}
+
+	[value="Cancel"], [value="Save"] {
+		width: 40%;
+		display: inline-block;
+		margin: 5px;
+	}
+
+	[value="Cancel"] {
+		float: left;
+	}
+
+	[value="Save"] {
+		float: right;
 	}
 
 	.actions {

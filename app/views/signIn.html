@@ -1,4 +1,4 @@
-<form ng-controller="signIn" name="signIn" ng-init="init()" ng-show ="showSignIn" class="cb-modal signIn">
+<form ng-controller="signIn" name="signIn" ng-submit="save()" ng-init="init()" ng-show ="showSignIn" class="cb-modal signIn">
 	<div class="form-group" ng-class="{'has-success': signIn.userName.$valid, 'has-error': !signIn.userName.$valid}">
 		<label class="control-label">
 			Username
@@ -18,7 +18,7 @@
 		</label>
 	</div>
 	<div class="actions">
-	  <button ng-click="cancel()" class="btn btn-default">Cancel</button>
-	  <button ng-click="save()" class="btn btn-primary">Save</button>
+	  <input ng-click="cancel()" value="Cancel" class="btn btn-default">
+	  <input type="submit" value="Save" class="btn btn-primary">
 	</div>
 </form>
