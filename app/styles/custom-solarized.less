@@ -91,12 +91,22 @@ less version: gui
     color: @base01;
   }
 
-  &.cm-s-dark .CodeMirror-selected {
-    background: @base02;
+  &.cm-s-dark {
+    .cm-matchhighlight {
+      border-bottom: 2px solid @base02;
+    }
+    .CodeMirror-selected {
+      background: @base02;
+    }
   }
 
-  &.cm-s-light .CodeMirror-selected {
-    background: @base2;
+  &.cm-s-light {
+    .cm-matchhighlight {
+      border-bottom: 2px solid @base2;
+    }
+    .CodeMirror-selected {
+      background: @base2;
+    }
   }
 
   /* Editor styling */

@@ -4,7 +4,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	var cmLeft, cmRight = null;
 	var viewingMySnippets = false;
 
-	$scope.code = "";
+	$scope.code = snippets.current();
 	$scope.errorWidgetLines = [];
 	$scope.errorMarkedTexts = [];
 	$scope.loggedIn = user.loggedIn;
@@ -29,6 +29,9 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		smartIndent: false,
 		autofocus: true,
 		autoCloseBrackets: true,
+		highlightSelectionMatches: {
+			showToken: false,
+		},
 		onChange: function(cm) {
 			throttle.event(function() {
 				scalaEval.insight($scope.code).then(function(data){
@@ -128,6 +131,11 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 
 	$scope.withInsight = true;
 	$scope.toogleInsight = function() {
+		$timeout(function() {
+			$scope.cmLeft.refresh();
+			$scope.cmRight.refresh();
+		});
+
 		$scope.withInsight = !$scope.withInsight;
 	}
 

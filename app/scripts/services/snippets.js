@@ -9,7 +9,8 @@ app.factory('snippets', function($resource) {
 
 	return {
 		current: function(){
-
+			console.log("test");
+			window.location.pathname.split("/").slice(1,3)
 		},
 		"queryUser": rest.queryUser,
 		"find": rest.find,
