@@ -5,17 +5,10 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	var viewingMySnippets = false;
 
 	$scope.code = "";
-	$scope.mySnippets = [];
 	$scope.errorWidgetLines = [];
 	$scope.errorMarkedTexts = [];
 	$scope.loggedIn = user.loggedIn;
 	$scope.fetching = scalaEval.fetching;
-
-	$scope.$watch('user.get()',function(){
-		if(user.loggedIn()) {
-			$scope.mySnippets = snippets.queryUser();
-		}
-	})
 
 	$rootScope.$on('selectedCode', function(event, code){
 		if(code){
@@ -97,8 +90,6 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 
 				});
 			});
-
-
 		},
 		onScroll: function(cm) {
 			if ($scope.cmLeft === null) {
@@ -165,6 +156,10 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		return user.loggedIn() && viewingMySnippets;
 	}
 	$scope.toogleMySnippets = function(){
+		if(!angular.isDefined($scope.mySnippets)) {
+			$scope.mySnippets = snippets.queryUser();
+		}
+
 		viewingMySnippets = !viewingMySnippets;
 	}
 

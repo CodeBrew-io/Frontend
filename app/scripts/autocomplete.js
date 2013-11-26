@@ -1,8 +1,10 @@
 app.run(function(scalaEval){
 	CodeMirror.commands.autocomplete = function(cm) {
-		var i;
-		scalaEval.autocomplete(cm.getDoc().getValue(), cm.getDoc().indexFromPos(cm.getCursor())).then(function(data){
+		scalaEval.autocomplete(
+			cm.getDoc().getValue(), 
+			cm.getDoc().indexFromPos(cm.getCursor())).then(function(data){
 
+			// unavailable
 			if(angular.isString(data.completions)) {
 				CodeMirror.showHint(cm, function(){
 					return {from: cm.getCursor(), to: cm.getCursor(), list: [ " /*" + data.completions + "*/ "] };
@@ -10,6 +12,7 @@ app.run(function(scalaEval){
 				return;
 			}
 
+			// ok
 			CodeMirror.showHint(cm, function(cm, options){
 				var i;
 				var curFrom = cm.getCursor();
