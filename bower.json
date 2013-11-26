@@ -7,7 +7,7 @@
     "bootstrap": "~3.0.0",
     "jquery": "~2.0.3",
     "font-awesome": "~4.0.1",
-    "codemirror": "~3.19.0",
+    "codemirror": "#4f083e8d92fb6bfa527d61154ff9a0fc82b58f1a",
     "angular-ui-codemirror": "~0.0.5",
     "angular-mocks": "~1.2.0-rc.3"
   },
