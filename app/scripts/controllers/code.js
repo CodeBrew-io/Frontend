@@ -2,15 +2,16 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	'use strict';
 	var compilationInfo = [];
 	var cmLeft, cmRight = null;
+	var viewingMySnippets = false;
 
-	$scope.code = "1+1";
+	$scope.code = "";
 	$scope.mySnippets = [];
 	$scope.errorWidgetLines = [];
 	$scope.errorMarkedTexts = [];
 	$scope.loggedIn = user.loggedIn;
-	$scope.fetching = false;
+	$scope.fetching = scalaEval.fetching;
 
-	$scope.$watch('user.loggedIn()',function(){
+	$scope.$watch('user.get()',function(){
 		if(user.loggedIn()) {
 			$scope.mySnippets = snippets.queryUser();
 		}
@@ -22,56 +23,9 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		}
 	});
 
-
 	$scope.fullscreen = function(){
 		fullscreen.apply(true);
 	}
-
-
-	CodeMirror.commands.autocomplete = function(cm) {
-		var i;
-		$scope.fetching = true;
-		scalaEval.autocomplete($scope.code, cm.getDoc().indexFromPos(cm.getCursor())).then(function(data){
-			$scope.fetching = false;
-
-			if(angular.isString(data.completions)) {
-				$scope.insight = data.completions;
-				return;
-			}
-
-			CodeMirror.showHint(cm, function(cm, options){
-				var i;
-				var curFrom = cm.getCursor();
-				var curTo = cm.getCursor();
-				var currentLine = $scope.code.split("\n")[curFrom.line];
-
-				function delimiter(c){
-					return  /^[a-zA-Z0-9\_]$/.test(c);
-				}
-
-				for (i = curFrom.ch-1; i >= 0 && delimiter(currentLine[i]); i--){
-					curFrom.ch = i;
-				}
-				for (i = curTo.ch; i < currentLine.length && delimiter(currentLine[i]); i++){
-					curTo.ch = i+1;
-				}
-
-				var term = currentLine.substr(curFrom.ch, curTo.ch - curFrom.ch);
-
-				var completions = data.completions.filter(function(c){
-					return c.name.toLowerCase().indexOf(term.toLowerCase()) != -1;
-				}).map(function(c){ return {
-					text: c.name,
-					completion: c,
-					alignWithWord: true,
-					render: function(el, _, _1){
-						$(el).text(c.signature);
-					},
-				}});
-				return {from: curFrom, to: curTo, list: completions};
-			});
-		})
-	};
 
 	$scope.optionsCode = {
 		extraKeys: {"Ctrl-Space": "autocomplete"},
@@ -83,11 +37,9 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		autofocus: true,
 		autoCloseBrackets: true,
 		onChange: function(cm) {
-			$scope.fetching = true;
 			throttle.event(function() {
 				scalaEval.insight($scope.code).then(function(data){
 					$scope.insight = data.insight;
-					$scope.fetching = false;
 
 					if (data.output){
 						if (!$scope.manuallyClosedConsole){
@@ -183,7 +135,6 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		}
 	};
 
-
 	$scope.withInsight = true;
 	$scope.toogleInsight = function() {
 		$scope.withInsight = !$scope.withInsight;
@@ -210,7 +161,6 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		return $scope.mySnippets.length > 0;
 	}
 
-	var viewingMySnippets = false;
 	$scope.viewingMySnippets = function(){
 		return user.loggedIn() && viewingMySnippets;
 	}
