@@ -17,7 +17,7 @@ app.controller('bubble', function code($scope)  {
 
 	// set the next bubble as current index
 	$scope.next = function() {
-		if ($scope.currentBubbleIndex < $scope.culture.messages.length) {
+		if ($scope.currentBubbleIndex < $scope.culture.messages.length -1) {
 			$scope.currentBubbleIndex += 1;
 		} else {
 			$scope.IsShowable = false;
