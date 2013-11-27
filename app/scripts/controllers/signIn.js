@@ -17,7 +17,7 @@ app.controller('signIn', function code($scope, $timeout, user){
 
 	$scope.save = function(){
 		var u = {};
-		if($scope.signUp.$valid){
+		if($scope.signIn.$valid){
 			u.userName = $scope.userName;
 			if(present($scope.email)) {
 				u.email = $scope.email;
@@ -48,14 +48,14 @@ app.controller('signIn', function code($scope, $timeout, user){
 					user.exists($scope.userName).$promise.then(function(d){
 						var exists = d.result;
 						if(exists) {
-							$scope.signUp.userName.$valid = false;
-							$scope.signUp.userName.$error.taken = true;
+							$scope.signIn.userName.$valid = false;
+							$scope.signIn.userName.$error.taken = true;
 						} else {
-							$scope.signUp.userName.$error.taken = false;
+							$scope.signIn.userName.$error.taken = false;
 						}
 					});
 				} else {
-					$scope.signUp.userName.$error.taken = false;
+					$scope.signIn.userName.$error.taken = false;
 				}
 			});
 		} else {

@@ -13,10 +13,13 @@
 
 .CodeMirror-hints {
 	width: 600px;
+	resize: horizontal;
+	z-index: 2000;
 }
 
 .CodeMirror-hint {
 	max-width: none;
+	resize: none;
 }
 
 .code, .insight {	
@@ -29,7 +32,10 @@
 
 	width: (100% / 2);
 	height: calc(~"100% -"@console-height + @handle-height);
+
 	.user-snippet {
+	overflow-y: scroll;
+	height:calc(~"100% - 5px");
 		h1 {
 			margin-top: 0;
 			color: white;
@@ -146,6 +152,7 @@
 }
 
 .console {
+
 	/*resize:both;*/
 	.output{
 		width:100%;

@@ -1,17 +1,14 @@
 app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fullscreen, snippets, user, throttle) {
 	'use strict';
-	$scope.code = "1+1";
 	var compilationInfo = [];
 	var cmLeft, cmRight = null;
-	$scope.mySnippets = [];
+	var viewingMySnippets = false;
+
+	$scope.code = "";
 	$scope.errorWidgetLines = [];
 	$scope.errorMarkedTexts = [];
-
-	$scope.$watch('user.loggedIn()',function(){
-		if(user.loggedIn()) {
-			$scope.mySnippets = snippets.queryUser();
-		}
-	})
+	$scope.loggedIn = user.loggedIn;
+	$scope.fetching = scalaEval.fetching;
 
 	$rootScope.$on('selectedCode', function(event, code){
 		if(code){
@@ -19,57 +16,17 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		}
 	});
 
-	$scope.loggedIn = user.loggedIn;
+	snippets.current().then(function(data){
+		$scope.code = data;
+	});
 
 	$scope.fullscreen = function(){
 		fullscreen.apply(true);
 	}
 
-	// for the pending of the insight
-	$scope.editorSending = {
-		canShowInsight: true,
-		numberOfChanges: 0
-	};
-
-	CodeMirror.commands.autocomplete = function(cm) {
-		var i;
-		$scope.editorSending.canShowInsight = false;
-		scalaEval.autocomplete($scope.code, cm.getDoc().indexFromPos(cm.getCursor())).then(function(data){
-			$scope.editorSending.canShowInsight = true;
-
-			CodeMirror.showHint(cm, function(cm, options){
-				var i;
-				var curFrom = cm.getCursor();
-				var curTo = cm.getCursor();
-				var currentLine = $scope.code.split("\n")[curFrom.line];
-
-				function delimiter(c){
-					return  /^[a-zA-Z0-9\_]$/.test(c);
-				}
-
-				for (i = curFrom.ch-1; i >= 0 && delimiter(currentLine[i]); i--){
-					curFrom.ch = i;
-				}
-				for (i = curTo.ch; i < currentLine.length && delimiter(currentLine[i]); i++){
-					curTo.ch = i+1;
-				}
-
-				var term = currentLine.substr(curFrom.ch, curTo.ch - curFrom.ch);
-
-				var completions = data.completions.filter(function(c){
-					return c.name.toLowerCase().indexOf(term.toLowerCase()) != -1;
-				}).map(function(c){ return {
-					text: c.name,
-					completion: c,
-					alignWithWord: true,
-					render: function(el, _, _1){
-						$(el).text(c.signature);
-					},
-				}});
-				return {from: curFrom, to: curTo, list: completions};
-			});
-		})
-	};
+	$scope.clear = function(){
+		$scope.code = "";
+	}
 
 	$scope.optionsCode = {
 		extraKeys: {"Ctrl-Space": "autocomplete"},
@@ -80,13 +37,14 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		smartIndent: false,
 		autofocus: true,
 		autoCloseBrackets: true,
+		highlightSelectionMatches: {
+			showToken: false,
+		},
 		onChange: function(cm) {
-			$scope.editorSending.canShowInsight = false;
-
+			snippets.saveLocal($scope.code);
 			throttle.event(function() {
 				scalaEval.insight($scope.code).then(function(data){
 					$scope.insight = data.insight;
-					$scope.editorSending.canShowInsight = true;
 
 					if (data.output){
 						if (!$scope.manuallyClosedConsole){
@@ -144,8 +102,6 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 
 				});
 			});
-
-
 		},
 		onScroll: function(cm) {
 			if ($scope.cmLeft === null) {
@@ -182,9 +138,13 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		}
 	};
 
-
 	$scope.withInsight = true;
 	$scope.toogleInsight = function() {
+		$timeout(function() {
+			$scope.cmLeft.refresh();
+			$scope.cmRight.refresh();
+		});
+
 		$scope.withInsight = !$scope.withInsight;
 	}
 
@@ -209,11 +169,14 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		return $scope.mySnippets.length > 0;
 	}
 
-	var viewingMySnippets = false;
 	$scope.viewingMySnippets = function(){
 		return user.loggedIn() && viewingMySnippets;
 	}
 	$scope.toogleMySnippets = function(){
+		if(!angular.isDefined($scope.mySnippets)) {
+			$scope.mySnippets = snippets.queryUser();
+		}
+
 		viewingMySnippets = !viewingMySnippets;
 	}
 

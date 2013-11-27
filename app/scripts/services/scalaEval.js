@@ -1,5 +1,6 @@
 // based on http://clintberry.com/2013/angular-js-websocket-service/
-app.factory("scalaEval", ['$q', '$rootScope', "$location", function($q, $rootScope, $location) {
+app.factory("scalaEval", function($q, $rootScope, $location) {
+	var fetching = false;
 	var url;
 	if($location.host() === "codebrew.io") {
 		url = "wss://codebrew.io/eval";
@@ -29,6 +30,7 @@ app.factory("scalaEval", ['$q', '$rootScope', "$location", function($q, $rootSco
 
 	socket.onmessage = function(message){
 		listener(JSON.parse(message.data));
+		fetching = false;
 	};
 
 	socket.onopen = function(){
@@ -38,6 +40,7 @@ app.factory("scalaEval", ['$q', '$rootScope', "$location", function($q, $rootSco
 	};
 
 	function send(request, serviceName){
+		fetching = true;
 		var defer = $q.defer();
 		var callbackId = getCallbackId();
 		callbacks[callbackId] = defer;
@@ -63,6 +66,7 @@ app.factory("scalaEval", ['$q', '$rootScope', "$location", function($q, $rootSco
 				"code": code,
 				"position": position
 			}}, "autocomplete");
-		}
+		},
+		"fetching": fetching
 	};
-}]);
+});
