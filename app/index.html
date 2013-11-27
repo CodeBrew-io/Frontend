@@ -16,11 +16,11 @@
     
     <link rel="stylesheet" href="/styles/main.css">
 </head>
-  <body ng-app="CodeBrew">
+  <body ng-app="CodeBrew" ng-controller="bubble">
     <ng-include src="'/views/header.html'"></ng-include>
     <ng-include src="'/views/code.html'"></ng-include>
     <ng-include src="'/views/signIn.html'"></ng-include>
-  
+
     <!-- build:js scripts/libs.js -->
     <script src="/bower_components/jquery/jquery.js"></script>
     <script src="/bower_components/angular/angular.js"></script>
@@ -52,6 +52,7 @@
     <script src="/scripts/controllers/code.js"></script>
     <script src="/scripts/controllers/header.js"></script>
     <script src="/scripts/controllers/signIn.js"></script>
+    <script src="/scripts/controllers/bubble.js"></script>
     <script src="/scripts/autocomplete.js"></script>
     <!-- endbuild -->
     <script>
