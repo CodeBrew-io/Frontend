@@ -24,6 +24,21 @@ app.controller('bubble', function code($scope)  {
 		}
 	};
 
+	$scope.head = function() {
+		if ($scope.currentBubbleIndex == 0) {
+			return "disabled";
+		}
+		
+	};
+
+	$scope.last = function() {
+		if ($scope.currentBubbleIndex == $scope.culture.messages.length -1 ) {
+			return "disabled";	
+		}
+		
+	};
+
+
 	$scope.getBubbleClass = function() {
 		var resultClassStr = "triangle-border ";
 		if ($scope.currentBubbleIndex == 0) {

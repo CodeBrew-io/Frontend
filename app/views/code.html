@@ -15,9 +15,9 @@
             <div ng-class="getBubbleClass()" ng-show="IsShowable">
                 <span>{{ culture.messages[currentBubbleIndex] }}</span>
                 <div>
-                    <a ng-click="previous()" ng-class="'disabled': currentBubbleIndex == 0">{{ culture.previous }}</a>&nbsp;
+                    <a ng-click="previous()" ng-class="head()">{{ culture.previous }}</a>&nbsp;
                     <a ng-click="skip()">{{ culture.skip }}</a>&nbsp;
-                    <a ng-click="next()" ng-class="'disabled': currentBubbleIndex == culture.messages.length - 1">{{ culture.next }}</a>
+                    <a ng-click="next()" ng-class="last()">{{ culture.next }}</a>
                 </div>
             </div>
         </div>
