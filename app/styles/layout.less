@@ -26,6 +26,161 @@ html, body {
 	}
 }
 
+.triangle-border {
+	z-index: 9999999999;
+	position: relative;
+	padding: 15px;
+	margin: 1em 0 3em;
+	border: 5px solid @sky-blue;
+	color: #333;
+	background: #fff;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+
+	width: 400px;
+
+
+	&.left.centered {
+		left: 470px;
+	}
+
+
+	&.right.centered {
+	}
+
+	&.top.centered {
+	}
+
+	&.top.login{
+		left: 213px;
+		top: -110px;
+	}
+
+
+	&.search {
+		left: 300px;
+		top: -110px;
+
+
+	}
+
+	&.fullscreen{
+
+		left: 52px;
+		top: -5px;
+
+	}
+
+	&.output {
+
+		left: 70px;
+		top: 120px;
+	}
+
+
+
+	p {
+		display: block;
+		-webkit-margin-before: 1em;
+		-webkit-margin-after: 1em;
+		-webkit-margin-start: 0px;
+		-webkit-margin-end: 0px;
+	}
+
+	span {
+		display: block;
+		width:100%;
+	}
+
+	div {
+		margin-top: 10px;
+		text-align: right;
+
+		.disabled {
+			text-decoration: none;
+			pointer-events: none;
+			cursor: default;
+		} 
+	}
+
+	&.top:before {
+		top: -20px;
+		bottom: auto;
+		left: auto;
+		right: 40px;
+		border-width: 0 20px 20px;
+	}
+
+	&.top:after {
+		top: -13px;
+		bottom: auto;
+		left: auto;
+		right: 47px;
+		border-width: 0 13px 13px;
+	}
+
+	&.left:before {
+		top: 10px;
+		bottom: auto;
+		left: -30px;
+		border-width: 15px 30px 15px 0;
+		border-color: transparent @sky-blue;
+	}
+
+	&.left:after {
+		top: 16px;
+		bottom: auto;
+		left: -21px;
+		border-width: 9px 21px 9px 0;
+		border-color: transparent #fff;
+	}	
+
+	&.right:before {
+		top: 10px;
+		bottom: auto;
+		left: auto;
+		right: -30px;
+		border-width: 15px 0 15px 30px;
+		border-color: transparent @sky-blue;
+	}
+
+	&.right:after {
+		top: 16px;
+		bottom: auto;
+		left: auto;
+		right: -21px;
+		border-width: 9px 0 9px 21px;
+		border-color: transparent #fff;
+	}
+
+	&:before {
+		content: "";
+		position: absolute;
+		bottom: -20px;
+		left: 333px;
+		border-width: 20px 20px 0;
+		border-style: solid;
+		border-color: @sky-blue transparent;
+		display: block;
+		width: 0;
+
+	}
+
+	&:after {
+		content: "";
+		position: absolute;
+		bottom: -13px;
+		left: 340px;
+		border-width: 13px 13px 0;
+		border-style: solid;
+		border-color: #fff transparent;
+		display: block;
+		width: 0;
+	}
+
+}
+
 :-webkit-full-screen {
 	.fullscreen;
 }

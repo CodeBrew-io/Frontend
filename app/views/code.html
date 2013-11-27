@@ -3,15 +3,23 @@
         <div class="expand-collapse">
             <i class="fa" 
                 ng-class="{'fa-chevron-right': withInsight, 'fa-chevron-left': !withInsight}"
-                ng-click="toogleInsight()"></i>
-            <i class="fa fa-expand" ng-click="fullscreen()"></i>
+                ng-click="toogleInsight()"></i><div style="clear:both;"></div>
+            <i class="fa fa-expand" ng-click="fullscreen()"></i><div style="clear:both;"></div>
             <i class="fa fa-floppy-o" ng-show="loggedIn()" ng-click="publish($event)" ng-class="{'disabled':isSavingEnabled==false}">
                 <span ng-show="!isSavingEnabled" class="message">{{savingMessage}}</span>
-            </i>
+            </i><div style="clear:both;"></div>
             <i class= "fa" 
                 ng-class="{'fa-folder-o' : !viewingMySnippets(), 'fa-folder-open-o': viewingMySnippets()}"
                 ng-show="loggedIn()" ng-click="toogleMySnippets()">
-            </i>
+            </i><div style="clear:both;"></div>
+            <div ng-class="getBubbleClass()" ng-show="IsShowable">
+                <span>{{ culture.messages[currentBubbleIndex] }}</span>
+                <div>
+                    <a ng-click="previous()" ng-class="'disabled': currentBubbleIndex == 0">{{ culture.previous }}</a>&nbsp;
+                    <a ng-click="skip()">{{ culture.skip }}</a>&nbsp;
+                    <a ng-click="next()" ng-class="'disabled': currentBubbleIndex == culture.messages.length - 1">{{ culture.next }}</a>
+                </div>
+            </div>
         </div>
         <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
     </div><div class="insight"  ng-show="withInsight" ng-class="{'expandedHeight' : withConsole==false}">
@@ -31,11 +39,13 @@
             </ul>
         </div>
     </div>
+
+
     <div class="console cm-s-solarized cm-s-light">
         <div class="handle">
             <div class="menu">
-            <i class="fa fa-eraser" ng-show="!consoleIsEmpty()" ng-click="clearConsole()"></i>
-            <i class="fa" 
+                <i class="fa fa-eraser" ng-show="!consoleIsEmpty()" ng-click="clearConsole()"></i>
+                <i class="fa" 
                 ng-class="{'fa-chevron-down': withConsole, 'fa-chevron-up': !withConsole}"
                  ng-click="toogleConsole()"></i> 
             </div>
