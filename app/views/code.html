@@ -1,6 +1,7 @@
 <div ng-controller="code" ng-init="init()" class="app">
     <div class="code" ng-class="{'expandedWidth': withInsight==false, 'expandedHeight' : withConsole==false}">
         <div class="expand-collapse">
+            <i class= "fa fa-eraser" ng-click="clear()"></i>
             <i class="fa" 
                 ng-class="{'fa-chevron-right': withInsight, 'fa-chevron-left': !withInsight}"
                 ng-click="toogleInsight()"></i>
@@ -15,7 +16,7 @@
         </div>
         <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
     </div><div class="insight"  ng-show="withInsight" ng-class="{'expandedHeight' : withConsole==false}">
-        <div class="mirror" ng-show="!viewingMySnippets()" ng-class="{ 'fetching': !editorSending.canShowInsight}">
+        <div class="mirror" ng-show="!viewingMySnippets()" ng-class="{ 'fetching': fetching}">
             <textarea ui-codemirror="optionsInsight" ng-model="insight"></textarea>
         </div>
         <div class="user-snippet" ng-show="viewingMySnippets()">
