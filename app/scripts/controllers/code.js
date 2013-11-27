@@ -5,8 +5,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	var viewingMySnippets = false;
 
 	$scope.code = "";
-	$scope.errorWidgetLines = [];
-	$scope.errorMarkedTexts = [];
+	$scope.mySnippets = [];
 	$scope.loggedIn = user.loggedIn;
 	$scope.fetching = scalaEval.fetching;
 
@@ -37,13 +36,14 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		smartIndent: false,
 		autofocus: true,
 		autoCloseBrackets: true,
-		highlightSelectionMatches: {
-			showToken: false,
-		},
+		highlightSelectionMatches: { showToken: false },
 		onChange: function(cm) {
 			snippets.saveLocal($scope.code);
 			throttle.event(function() {
 				scalaEval.insight($scope.code).then(function(data){
+					var errorWidgetLines = [];
+					var errorMarkedTexts = [];
+
 					$scope.insight = data.insight;
 
 					if (data.output){
@@ -55,17 +55,17 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 						$scope.console = "";
 					}
 
-					ClearErrorWidgetLines();
-					ClearErrorSquigglyLines();
+					clearErrorWidgetLines();
+					clearErrorSquigglyLines();
 					if (data.errors){
 
 						data.errors.forEach(function(value) {	
-							$scope.errorWidgetLines.push(AddErrorWidgetLines(value));							
-							$scope.errorMarkedTexts.push(AddErrorSquigglyLines(value));
+							errorWidgetLines.push(addErrorWidgetLines(value));							
+							errorMarkedTexts.push(addErrorSquigglyLines(value));
 						});
 					}
 					/* Make the squiggly line in the code editor for error message */    
-				    function AddErrorSquigglyLines(value) {
+				    function addErrorSquigglyLines(value) {
 				    	var cur = cm.getDoc().posFromIndex(value.position);
 						var currentLine = $scope.code.split("\n")[cur.line];
 				    	var markedText = cm.markText(
@@ -76,13 +76,13 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 						return markedText;
 						
 				  	}
-				  	function ClearErrorSquigglyLines(){
-				  		$scope.errorMarkedTexts.forEach(function (value){
+				  	function clearErrorSquigglyLines(){
+				  		errorMarkedTexts.forEach(function (value){
 				  			value.clear();
 				  		});
-					    $scope.errorMarkedTexts = [];
+					    errorMarkedTexts = [];
 				  	}
-				  	function AddErrorWidgetLines(value){
+				  	function addErrorWidgetLines(value){
 				  		var cur = cm.getDoc().posFromIndex(value.position);
 						var currentLine = $scope.code.split("\n")[cur.line];
 				  		var msg = document.createElement("div");
@@ -93,11 +93,11 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 						var errorLineWidget = cm.addLineWidget(cur.line, msg);
 						return errorLineWidget;
 				  	}
-				  	function ClearErrorWidgetLines(){
-				  		$scope.errorWidgetLines.forEach(function (value){
+				  	function clearErrorWidgetLines(){
+				  		errorWidgetLines.forEach(function (value){
 				  			cm.removeLineWidget(value);
 				  		});
-					    $scope.errorWidgetLines = [];
+					    errorWidgetLines = [];
 				  	}
 
 				});
@@ -151,19 +151,16 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		refreshMirrors();
 	}
 
-	$scope.savingMessage = "saving...";
-	$scope.isSavingEnabled = true;
 	$scope.publish = function($event){
-		if ($scope.isSavingEnabled) {
-			$scope.isSavingEnabled = false
+		if (!$scope.isSaving) {
+			$scope.isSaving = true;
 			snippets.save({"code": $scope.code}).$promise.then(function(data){
 				$scope.mySnippets = $scope.mySnippets.concat({
 					"id": data.id,
-					"code": $scope.code
+					"code": $scope.code,
+					"user": user.get().codeBrewUser.userName
 				});
-				$timeout(function() {
-					$scope.isSavingEnabled = true;
-				}, 1000);
+				$timeout(function() { $scope.isSaving = false; }, 1000);
 			})
 		}
 	}
@@ -176,10 +173,8 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		return user.loggedIn() && viewingMySnippets;
 	}
 	$scope.toogleMySnippets = function(){
-		if(!angular.isDefined($scope.mySnippets)) {
-			$scope.mySnippets = snippets.queryUser();
-		}
-
+		$scope.mySnippets = snippets.queryUser();
+		
 		viewingMySnippets = !viewingMySnippets;
 		refreshMirrors();
 	}
@@ -189,10 +184,12 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	};
 
 	$scope.deleteSnippet = function(snippet){
-		snippets.delete({id: snippet.id});
-		$scope.mySnippets = $scope.mySnippets.filter(function(s){
-			return s != snippet;
-		})
+		if(window.confirm("Delete snippet ?")) {
+			snippets.delete({id: snippet.id});
+			$scope.mySnippets = $scope.mySnippets.filter(function(s){
+				return s != snippet;
+			});
+		}
 	};
 
 	$scope.withConsole = false;

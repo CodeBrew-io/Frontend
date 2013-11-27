@@ -68,7 +68,7 @@ module.exports = function (grunt) {
         {from: "^/scripts/(.*)$", to: "/scripts/$1"},
         {from: "^/styles/(.*)$", to: "/styles/$1"},
         {from: "^/views/(.*)$", to: "/views/$1"},
-        {from: "^/([a-bd-zA-BD-Z\-])([a-zA-Z\-]*)/([0-9a-zA-Z]*)$", to: "/index.html"}
+        {from: "^/([a-bd-zA-BD-Z_\-])([a-zA-Z_\-]*)/([0-9a-zA-Z_\-]*)$", to: "/index.html"}
       ],
       proxies: [{
         context: ['/webjars', '/assets', '/user', '/login', '/logout', '/authenticate', '/not-authorized','/snippets', '/@evolutions'],

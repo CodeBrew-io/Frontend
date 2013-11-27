@@ -30,7 +30,9 @@ app.factory('snippets', function($q, $resource, $timeout /* location, localStora
 		"queryUser": rest.queryUser,
 		"find": rest.find,
 		"query": rest.query,
-		"save": rest.save,
+		"save": function(s){
+			return rest.save(s);
+		},
 		"delete": rest.delete
 	}
 });
