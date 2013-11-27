@@ -15,7 +15,7 @@ app.factory('snippets', function($q, $resource, $timeout /* location, localStora
 			if("/" !== window.location.pathname) {
 				// url is /:username/:snippetId
 				var info = window.location.pathname.split("/").slice(1,3);
-				rest.find({ user: info[0], id: info[1] });
+				return rest.find({ username: info[0], id: info[1] }).$promise;
 			} else {
 				// also async
 				var defer = $q.defer();

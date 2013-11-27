@@ -68,7 +68,7 @@ module.exports = function (grunt) {
         {from: "^/scripts/(.*)$", to: "/scripts/$1"},
         {from: "^/styles/(.*)$", to: "/styles/$1"},
         {from: "^/views/(.*)$", to: "/views/$1"},
-        {from: "^/([a-bd-z])([a-z]*)/([0-9a-z]*)$", to: "/index.html"}
+        {from: "^/([a-bd-zA-BD-Z])([a-zA-Z]*)/([0-9a-zA-Z]*)$", to: "/index.html"}
       ],
       proxies: [{
         context: ['/webjars', '/assets', '/user', '/login', '/logout', '/authenticate', '/not-authorized','/snippets', '/@evolutions'],
@@ -110,7 +110,7 @@ module.exports = function (grunt) {
     },
     open: {
       server: {
-        url: 'http://localhost:<%= connect.options.port %>/masgui/dfw4534sdgf'
+        url: 'http://localhost:<%= connect.options.port %>/masgui/3JLZwuoqQROHc4DlnoliIQ'
       }
     },
     clean: {
