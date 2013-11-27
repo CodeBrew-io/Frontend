@@ -14,7 +14,7 @@
             </i>
             <div ng-class="getBubbleClass()" ng-show="show">
                 <span class="info">{{ tutorialText.messages[currentBubbleIndex] }}</span>
-                <div class="options">
+                <div class="navigation">
                     <a ng-click="previous()" ng-class="head()">{{ tutorialText.previous }}</a>&nbsp;
                     <a ng-click="skip()">{{ tutorialText.skip }}</a>&nbsp;
                     <a ng-click="next()" ng-class="last()">{{ tutorialText.next }}</a>
