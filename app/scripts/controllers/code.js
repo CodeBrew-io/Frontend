@@ -17,7 +17,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	});
 
 	snippets.current().then(function(data){
-		$scope.code = data;
+		$scope.code = data.code;
 	});
 
 	$scope.fullscreen = function(){
@@ -138,14 +138,17 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		}
 	};
 
-	$scope.withInsight = true;
-	$scope.toogleInsight = function() {
+	function refreshMirrors(){
 		$timeout(function() {
 			$scope.cmLeft.refresh();
 			$scope.cmRight.refresh();
 		});
+	}
 
+	$scope.withInsight = true;
+	$scope.toogleInsight = function() {
 		$scope.withInsight = !$scope.withInsight;
+		refreshMirrors();
 	}
 
 	$scope.savingMessage = "saving...";
@@ -178,6 +181,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		}
 
 		viewingMySnippets = !viewingMySnippets;
+		refreshMirrors();
 	}
 
 	$scope.insertSnippet = function(snippet){
@@ -198,11 +202,9 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		if (!$scope.withConsole){
 			$scope.manuallyClosedConsole = true;
 		}
-		$timeout(function() {
-			$scope.cmLeft.refresh();
-			$scope.cmRight.refresh();
-		});
-	}
+		refreshMirrors();
+	}	
+
 	$scope.consoleIsEmpty = function () {
 		return !$scope.console;
 	}

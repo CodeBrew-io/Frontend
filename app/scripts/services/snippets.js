@@ -1,8 +1,7 @@
 app.factory('snippets', function($q, $resource, $timeout /* location, localStorage */) {
 	var rest = $resource('/snippets/',{},{
 		"queryUser": { method: 'GET', url: '/snippets/queryUser', isArray: true },
-		"queryDistinct": { method: 'GET', url: '/snippets/queryDistinct', isArray: true },
-		"find": { method: 'GET', url: '/snippets/u/:username/:id', isArray: true },
+		"find": { method: 'GET', url: '/snippets/u/:username/:id' },
 		"query": { method: 'GET', isArray: true },
 		"save": { method: 'POST' },
 		"delete" : { method : 'DELETE' }
@@ -21,13 +20,14 @@ app.factory('snippets', function($q, $resource, $timeout /* location, localStora
 				// also async
 				var defer = $q.defer();
 				$timeout(function(){
-					defer.resolve(window.localStorage["code"]);
+					defer.resolve({
+						code: window.localStorage["code"]
+					});
 				});
 				return defer.promise;
 			}
 		},
 		"queryUser": rest.queryUser,
-		"queryDistinct" :rest.queryDistinct,
 		"find": rest.find,
 		"query": rest.query,
 		"save": rest.save,

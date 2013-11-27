@@ -32,7 +32,7 @@ app.controller('header', function header($scope, $rootScope, user, snippets, sca
 			$scope.all = [];
 		} else {
 			throttle.event(function(){
-				snippets.queryDistinct({terms: term}, function(data){
+				snippets.query({terms: term}, function(data){
 					$scope.snippets = data;
 					scaladoc.query($scope.term).then(function(data){
 						$scope.docs = data.results;
