@@ -19,6 +19,9 @@
                         <syntaxhighlight syntaxtype="text/x-scala" ng-model='doc.qualifiedName'></syntaxhighlight>
                         <syntaxhighlight syntaxtype="text/x-scala" ng-model='doc.signature'></syntaxhighlight>
                         <pre class="text" ng-show="doc.comment.source">{{ doc.comment.source }}</pre>
+                        <a href="http://www.scala-lang.org/files/archive/api/current/#{{ doc.parent.qualifiedName }}" target="_blank">
+                            <i class="fa fa-external-link"></i>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -27,6 +30,9 @@
                 <ul>
                     <li typeahead-item="snippet.code" ng-repeat="snippet in snippets track by snippet.id" class="results">
                         <syntaxhighlight syntaxtype="text/x-scala" ng-model='snippet.code'></syntaxhighlight>
+                        <a href="/{{ snippet.user }}/{{ snippet.id }}" target="_blank">
+                            <i class="fa fa-external-link"></i>
+                        </a>
                     </li>
                 </ul>
             </div>
