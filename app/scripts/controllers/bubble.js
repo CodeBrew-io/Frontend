@@ -1,6 +1,6 @@
 app.controller('bubble', function code($scope)  {
 	$scope.currentBubbleIndex = 0;
-	$scope.IsShowable = true;
+	$scope.show = true;
 
 	// set the previous bubble as current index
 	$scope.previous = function() {
@@ -12,15 +12,15 @@ app.controller('bubble', function code($scope)  {
 	// set the current bubble index at -1, that way there is no way that any bubble is visible
 	$scope.skip = function() {
 		$scope.currentBubbleIndex = -1;
-		$scope.IsShowable = false;
+		$scope.show = false;
 	};
 
 	// set the next bubble as current index
 	$scope.next = function() {
-		if ($scope.currentBubbleIndex < $scope.culture.messages.length -1) {
+		if ($scope.currentBubbleIndex < $scope.tutorialText.messages.length -1) {
 			$scope.currentBubbleIndex += 1;
 		} else {
-			$scope.IsShowable = false;
+			$scope.show = false;
 		}
 	};
 
@@ -32,7 +32,7 @@ app.controller('bubble', function code($scope)  {
 	};
 
 	$scope.last = function() {
-		if ($scope.currentBubbleIndex == $scope.culture.messages.length -1 ) {
+		if ($scope.currentBubbleIndex == $scope.tutorialText.messages.length -1 ) {
 			return "disabled";	
 		}
 		
@@ -72,8 +72,8 @@ app.controller('bubble', function code($scope)  {
 
 
 
-	// This object contains the cultured string for the tutorial's bubble.
-	$scope.culture = {
+	// This object contains the tutorialText string for the tutorial's bubble.
+	$scope.tutorialText = {
 		previous: 'previous',
 		skip: 'skip',
 		next: 'next',

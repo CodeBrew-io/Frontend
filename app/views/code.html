@@ -7,17 +7,17 @@
             <i class="fa fa-expand" ng-click="fullscreen()"></i><div style="clear:both;"></div>
             <i class="fa fa-floppy-o" ng-show="loggedIn()" ng-click="publish($event)" ng-class="{'disabled':isSavingEnabled==false}">
                 <span ng-show="!isSavingEnabled" class="message">{{savingMessage}}</span>
-            </i><div style="clear:both;"></div>
+            </i>
             <i class= "fa" 
                 ng-class="{'fa-folder-o' : !viewingMySnippets(), 'fa-folder-open-o': viewingMySnippets()}"
                 ng-show="loggedIn()" ng-click="toogleMySnippets()">
-            </i><div style="clear:both;"></div>
-            <div ng-class="getBubbleClass()" ng-show="IsShowable">
-                <span>{{ culture.messages[currentBubbleIndex] }}</span>
-                <div>
-                    <a ng-click="previous()" ng-class="head()">{{ culture.previous }}</a>&nbsp;
-                    <a ng-click="skip()">{{ culture.skip }}</a>&nbsp;
-                    <a ng-click="next()" ng-class="last()">{{ culture.next }}</a>
+            </i>
+            <div ng-class="getBubbleClass()" ng-show="show">
+                <span class="info">{{ tutorialText.messages[currentBubbleIndex] }}</span>
+                <div class="options">
+                    <a ng-click="previous()" ng-class="head()">{{ tutorialText.previous }}</a>&nbsp;
+                    <a ng-click="skip()">{{ tutorialText.skip }}</a>&nbsp;
+                    <a ng-click="next()" ng-class="last()">{{ tutorialText.next }}</a>
                 </div>
             </div>
         </div>
@@ -39,8 +39,6 @@
             </ul>
         </div>
     </div>
-
-
     <div class="console cm-s-solarized cm-s-light">
         <div class="handle">
             <div class="menu">
