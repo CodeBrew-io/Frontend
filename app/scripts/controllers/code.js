@@ -4,7 +4,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	var cmLeft, cmRight = null;
 	var viewingMySnippets = false;
 
-	$scope.code = snippets.current();
+	$scope.code = "";
 	$scope.errorWidgetLines = [];
 	$scope.errorMarkedTexts = [];
 	$scope.loggedIn = user.loggedIn;
@@ -16,8 +16,16 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		}
 	});
 
+	snippets.current().then(function(data){
+		$scope.code = data;
+	});
+
 	$scope.fullscreen = function(){
 		fullscreen.apply(true);
+	}
+
+	$scope.clear = function(){
+		$scope.code = "";
 	}
 
 	$scope.optionsCode = {
@@ -33,6 +41,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 			showToken: false,
 		},
 		onChange: function(cm) {
+			snippets.saveLocal($scope.code);
 			throttle.event(function() {
 				scalaEval.insight($scope.code).then(function(data){
 					$scope.insight = data.insight;

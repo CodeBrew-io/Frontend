@@ -1,4 +1,4 @@
-app.factory('snippets', function($resource) {
+app.factory('snippets', function($q, $resource, $timeout /* location, localStorage */) {
 	var rest = $resource('/snippets/',{},{
 		"queryUser": { method: 'GET', url: '/snippets/queryUser', isArray: true },
 		"find": { method: 'GET', url: '/snippets/u/:username/:id', isArray: true },
@@ -8,9 +8,22 @@ app.factory('snippets', function($resource) {
 	});
 
 	return {
-		current: function(){
-			console.log("test");
-			window.location.pathname.split("/").slice(1,3)
+		"saveLocal": function(code){
+			window.localStorage["code"] = code;
+		},
+		"current": function(){
+			if("/" !== window.location.pathname) {
+				// url is /:username/:snippetId
+				var info = window.location.pathname.split("/").slice(1,3);
+				rest.find({ user: info[0], id: info[1] });
+			} else {
+				// also async
+				var defer = $q.defer();
+				$timeout(function(){
+					defer.resolve(window.localStorage["code"]);
+				});
+				return defer.promise;
+			}
 		},
 		"queryUser": rest.queryUser,
 		"find": rest.find,

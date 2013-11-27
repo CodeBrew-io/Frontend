@@ -1,5 +1,5 @@
 // based on http://clintberry.com/2013/angular-js-websocket-service/
-app.factory("scalaEval", ['$q', '$rootScope', "$location", function($q, $rootScope, $location) {
+app.factory("scalaEval", function($q, $rootScope, $location) {
 	var fetching = false;
 	var url;
 	if($location.host() === "codebrew.io") {
@@ -69,4 +69,4 @@ app.factory("scalaEval", ['$q', '$rootScope', "$location", function($q, $rootSco
 		},
 		"fetching": fetching
 	};
-}]);
+});
