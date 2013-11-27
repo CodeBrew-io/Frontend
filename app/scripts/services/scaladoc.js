@@ -6,6 +6,7 @@ app.factory('scaladoc', ['$q', '$rootScope', '$location', function($q, $rootScop
  
     return {
         query: function(term){
+
             var rurl, defer = $q.defer();
 
             if($location.host() === "codebrew.io") {
@@ -29,7 +30,7 @@ app.factory('scaladoc', ['$q', '$rootScope', '$location', function($q, $rootScop
                 success: function (data) {
                     if (data.error) console.log(data.error)
                     else {
-                        $rootScope.$apply(defer.resolve(data.results));
+                        $rootScope.$apply(defer.resolve(data));
                     }
                 }
             });

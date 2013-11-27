@@ -54,8 +54,10 @@ app.factory('throttle', ['$timeout', '$interval', function($timeout, $interval) 
 				wait: Math.min(defaults.minWait + average + 2 * variance, defaults.maxWait) / 1000
 			}
 		},
-		event: function(f) {
-			var interval = Math.min(defaults.minWait + average + 2 * variance, defaults.maxWait);
+		event: function(f, minWait, maxWait) {
+			minWait = minWait || defaults.minWait;
+			maxWait = maxWait || defaults.maxWait;
+			var interval = Math.min(minWait + average + 2 * variance, maxWait);
 			events.push(new Date().getTime());
 
 			if (timeout !== null) {

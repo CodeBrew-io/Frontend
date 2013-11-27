@@ -1,4 +1,4 @@
-app.controller('header', function header($scope, $rootScope, user, snippets, scaladoc) {
+app.controller('header', function header($scope, $rootScope, user, snippets, scaladoc, throttle) {
 	'use strict';
 
 	$scope.user = user.get;
@@ -31,13 +31,15 @@ app.controller('header', function header($scope, $rootScope, user, snippets, sca
 			$scope.snippets = [];
 			$scope.all = [];
 		} else {
-			snippets.queryDistinct({terms: term}, function(data){
-				$scope.snippets = data;
-				scaladoc.query(term).then(function(data){
-					$scope.docs = data;
-					$scope.all = $scope.snippets.concat($scope.docs);
+			throttle.event(function(){
+				snippets.queryDistinct({terms: term}, function(data){
+					$scope.snippets = data;
+					scaladoc.query($scope.term).then(function(data){
+						$scope.docs = data.results;
+						$scope.all = $scope.snippets.concat($scope.docs);
+					});
 				});
-			});
+			}, 150, 300);
 		}
 	};
 
