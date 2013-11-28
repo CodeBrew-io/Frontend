@@ -1,6 +1,7 @@
 app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fullscreen, snippets, user, throttle) {
 	'use strict';
-	var compilationInfo = [];
+	var errorWidgetLines = [];
+	var errorMarkedTexts = [];
 	var cmLeft, cmRight = null;
 	var viewingMySnippets = false;
 
@@ -41,11 +42,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 			snippets.saveLocal($scope.code);
 			throttle.event(function() {
 				scalaEval.insight($scope.code).then(function(data){
-					var errorWidgetLines = [];
-					var errorMarkedTexts = [];
-
 					$scope.insight = data.insight;
-
 					if (data.output){
 						if (!$scope.manuallyClosedConsole){
 							$scope.withConsole = true;
@@ -58,7 +55,6 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 					clearErrorWidgetLines();
 					clearErrorSquigglyLines();
 					if (data.errors){
-
 						data.errors.forEach(function(value) {	
 							errorWidgetLines.push(addErrorWidgetLines(value));							
 							errorMarkedTexts.push(addErrorSquigglyLines(value));
@@ -125,10 +121,10 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		theme: 'solarized light',
 		readOnly: 'nocursor',
 		onScroll: function(cm) {
+			var scrollRightInfo = cm.getScrollInfo();
 			if($scope.cmRight === null) {
 				$scope.cmRight = cm;
 			}
-			var scrollRightInfo = cm.getScrollInfo();
 			if ($scope.cmLeft !== null) {
 				$scope.cmLeft.scrollTo(null, scrollRightInfo['top']);
 			}
