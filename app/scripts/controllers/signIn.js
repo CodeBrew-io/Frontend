@@ -28,7 +28,8 @@ app.controller('signIn', function code($scope, $timeout, user){
 		}
 	}
 
-	user.get().$promise.then(function(u){
+	$scope.$watch('user.get()',function(){
+		var u = user.get();
 		if(angular.isDefined(u.secureSocialUser)){		
 			// use email as starting username
 			if(defined(u.secureSocialUser.email)){

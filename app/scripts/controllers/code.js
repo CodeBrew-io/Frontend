@@ -211,4 +211,6 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		$scope.console = "";
 		$scope.lastExecutionOutput = "";
 	}
+
+	$scope.login = user.login;
 });
