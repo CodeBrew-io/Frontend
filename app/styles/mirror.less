@@ -79,7 +79,6 @@
 		right: 0;
 		position: absolute;
 	    z-index: 100;
-	    background-color:@dark-tan;
 	    border-bottom-left-radius:15px;
 		.handle{
 			font-size:20px;
@@ -123,6 +122,11 @@
 					position: absolute;
 					color: @metal-blue;
 					font-size: 12px;
+				}
+
+				&.disable,
+				&.disable:hover {
+					color: @disable-blue;
 				}
 			}		
 		}

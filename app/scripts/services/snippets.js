@@ -9,13 +9,26 @@ app.factory('snippets', function($q, $resource, $timeout /* location, localStora
 
 	var hack = null;
 
+	if(!angular.isDefined(window.localStorage["theme"])) {
+		window.localStorage["theme"] = "light";
+	}
+
 	return {
 		"saveLocal": function(code){
 			window.localStorage["code"] = code;
 		},
+		"isLigth": function(){
+			return window.localStorage["theme"] == "light";
+		},
+		"getTheme": function(){
+			return "solarized " + window.localStorage["theme"];
+		},
+		"getThemeShort": function(){
+			return window.localStorage["theme"];
+		},
 		"toogleTheme": function(){
 			var to;
-			if(window.localStorage["theme"] == "dark") {
+			if( window.localStorage["theme"] == "dark") {
 				to = "light";
 			} else {
 				to = "dark";
@@ -24,12 +37,6 @@ app.factory('snippets', function($q, $resource, $timeout /* location, localStora
 				hack("solarized " + to);
 			}
 			window.localStorage["theme"] = to;
-		},
-		"theme": function(){
-			if(!angular.isDefined(window.localStorage["theme"])) {
-				window.localStorage["theme"] = "light";	
-			}
-			return window.localStorage["theme"];
 		},
 		"hack": function(h) {
 			hack = h;

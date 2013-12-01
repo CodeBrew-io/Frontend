@@ -30,12 +30,33 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		}
 	}
 
+	// Assing the value of the icon "Save my snippet"'s CSS'
+	$scope.saveMySnippetCss = function() {
+		var saveIconCss = $scope.isSaving ? ' fa-check saving' : ' fa-floppy-o';
+
+		if ($scope.code.length < 1 || errorWidgetLines.length > 0) 
+		{
+			saveIconCss += ' disable';
+		}
+
+		return saveIconCss;
+	}
+
+	$scope.logOut = function(){
+		user.logout();
+	};
+
+	$scope.getThemeShort = snippets.getThemeShort;
+
+	$scope.toogleTheme = snippets.toogleTheme;
+	$scope.isLigth = snippets.isLigth;
+
 	$scope.optionsCode = {
 		extraKeys: {"Ctrl-Space": "autocomplete"},
 		fixedGutter: false,
 		lineNumbers: true,
 		mode: 'text/x-scala',
-		theme: 'solarized light',
+		theme: snippets.getTheme(),
 		smartIndent: false,
 		autofocus: true,
 		autoCloseBrackets: true,
@@ -120,7 +141,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		fixedGutter: false,
 		lineNumbers: true,
 		mode: 'text/x-scala',
-		theme: 'solarized light',
+		theme: snippets.getTheme(),
 		readOnly: 'nocursor',
 		onScroll: function(cm) {
 			var scrollRightInfo = cm.getScrollInfo();
@@ -149,20 +170,23 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		refreshMirrors();
 	}
 
-	$scope.publish = function(){
-		if($scope.isSaving) return;
+	$scope.save = function(){
+		// We want to be able to save a snippet only if it's not empty.
+		if ($scope.code.length > 0 && errorWidgetLines.length == 0) {
+			if($scope.isSaving) return;
 
-		user.afterSignIn(function(userName){
-			$scope.isSaving = true;
-			snippets.save({"code": $scope.code}).$promise.then(function(data){
-				$scope.mySnippets = $scope.mySnippets.concat({
-					"id": data.id,
-					"code": $scope.code,
-					"user": userName
+			user.doAfterLogin(function(user){
+				$scope.isSaving = true;
+				snippets.save({"code": $scope.code}).$promise.then(function(data){
+					$scope.mySnippets = $scope.mySnippets.concat({
+						"id": data.id,
+						"code": $scope.code,
+						"user": user.codeBrewUser.userName
+					});
+					$timeout(function() { $scope.isSaving = false; }, 1000);
 				});
-				$timeout(function() { $scope.isSaving = false; }, 1000);
 			});
-		});
+		}
 	}
 
 	$scope.hasSnippets = function(){

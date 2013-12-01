@@ -1,15 +1,9 @@
 <div ng-controller="header" >
     <header ng-init="init()">
         <div class="brand" title="About Codebrew.io" ng-click="toogleContentPage()">CodeBrew</div>
-        <div class="btn-group profile" ng-show="loggedIn()" ng-class="{ 'open': profileOpen }" clickblur="closeProfile()">
-            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" ng-click="toogleProfile()">
-                <img class="img-rounded" ng-src="{{ user().codeBrewUser.avatarUrl }}">{{ user().codeBrewUser.userName }}<span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                <li><a ng-click="toogleTheme()">{{ theme() }}</a></li>
-                <li><a ng-click="logOut()">Logout</a></li>
-            </ul>
-        </div>
+        <img ng-show="loggedIn()" class="avatar img-rounded" ng-src="{{ user().codeBrewUser.avatarUrl }}">
+        <p ng-show="loggedIn()" class="username">{{ user().codeBrewUser.fullName }} ({{ user().codeBrewUser.userName }})</p>
+
         <div class="search-area" ng-class="{ 'active': !showingContentPage, 'inactive': showingContentPage}">
             <typeahead class="search" items="all"
                 term="term" search="search(term)" select="select(item)">
@@ -40,9 +34,9 @@
             </typeahead>
         </div>
     </header>
-    <div class="content-holder" ng-class="{ 'active': showingContentPage, 'inactive': !showingContentPage}">
+    <!--div class="content-holder" ng-class="{ 'active': showingContentPage, 'inactive': !showingContentPage}">
         <div class="content" ng-class="{ 'active': showingContentPage, 'inactive': !showingContentPage}">
             <ng-include src="'/views/about.html'" ></ng-include>
         </div>
-    </div>
+    </div-->
 </div>

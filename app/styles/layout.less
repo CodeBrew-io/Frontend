@@ -111,12 +111,15 @@ header {
 	position: relative;
 
 	height: @header-height;
-	
-	.brand, .profile {
-		display: inline-block;
-	}
 
+	.brand, .avatar, .username {
+		vertical-align: middle;
+		display: inline-block;
+		margin: 0;
+	}
+	
 	.brand {
+		padding-right: 20px;
 		font-size: 32px;
 		color: white;
 		vertical-align: middle;
@@ -124,17 +127,14 @@ header {
 		cursor:pointer;
 	}
 
-	.profile {
-		img {
-			margin-right: 10px;
-			width: 20px;
-			height: 20px;
-		}
+	.avatar {
+		width: 32px;
+		height: 32px;
+	}
 
-		.dropdown-menu {
-			min-width: 0;
-			cursor: pointer;
-		}
+	.username {
+		color: white;
+		font-size: 20px;
 	}
 	
 	.search-area {
@@ -155,14 +155,6 @@ header {
 		& > * {
 			vertical-align: middle;
 			display: inline-block;		
-		}
-
-		[href='/login'] {
-			margin-right: 30px;
-		}
-
-		[href='/login'], .profile {
-			vertical-align: top;
 		}
 
 		.search {

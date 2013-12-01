@@ -1,45 +1,39 @@
 <div ng-controller="code" ng-init="init()" class="app">
     <div class="code" ng-class="{'expandedWidth': withInsight==false, 'expandedHeight' : withConsole==false}">
-        <div class="sideMenu">
+        <div class="sideMenu cm-s-solarized cm-s-{{ getThemeShort() }}">
             <div class="expand-collapse" ng-class="{ 'active': showingSideMenu, 'inactive': !showingSideMenu}">
 
                 <i title="fullscreen (f11)" class="fa fa-expand" ng-click="fullscreen()"></i>
-                <i title="toogle insight" class="fa" 
+                <i title="toogle insight (ctrl-> | ctrl-<)" class="fa" 
                     ng-class="{'fa-chevron-right': withInsight, 'fa-chevron-left': !withInsight}"
                     ng-click="toogleInsight()"></i>
-                <i title="save snippet" class="fa" ng-click="publish($event)" 
-                    ng-class="{'fa-check saving':isSaving, 'fa-floppy-o': !isSaving}">
+                <i title="save snippet (ctrl-s)" class="fa" ng-click="save()" 
+                    ng-class="saveMySnippetCss()">
                 </i>
-                <i title="toogle my snippets" class= "fa" 
+                <i title="toogle my snippets (ctrl-o)" class="fa" 
                     ng-class="{'fa-folder-o' : !viewingMySnippets(), 'fa-folder-open-o': viewingMySnippets()}"
                     ng-click="toogleMySnippets()">
                 </i>
-                <i title="clear all" class="fa fa-eraser" ng-click="clear()"></i>
-                <i title="login" class="fa fa-user" ng-show="!loggedIn()" ng-click="login()"></i>
-                <div ng-class="getBubbleClass()" ng-show="show">
-                    <span class="info">{{ tutorialText.messages[currentBubbleIndex] }}</span>
-                    <div class="navigation">
-                        <a ng-click="previous()" ng-class="head()">{{ tutorialText.previous }}</a>
-                        <a ng-click="skip()">{{ tutorialText.skip }}</a>
-                        <a ng-click="next()" ng-class="last()">{{ tutorialText.next }}</a>
-                    </div>
-                </div>
-
+                <i title="clear all (ctrl-del)" class="fa fa-eraser" ng-click="clear()"></i>
+                <i title="login" class="fa fa-sign-in" ng-show="!loggedIn()" ng-click="login()"></i>
+                <i title="logout (ctrl-l)" class="fa fa-sign-out" ng-show="loggedIn()" ng-click="logOut()"></i>
+                <i title="inverse theme colors (ctrl-i)" class="fa"
+                    ng-class="{'fa-circle-o': !isLigth(), 'fa-circle': isLigth()}"
+                    ng-click="toogleTheme()"></i>
             </div>
-            
                 <div class="fa handle" ng-class="{'fa-bars': !showingSideMenu, 'fa-chevron-up': showingSideMenu}" ng-click="toogleSideMenu()"></div>
         </div>
         <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
-    </div><div class="insight"  ng-show="withInsight" ng-class="{'expandedHeight' : withConsole==false}">
+    </div><!-- 
+  --><div class="insight"  ng-show="withInsight" ng-class="{'expandedHeight' : withConsole==false}">
         <div class="mirror" ng-show="!viewingMySnippets()" ng-class="{ 'fetching': fetching}">
             <textarea ui-codemirror="optionsInsight" ng-model="insight"></textarea>
         </div>
         <div class="left-box user-snippet" ng-show="viewingMySnippets()">
             <ng-include src="'/views/mysnippets.html'"></ng-include>
         </div>
-
     </div>
-    <div class="console cm-s-solarized cm-s-light">
+    <div class="console cm-s-solarized cm-s-{{ getThemeShort() }}">
         <div class="handle">
             <div class="menu">
                 <i class="fa fa-eraser" ng-show="!consoleIsEmpty()" ng-click="clearConsole()"></i>
