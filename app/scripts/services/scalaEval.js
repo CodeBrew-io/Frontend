@@ -36,6 +36,7 @@ app.factory("scalaEval", function($q, $rootScope, $location) {
 	socket.onopen = function(){
 		if(null !== lastMessage) {
 			socket.send(lastMessage);
+			lastMessage = null;
 		}
 	};
 
@@ -46,10 +47,17 @@ app.factory("scalaEval", function($q, $rootScope, $location) {
 		callbacks[callbackId] = defer;
 		request[serviceName].callback_id = callbackId;
 
-		if( socket.readyState === socket.CONNECTING ) {
-			lastMessage = JSON.stringify(request)
-		} else {
-			socket.send(JSON.stringify(request));
+		switch(socket.readyState) {
+			case socket.OPEN:
+				socket.send(JSON.stringify(request));	
+				break;
+			case socket.CONNECTING:
+				lastMessage = JSON.stringify(request);
+				break;
+			case socket.CLOSED:
+				lastMessage = JSON.stringify(request);
+				socket = new WebSocket(url); // reopen
+				break;
 		}
 		
 		return defer.promise;
