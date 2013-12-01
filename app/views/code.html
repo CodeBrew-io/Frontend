@@ -1,4 +1,4 @@
-<div class="bubble" ng-show="show">
+<div class="bubble" ng-class="arrowSide" ng-show="show">
     <span class="info">{{ bubbleText }}</span>
     <div class="navigation">
         <a ng-click="previous()" ng-class="head()">{{ tutorialText.previous }}</a>
@@ -6,8 +6,6 @@
         <a ng-click="next()" ng-class="last()">{{ tutorialText.next }}</a>
     </div>
 </div>
-
-<span style="color:white;">bubble positions = [left: {{bubbleLeft}}, top: {{bubbleTop}}]</span>
 
 <div ng-controller="code" ng-init="init()" class="app">
     <div class="code" ng-class="{'expandedWidth': withInsight==false, 'expandedHeight' : withConsole==false}">
@@ -49,6 +47,7 @@
     <div class="console cm-s-solarized cm-s-light">
         <div class="handle">
             <div class="menu">
+                <span class="chevron">&nbsp;</span>
                 <i class="fa fa-eraser" ng-show="!consoleIsEmpty()" ng-click="clearConsole()"></i>
                 <i class="fa" ng-class="{'fa-chevron-down': withConsole, 'fa-chevron-up': !withConsole}"
                  ng-click="toogleConsole()"></i> 

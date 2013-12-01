@@ -16,6 +16,16 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		}
 	});
 
+	// to be able to set the code from the rootScope
+	$rootScope.$on('setCode', function(event, code) {
+		$scope.code = code;
+	});
+
+	// to be able to set the insight from the rootScope
+	$rootScope.$on('setInsight', function(event, insight) {
+		$scope.insight = insight;
+	});
+
 	snippets.current().then(function(data){
 		$scope.code = data.code;
 	});
