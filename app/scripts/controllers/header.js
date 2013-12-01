@@ -2,6 +2,7 @@ app.controller('header', function header($scope, $rootScope, user, snippets, sca
 	'use strict';
 
 	$scope.user = user.get;
+
 	$scope.loggedIn = user.loggedIn;
 
 	$scope.logOut = function(){
@@ -15,9 +16,6 @@ app.controller('header', function header($scope, $rootScope, user, snippets, sca
 	$scope.toogleProfile = function(){
 		$scope.profileOpen = !$scope.profileOpen;
 	};
-
-	$scope.theme = snippets.theme;
-	$scope.toogleTheme = snippets.toogleTheme;
 
 	$scope.codemirrorOptions = {
 		mode: 'text/x-scala',

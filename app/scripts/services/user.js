@@ -6,8 +6,8 @@ app.factory('user', function($resource, $window, $q) {
 	var afterLogin = null;
 
 	function popup(url, title, w, h) {
-		w = w | 1024;
-		h = h | $window.innerHeight;
+		w = w | 620;
+		h = h | 680;
 		var left = (screen.width/2)-(w/2);
 		var top = (screen.height/2)-(h/2);
 		return window.open(url, title, 'toolbar=0, location=0, titlebar=0, directories=0, status=0, menubar=0, scrollbars=1, resizable=1, width='+w+', height='+h+', top='+top+', left='+left);

@@ -34,12 +34,17 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		user.logout();
 	};
 
+	$scope.getThemeShort = snippets.getThemeShort;
+
+	$scope.toogleTheme = snippets.toogleTheme;
+	$scope.isLigth = snippets.isLigth;
+
 	$scope.optionsCode = {
 		extraKeys: {"Ctrl-Space": "autocomplete"},
 		fixedGutter: false,
 		lineNumbers: true,
 		mode: 'text/x-scala',
-		theme: 'solarized light',
+		theme: snippets.getTheme(),
 		smartIndent: false,
 		autofocus: true,
 		autoCloseBrackets: true,
@@ -124,7 +129,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		fixedGutter: false,
 		lineNumbers: true,
 		mode: 'text/x-scala',
-		theme: 'solarized light',
+		theme: snippets.getTheme(),
 		readOnly: 'nocursor',
 		onScroll: function(cm) {
 			var scrollRightInfo = cm.getScrollInfo();
