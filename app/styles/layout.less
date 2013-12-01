@@ -2,7 +2,7 @@
 
 html, body {
 	height: 100%;
-	background-color: @metal-blue;
+	
 }
 
 @header-height: 56px;
@@ -22,7 +22,7 @@ html, body {
 		height: @header-height;		
 	}
 	.expand-collapse {
-		display: none;
+
 	}
 }
 
@@ -41,8 +41,72 @@ html, body {
 :fullscreen {
 	.fullscreen;
 }
+.content-holder{
+	transition: height 0.5s;
+	-webkit-transition: height 0.5s;
+	position:absolute;
+	top:@header-height;
+	overflow-y:auto;
+	color:white;
+	background-color: @metal-blue;
+	float:left;
+	z-index:1000;
+	box-shadow: 0px 5px 5px #888888;
+	&.active{
+		height:calc(~"90% - " @header-height);
+	}
+
+	&.inactive {
+		height:0px;
+	}
+
+	.content {
+		margin:10px;
+		transition: opacity 0.5s;
+		-webkit-transition: opacity 0.5s;
+
+		&.active {
+		opacity:1;
+		}
+		&.inactive {
+			opacity:0;
+		}
+		h2 {
+			font-size:1.3em;
+		}
+
+		.thanksBox {
+			background-color:white;
+			padding:10px;
+			text-align:center;
+
+			border-radius:25px;
+
+			.specialThanksLogo{
+				width:200px;
+				margin-left:30px;
+				margin-right:30px;
+				display:inline;
+			}
+			.scalex{
+				font-size: 40px;
+				color: #909090;
+				text-shadow: 0 1px 0 #fff;
+			}
+			.scalexVersion{
+				font-size: 14px;
+				font-weight: bold;
+				color: #ff8888;
+			}
+		}
+	}
+}
+
+
+
 
 header {
+	background-color: @metal-blue;
 	padding: 5px;
 	position: relative;
 
@@ -58,6 +122,9 @@ header {
 		padding-right: 20px;
 		font-size: 32px;
 		color: white;
+		vertical-align: middle;
+		padding-right: 20px;
+		cursor:pointer;
 	}
 
 	.avatar {
@@ -76,6 +143,14 @@ header {
 		top:0;
 		width: calc(~"50% - 45px");
 		padding: 10px;
+		transition: opacity 0.5s;
+		-webkit-transition: opacity 0.5s;
+		&.active {
+			opacity:1;
+		}
+		&.inactive{
+			opacity:0;
+		}
 
 		& > * {
 			vertical-align: middle;

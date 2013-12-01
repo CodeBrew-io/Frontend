@@ -1,6 +1,6 @@
 <div ng-controller="code" ng-init="init()" class="app">
     <div class="code" ng-class="{'expandedWidth': withInsight==false, 'expandedHeight' : withConsole==false}">
-        <!--div class="sideMenu"-->
+        <div class="sideMenu cm-s-solarized cm-s-{{ getThemeShort() }}">
             <div class="expand-collapse" ng-class="{ 'active': showingSideMenu, 'inactive': !showingSideMenu}">
 
                 <i title="fullscreen (f11)" class="fa fa-expand" ng-click="fullscreen()"></i>
@@ -21,10 +21,8 @@
                     ng-class="{'fa-circle-o': !isLigth(), 'fa-circle': isLigth()}"
                     ng-click="toogleTheme()"></i>
             </div>
-            <!--div class="fa handle" ng-click="toogleSideMenu()"
-                ng-class="{'fa-chevron-up': showingSideMenu, 'fa-chevron-down': !showingSideMenu}" >
-            </div-->
-        <!--/div-->
+                <div class="fa handle" ng-class="{'fa-bars': !showingSideMenu, 'fa-chevron-up': showingSideMenu}" ng-click="toogleSideMenu()"></div>
+        </div>
         <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
     </div><!-- 
   --><div class="insight"  ng-show="withInsight" ng-class="{'expandedHeight' : withConsole==false}">
