@@ -61,4 +61,10 @@ app.controller('header', function header($scope, $rootScope, user, snippets, sca
 			$rootScope.$emit('selectedCode', code);
 		}
 	};
+
+	$scope.showingContentPage = false;
+	$scope.toogleContentPage = function() {
+		$scope.showingContentPage = !$scope.showingContentPage;
+	}
+
 });	

@@ -35,16 +35,20 @@ app.run(function(scalaEval){
 
 				var term = currentLine.substr(curFrom.ch, curTo.ch - curFrom.ch);
 
+
 				var completions = data.completions.filter(function(c){
+
 					return c.name.toLowerCase().indexOf(term.toLowerCase()) != -1;
+
 				}).map(function(c){ return {
 					text: c.name,
 					completion: c,
 					alignWithWord: true,
 					render: function(el, _, _1){
-						$(el).html("<span class=\"autocomplete-result-name\">" + c.name + "</span><span class=\"autocomplete-result-signature\">" + c.signature +"</span>");
+						$(el).html("<span class=\"autocomplete-result-name\">" + c.name + "</span> <span class=\"autocomplete-result-signature\">" + c.signature +"</span>");
 					},
 				}});
+
 				return {from: curFrom, to: curTo, list: completions};
 			});
 		})

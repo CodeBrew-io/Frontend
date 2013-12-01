@@ -1,41 +1,48 @@
-<header ng-controller="header" ng-init="init()">
-    <div class="brand">CodeBrew</div>
-    <div class="btn-group profile" ng-show="loggedIn()" ng-class="{ 'open': profileOpen }" clickblur="closeProfile()">
-        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" ng-click="toogleProfile()">
-            <img class="img-rounded" ng-src="{{ user().codeBrewUser.avatarUrl }}">{{ user().codeBrewUser.userName }}<span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-            <li><a ng-click="toogleTheme()">{{ theme() }}</a></li>
-            <li><a ng-click="logOut()">Logout</a></li>
-        </ul>
+<div ng-controller="header" >
+    <header ng-init="init()">
+        <div class="brand" title="About Codebrew.io" ng-click="toogleContentPage()">CodeBrew</div>
+        <div class="btn-group profile" ng-show="loggedIn()" ng-class="{ 'open': profileOpen }" clickblur="closeProfile()">
+            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" ng-click="toogleProfile()">
+                <img class="img-rounded" ng-src="{{ user().codeBrewUser.avatarUrl }}">{{ user().codeBrewUser.userName }}<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a ng-click="toogleTheme()">{{ theme() }}</a></li>
+                <li><a ng-click="logOut()">Logout</a></li>
+            </ul>
+        </div>
+        <div class="search-area" ng-class="{ 'active': !showingContentPage, 'inactive': showingContentPage}">
+            <typeahead class="search" items="all"
+                term="term" search="search(term)" select="select(item)">
+                <div ng-show="hasDocs()" class="doc">
+                    <h3>Doc</h3>
+                    <ul>
+                        <li typeahead-item="doc" ng-repeat="doc in docs" class="results">
+                            <syntaxhighlight syntaxtype="text/x-scala" ng-model='doc.qualifiedName'></syntaxhighlight>
+                            <syntaxhighlight syntaxtype="text/x-scala" ng-model='doc.signature'></syntaxhighlight>
+                            <pre class="text" ng-show="doc.comment.source">{{ doc.comment.source }}</pre>
+                            <a href="http://www.scala-lang.org/files/archive/api/current/#{{ doc.parent.qualifiedName }}" target="_blank">
+                                <i class="fa fa-external-link"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div ng-show="hasSnippets()" class="snippet">
+                    <h3>Snippet</h3>
+                    <ul>
+                        <li typeahead-item="snippet.code" ng-repeat="snippet in snippets track by snippet.id" class="results">
+                            <syntaxhighlight syntaxtype="text/x-scala" ng-model='snippet.code'></syntaxhighlight>
+                            <a href="/{{ snippet.user }}/{{ snippet.id }}" target="_blank">
+                                <i class="fa fa-external-link"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </typeahead>
+        </div>
+    </header>
+    <div class="content-holder" ng-class="{ 'active': showingContentPage, 'inactive': !showingContentPage}">
+        <div class="content" ng-class="{ 'active': showingContentPage, 'inactive': !showingContentPage}">
+            <ng-include src="'/views/about.html'" ></ng-include>
+        </div>
     </div>
-    <div class="search-area">
-        <typeahead class="search" items="all"
-            term="term" search="search(term)" select="select(item)">
-            <div ng-show="hasDocs()" class="doc">
-                <h3>Doc</h3>
-                <ul>
-                    <li typeahead-item="doc" ng-repeat="doc in docs" class="results">
-                        <syntaxhighlight syntaxtype="text/x-scala" ng-model='doc.qualifiedName'></syntaxhighlight>
-                        <syntaxhighlight syntaxtype="text/x-scala" ng-model='doc.signature'></syntaxhighlight>
-                        <pre class="text" ng-show="doc.comment.source">{{ doc.comment.source }}</pre>
-                        <a href="http://www.scala-lang.org/files/archive/api/current/#{{ doc.parent.qualifiedName }}" target="_blank">
-                            <i class="fa fa-external-link"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div ng-show="hasSnippets()" class="snippet">
-                <h3>Snippet</h3>
-                <ul>
-                    <li typeahead-item="snippet.code" ng-repeat="snippet in snippets track by snippet.id" class="results">
-                        <syntaxhighlight syntaxtype="text/x-scala" ng-model='snippet.code'></syntaxhighlight>
-                        <a href="/{{ snippet.user }}/{{ snippet.id }}" target="_blank">
-                            <i class="fa fa-external-link"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </typeahead>
-    </div>
-</header>
+</div>
