@@ -32,7 +32,8 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	$scope.saveMySnippetCss = function() {
 		var saveIconCss = $scope.isSaving ? ' fa-check saving' : ' fa-floppy-o';
 
-		if ($scope.code.length < 1) {
+		if ($scope.code.length < 1 || errorWidgetLines.length > 0) 
+		{
 			saveIconCss += ' disable';
 		}
 
