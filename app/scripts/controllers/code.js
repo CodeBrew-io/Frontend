@@ -1,4 +1,4 @@
-app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fullscreen, snippets, user, throttle) {
+app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fullscreen, snippets, user, throttle, keyboardManager) {
 	'use strict';
 	var errorWidgetLines = [];
 	var errorMarkedTexts = [];
@@ -249,4 +249,41 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	$scope.toogleSideMenu = function(){
 		$scope.showingSideMenu = !$scope.showingSideMenu;
 	}
+
+	// adding the keyboard's shortcuts
+	//________________________________________
+
+	// toggle Insight (make insight appear or disappear)
+	keyboardManager.bind('ctrl+,', function(e) {
+		$scope.toogleInsight();
+	}, {'stop':true});
+
+	// saving
+	keyboardManager.bind('ctrl+s', function(e) {
+		$scope.save();
+	}, {'stop':true});
+
+	// toggle my snippets
+	keyboardManager.bind('ctrl+o', function(e) {
+		$scope.toogleMySnippets();
+	}, {'stop':true});
+
+	// clear code
+	keyboardManager.bind('ctrl+delete', function(e) {
+		$scope.clear();
+	}, {'stop':true});
+
+	// logout
+	keyboardManager.bind('ctrl+l', function(e) {
+		if ($scope.loggedIn()) {
+			$scope.logOut();
+		} else {
+			$scope.login();
+		}
+	}, {'stop':true});
+
+	// inverse color
+	keyboardManager.bind('ctrl+i', function(e) {
+		$scope.toogleTheme();
+	}, {'stop':true});
 });
