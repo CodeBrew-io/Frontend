@@ -13,7 +13,7 @@ app.factory('user', function($resource, $window) {
 			  var top = (screen.height/2)-(h/2);
 			  return window.open(url, title, 'toolbar=0, location=0, titlebar=0, directories=0, status=0, menubar=0, scrollbars=1, resizable=1, width='+w+', height='+h+', top='+top+', left='+left);
 			} 
-			popupwindow('/login', 'oauth', 1024, $window.innerHeight);
+			popup = popupwindow('/login', 'oauth', 1024, $window.innerHeight);
 		}
 	}
 
