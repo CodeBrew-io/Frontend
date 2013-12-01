@@ -80,6 +80,8 @@ app.controller('bubble', function code($scope, $rootScope) {
 
 	// will get the informations needed for the bubble
 	function _setBubbleData(index) {
+		if(!$scope.show) return;
+		
 		_ensureBubbleElement();
 
 		var bubbleInfoList = $scope.tutorialText.bubbleInfoList;
