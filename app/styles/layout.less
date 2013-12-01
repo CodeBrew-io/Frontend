@@ -47,18 +47,34 @@ header {
 	position: relative;
 
 	height: @header-height;
+
+	.brand, .avatar, .username {
+		vertical-align: middle;
+		display: inline-block;
+		margin: 0;
+	}
 	
 	.brand {
+		padding-right: 20px;
 		font-size: 32px;
-		width: 30%;
 		color: white;
+	}
+
+	.avatar {
+		width: 32px;
+		height: 32px;
+	}
+
+	.username {
+		color: white;
+		font-size: 20px;
 	}
 	
 	.search-area {
 		position: absolute;
 		right: 0;
 		top:0;
-		width: 45%;
+		width: calc(~"50% - 45px");
 		padding: 10px;
 
 		& > * {
@@ -66,29 +82,8 @@ header {
 			display: inline-block;		
 		}
 
-		[href='/login'] {
-			margin-right: 30px;
-		}
-
-		[href='/login'], .profile {
-			vertical-align: top;
-		}
-
-		.profile {
-			width: 20%;
-			img {
-				margin-right: 10px;
-				width: 20px;
-				height: 20px;
-			}
-
-			.dropdown-menu {
-				min-width: 0;
-			}
-		}
-
 		.search {
-			width: 80%;
+			width: 100%;
 
 			.dropdown {
 				z-index: 10;

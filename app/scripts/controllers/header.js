@@ -2,23 +2,24 @@ app.controller('header', function header($scope, $rootScope, user, snippets, sca
 	'use strict';
 
 	$scope.user = user.get;
+
 	$scope.loggedIn = user.loggedIn;
 
 	$scope.logOut = function(){
 		user.logout();
-	}
+	};
 
 	$scope.profileOpen = false;
-	$scope.outProfile = function(){
+	$scope.closeProfile = function(){
 		$scope.profileOpen = false;
-	}
+	};
 	$scope.toogleProfile = function(){
 		$scope.profileOpen = !$scope.profileOpen;
-	}
+	};
 
 	$scope.codemirrorOptions = {
 		mode: 'text/x-scala',
-		theme: 'solarized light',
+		theme: snippets.getTheme(),
 		readOnly: 'true'
 	};
 	$scope.docs = [];
@@ -58,4 +59,9 @@ app.controller('header', function header($scope, $rootScope, user, snippets, sca
 			$rootScope.$emit('selectedCode', code);
 		}
 	};
+
+	$scope.showingContentPage = false;
+	$scope.toogleContentPage = function() {
+		$scope.showingContentPage = !$scope.showingContentPage;
+	}
 });	

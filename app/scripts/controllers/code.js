@@ -25,7 +25,9 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	}
 
 	$scope.clear = function(){
-		$scope.code = "";
+		if(window.confirm("Clear code?")) {
+			$scope.code = "";
+		}
 	}
 
 	// Assing the value of the icon "Save my snippet"'s CSS'
@@ -40,12 +42,21 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		return saveIconCss;
 	}
 
+	$scope.logOut = function(){
+		user.logout();
+	};
+
+	$scope.getThemeShort = snippets.getThemeShort;
+
+	$scope.toogleTheme = snippets.toogleTheme;
+	$scope.isLigth = snippets.isLigth;
+
 	$scope.optionsCode = {
 		extraKeys: {"Ctrl-Space": "autocomplete"},
 		fixedGutter: false,
 		lineNumbers: true,
 		mode: 'text/x-scala',
-		theme: 'solarized light',
+		theme: snippets.getTheme(),
 		smartIndent: false,
 		autofocus: true,
 		autoCloseBrackets: true,
@@ -130,7 +141,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		fixedGutter: false,
 		lineNumbers: true,
 		mode: 'text/x-scala',
-		theme: 'solarized light',
+		theme: snippets.getTheme(),
 		readOnly: 'nocursor',
 		onScroll: function(cm) {
 			var scrollRightInfo = cm.getScrollInfo();
@@ -159,21 +170,22 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		refreshMirrors();
 	}
 
-	$scope.publish = function($event){
+	$scope.save = function(){
 		// We want to be able to save a snippet only if it's not empty.
-		if ($scope.code.length > 0) {
-			if (!$scope.isSaving) {
-				$scope.isSaving = true;
+		if ($scope.code.length > 0 && errorWidgetLines.length == 0) {
+			if($scope.isSaving) return;
 
+			user.doAfterLogin(function(user){
+				$scope.isSaving = true;
 				snippets.save({"code": $scope.code}).$promise.then(function(data){
 					$scope.mySnippets = $scope.mySnippets.concat({
 						"id": data.id,
 						"code": $scope.code,
-						"user": user.get().codeBrewUser.userName
+						"user": user.codeBrewUser.userName
 					});
 					$timeout(function() { $scope.isSaving = false; }, 1000);
 				});
-			}
+			});
 		}
 	}
 
@@ -185,6 +197,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		return user.loggedIn() && viewingMySnippets;
 	}
 	$scope.toogleMySnippets = function(){
+		// login if need be
 		$scope.mySnippets = snippets.queryUser();
 		
 		viewingMySnippets = !viewingMySnippets;
@@ -196,7 +209,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	};
 
 	$scope.deleteSnippet = function(snippet){
-		if(window.confirm("Delete snippet ?")) {
+		if(window.confirm("Delete snippet?")) {
 			snippets.delete({id: snippet.id});
 			$scope.mySnippets = $scope.mySnippets.filter(function(s){
 				return s != snippet;
@@ -221,5 +234,19 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	$scope.clearConsole = function() {
 		$scope.console = "";
 		$scope.lastExecutionOutput = "";
+	}
+
+	$scope.login = user.login;
+
+	snippets.hack(function(t){
+		$timeout(function() {
+			$scope.cmLeft.setOption("theme", t);
+			$scope.cmRight.setOption("theme", t);
+		});
+	});
+
+	$scope.showingSideMenu = true;
+	$scope.toogleSideMenu = function(){
+		$scope.showingSideMenu = !$scope.showingSideMenu;
 	}
 });

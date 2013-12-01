@@ -1,6 +1,6 @@
 app.controller('bubble', function code($scope) {
 	$scope.currentBubbleIndex = 0;
-	$scope.show = true;
+	$scope.show = false;
 
 	// set the previous bubble as current index
 	$scope.previous = function() {

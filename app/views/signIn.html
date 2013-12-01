@@ -1,4 +1,4 @@
-<form ng-controller="signIn" name="signIn" ng-submit="save()" ng-init="init()" ng-show ="showSignIn" class="cb-modal signIn">
+<form ng-controller="signIn" class="cb-modal signIn" name="signIn" ng-submit="save()" ng-init="init()" ng-show ="showSignIn()">
 	<div class="form-group" ng-class="{'has-success': signIn.userName.$valid, 'has-error': !signIn.userName.$valid}">
 		<label class="control-label">
 			Username
@@ -6,15 +6,6 @@
 			<span class="error" ng-show="signIn.userName.$error.taken">is already taken</span>
 			<i class="fa" ng-class="{'fa-check valid': signIn.userName.$valid, 'fa-exclamation invalid': !signIn.userName.$valid}"></i>
 			<input ng-model="userName" name="userName" type="text" placeholder="bob" required class="form-control">
-		</label>
-	</div>
-	<div class="form-group" ng-class="{'has-success': signIn.email.$valid, 'has-error': !signIn.email.$valid}">
-		<label class="control-label">
-			Email 
-			<span class="error" ng-show="signIn.email.$error.email">is not valid</span>
-			<span class="error" ng-show="signIn.email.$error.required">is required</span>
-			<i class="fa" ng-class="{'fa-check valid': signIn.email.$valid, 'fa-exclamation invalid': !signIn.email.$valid}"></i>
-			<input ng-model="email" name="email" type="email" placeholder="bob@example.com" required class="form-control">
 		</label>
 	</div>
 	<div class="actions">
