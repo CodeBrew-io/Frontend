@@ -75,41 +75,57 @@
 }
 
 .code {
-	.expand-collapse {
+	.sideMenu{
 		right: 0;
 		position: absolute;
-	    margin-top: 5px;
-	    margin-right: 12px;
 	    z-index: 100;
+	    background-color:@dark-tan;
+	    border-bottom-left-radius:15px;
+		.handle{
+			font-size:20px;
+			text-align:center;
+			width:100%;
+			margin:auto;
+		}
+		.expand-collapse {
+			transition: max-height 0.5s;
+			-webkit-transition: max-height 0.5s;
+			overflow:hidden;
+			text-align:center;
+		    &.active{
+		    	max-height:500px;
+		    }
+		    &.inactive{
+		    	max-height:0px;
+		    }
 
-		i {
-			float:right;
-			clear: both;
-			display: block;
-			font-size: 32px;
-			margin-top: 10px;
-			color: @metal-blue;
-
-			&:hover {
-				color: @sky;
-			}
-
-			&.saving {
-				color: green;
-
-				&:hover {
-					color: green;
-				}
-			}
-
-			.message {
-				top: 105px;
-				left: -55px;
-				position: absolute;
+			i {
+				
+				display: block;
+				font-size: 32px;
 				color: @metal-blue;
-				font-size: 12px;
-			}
-		}		
+				margin:3px;
+				&:hover {
+					color: @sky;
+				}
+
+				&.saving {
+					color: green;
+
+					&:hover {
+						color: green;
+					}
+				}
+
+				.message {
+					top: 105px;
+					left: -55px;
+					position: absolute;
+					color: @metal-blue;
+					font-size: 12px;
+				}
+			}		
+		}
 	}
 
 	.error {

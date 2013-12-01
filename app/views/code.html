@@ -27,7 +27,7 @@
 
             </div>
             
-                <div class="fa handle" ng-class="{'fa-chevron-up': showingSideMenu, 'fa-chevron-down': !showingSideMenu}" ng-click="toogleSideMenu()"></div>
+                <div class="fa handle" ng-class="{'fa-bars': !showingSideMenu, 'fa-chevron-up': showingSideMenu}" ng-click="toogleSideMenu()"></div>
         </div>
         <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
     </div><div class="insight"  ng-show="withInsight" ng-class="{'expandedHeight' : withConsole==false}">
