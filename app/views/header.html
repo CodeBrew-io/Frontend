@@ -1,11 +1,11 @@
 <header ng-controller="header" ng-init="init()">
     <div class="brand">CodeBrew</div>
-    <div class="btn-group profile" ng-show="loggedIn()" ng-class="{ 'open': profileOpen }">
+    <div class="btn-group profile" ng-show="loggedIn()" ng-class="{ 'open': profileOpen }" clickblur="closeProfile()">
         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" ng-click="toogleProfile()">
             <img class="img-rounded" ng-src="{{ user().codeBrewUser.avatarUrl }}">{{ user().codeBrewUser.userName }}<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-            <li><a ng-click="settings()">Settings</a></li>
+            <li><a ng-click="toogleTheme()">{{ theme() }}</a></li>
             <li><a ng-click="logOut()">Logout</a></li>
         </ul>
     </div>

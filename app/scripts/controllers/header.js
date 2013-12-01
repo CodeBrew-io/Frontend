@@ -6,15 +6,18 @@ app.controller('header', function header($scope, $rootScope, user, snippets, sca
 
 	$scope.logOut = function(){
 		user.logout();
-	}
+	};
 
 	$scope.profileOpen = false;
-	$scope.outProfile = function(){
+	$scope.closeProfile = function(){
 		$scope.profileOpen = false;
-	}
+	};
 	$scope.toogleProfile = function(){
 		$scope.profileOpen = !$scope.profileOpen;
-	}
+	};
+
+	$scope.theme = snippets.theme;
+	$scope.toogleTheme = snippets.toogleTheme;
 
 	$scope.codemirrorOptions = {
 		mode: 'text/x-scala',

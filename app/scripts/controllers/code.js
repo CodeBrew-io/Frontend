@@ -211,4 +211,13 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		$scope.console = "";
 		$scope.lastExecutionOutput = "";
 	}
+
+	$scope.login = user.login;
+
+	snippets.hack(function(t){
+		$timeout(function() {
+			$scope.cmLeft.setOption("theme", t);
+			$scope.cmRight.setOption("theme", t);
+		});
+	});
 });

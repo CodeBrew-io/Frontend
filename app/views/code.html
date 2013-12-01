@@ -13,6 +13,7 @@
                 ng-click="toogleMySnippets()">
             </i>
             <i title="clear all" class="fa fa-eraser" ng-click="clear()"></i>
+            <i class="fa fa-user" ng-show="!loggedIn()" ng-click="login()"></i>
             <div ng-class="getBubbleClass()" ng-show="show">
                 <span class="info">{{ tutorialText.messages[currentBubbleIndex] }}</span>
                 <div class="navigation">
