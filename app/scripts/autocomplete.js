@@ -39,7 +39,7 @@ app.run(function(scalaEval){
 					completion: c,
 					alignWithWord: true,
 					render: function(el, _, _1){
-						$(el).text(c.signature);
+						$(el).html("<span class=\"autocomplete-result-name\">" + c.name + "</span><span class=\"autocomplete-result-signature\">" + c.signature +"</span>");
 					},
 				}});
 				return {from: curFrom, to: curTo, list: completions};
