@@ -28,7 +28,11 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	// Assing the value of the icon "Save my snippet"'s CSS'
 	$scope.saveMySnippetCss = function() {
 		var saveIconCss = $scope.isSaving ? ' fa-check saving' : ' fa-floppy-o';
-		if (angular.isDefined($scope.code) || errorWidgetLines.length > 0) {
+		if(angular.isDefined($scope.code)) {
+			if($scope.code.length == 0 || errorWidgetLines.length > 0) {
+				saveIconCss += ' disable';	
+			}
+		} else {
 			saveIconCss += ' disable';
 		}
 
@@ -173,8 +177,11 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	$scope.withInsight = true;
 	$scope.toogleInsight = function() {
 		$scope.withInsight = !$scope.withInsight;
-		refreshMirrors();
 	}
+
+	$scope.$watch('withInsight',function(){
+		refreshMirrors();
+	});
 
 	$scope.save = function(){
 		// We want to be able to save a snippet only if it's not empty.
@@ -230,7 +237,6 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		if (!$scope.withConsole){
 			$scope.manuallyClosedConsole = true;
 		}
-		refreshMirrors();
 	}	
 
 	$scope.consoleIsEmpty = function () {
@@ -241,6 +247,10 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		$scope.console = "";
 		$scope.lastExecutionOutput = "";
 	}
+
+	$scope.$watch('withConsole',function(){
+		refreshMirrors();
+	})
 
 	$scope.login = user.login;
 
@@ -260,8 +270,12 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	//________________________________________
 
 	// toggle Insight (make insight appear or disappear)
-	keyboardManager.bind('ctrl+,', function(e) {
-		$scope.toogleInsight();
+	keyboardManager.bind('ctrl+left', function(e) {
+		$scope.withInsight = true;
+	});
+
+	keyboardManager.bind('ctrl+right', function(e) {
+		$scope.withInsight = false;
 	});
 
 	// saving
