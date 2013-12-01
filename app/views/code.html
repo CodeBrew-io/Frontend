@@ -1,3 +1,14 @@
+<div class="bubble" ng-show="show">
+    <span class="info">{{ bubbleText }}</span>
+    <div class="navigation">
+        <a ng-click="previous()" ng-class="head()">{{ tutorialText.previous }}</a>
+        <a ng-click="skip()">{{ tutorialText.skip }}</a>
+        <a ng-click="next()" ng-class="last()">{{ tutorialText.next }}</a>
+    </div>
+</div>
+
+<span style="color:white;">bubble positions = [left: {{bubbleLeft}}, top: {{bubbleTop}}]</span>
+
 <div ng-controller="code" ng-init="init()" class="app">
     <div class="code" ng-class="{'expandedWidth': withInsight==false, 'expandedHeight' : withConsole==false}">
         <div class="expand-collapse">
@@ -13,14 +24,6 @@
                 ng-click="toogleMySnippets()">
             </i>
             <i title="clear all" class="fa fa-eraser" ng-click="clear()"></i>
-            <div ng-class="getBubbleClass()" ng-show="show">
-                <span class="info">{{ tutorialText.messages[currentBubbleIndex] }}</span>
-                <div class="navigation">
-                    <a ng-click="previous()" ng-class="head()">{{ tutorialText.previous }}</a>
-                    <a ng-click="skip()">{{ tutorialText.skip }}</a>
-                    <a ng-click="next()" ng-class="last()">{{ tutorialText.next }}</a>
-                </div>
-            </div>
         </div>
         <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
     </div><div class="insight"  ng-show="withInsight" ng-class="{'expandedHeight' : withConsole==false}">
