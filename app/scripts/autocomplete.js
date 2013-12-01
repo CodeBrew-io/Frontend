@@ -15,33 +15,40 @@ app.run(function(scalaEval){
 			// ok
 			CodeMirror.showHint(cm, function(cm, options){
 				var i;
-				var curFrom = cm.getCursor();
-				var curTo = cm.getCursor();
-				var currentLine = cm.getDoc().getValue().split("\n")[curFrom.line];
+				var cur= cm.getCursor();
+				var curTo = {"ch" : cur.ch, "line" : cur.line};
+				var curFrom = {"ch" : cur.ch, "line" : cur.line};
+
+				var currentLine = cm.getDoc().getValue().split("\n")[cur.line];
 
 				function delimiter(c){
 					return  /^[a-zA-Z0-9\_]$/.test(c);
 				}
 
-				for (i = curFrom.ch-1; i >= 0 && delimiter(currentLine[i]); i--){
+
+				for (i = cur.ch-1; i >= 0 && delimiter(currentLine[i]); i--){
 					curFrom.ch = i;
 				}
-				for (i = curTo.ch; i < currentLine.length && delimiter(currentLine[i]); i++){
+				for (i = cur.ch; i < currentLine.length && delimiter(currentLine[i]); i++){
 					curTo.ch = i+1;
 				}
 
 				var term = currentLine.substr(curFrom.ch, curTo.ch - curFrom.ch);
 
+
 				var completions = data.completions.filter(function(c){
+
 					return c.name.toLowerCase().indexOf(term.toLowerCase()) != -1;
+
 				}).map(function(c){ return {
 					text: c.name,
 					completion: c,
 					alignWithWord: true,
 					render: function(el, _, _1){
-						$(el).text(c.signature);
+						$(el).html("<span class=\"autocomplete-result-name\">" + c.name + "</span> <span class=\"autocomplete-result-signature\">" + c.signature +"</span>");
 					},
 				}});
+
 				return {from: curFrom, to: curTo, list: completions};
 			});
 		})

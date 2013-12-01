@@ -229,4 +229,9 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 			$scope.cmRight.setOption("theme", t);
 		});
 	});
+
+	$scope.showingSideMenu = true;
+	$scope.toogleSideMenu = function(){
+		$scope.showingSideMenu = !$scope.showingSideMenu;
+	}
 });

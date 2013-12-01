@@ -19,7 +19,7 @@ app.controller('header', function header($scope, $rootScope, user, snippets, sca
 
 	$scope.codemirrorOptions = {
 		mode: 'text/x-scala',
-		theme: 'solarized light',
+		theme: snippets.getTheme(),
 		readOnly: 'true'
 	};
 	$scope.docs = [];
@@ -59,4 +59,9 @@ app.controller('header', function header($scope, $rootScope, user, snippets, sca
 			$rootScope.$emit('selectedCode', code);
 		}
 	};
+
+	$scope.showingContentPage = false;
+	$scope.toogleContentPage = function() {
+		$scope.showingContentPage = !$scope.showingContentPage;
+	}
 });	
