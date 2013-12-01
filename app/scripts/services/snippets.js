@@ -7,9 +7,32 @@ app.factory('snippets', function($q, $resource, $timeout /* location, localStora
 		"delete" : { method : 'DELETE' }
 	});
 
+	var hack = null;
+
 	return {
 		"saveLocal": function(code){
 			window.localStorage["code"] = code;
+		},
+		"toogleTheme": function(){
+			var to;
+			if(window.localStorage["theme"] == "dark") {
+				to = "light";
+			} else {
+				to = "dark";
+			}
+			if(hack) {
+				hack("solarized " + to);
+			}
+			window.localStorage["theme"] = to;
+		},
+		"theme": function(){
+			if(!angular.isDefined(window.localStorage["theme"])) {
+				window.localStorage["theme"] = "light";	
+			}
+			return window.localStorage["theme"];
+		},
+		"hack": function(h) {
+			hack = h;
 		},
 		"current": function(){
 			if("/" !== window.location.pathname) {

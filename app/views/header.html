@@ -5,7 +5,7 @@
             <img class="img-rounded" ng-src="{{ user().codeBrewUser.avatarUrl }}">{{ user().codeBrewUser.userName }}<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-            <li><a ng-click="settings()">Settings</a></li>
+            <li><a ng-click="toogleTheme()">{{ theme() }}</a></li>
             <li><a ng-click="logOut()">Logout</a></li>
         </ul>
     </div>
