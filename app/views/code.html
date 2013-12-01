@@ -13,36 +13,24 @@
         <!--div class="sideMenu"-->
             <div class="expand-collapse" ng-class="{ 'active': showingSideMenu, 'inactive': !showingSideMenu}">
 
-                <i title="fullscreen (f11)" class="fa fa-expand" ng-click="fullscreen()">
-                    <span class="fullscreen">&nbsp;</span>
-                </i>
-                <i title="toogle insight (ctrl-> | ctrl-<)" class="fa" 
+                <i title="fullscreen (f11)" class="fa fa-expand fullscreen" ng-click="fullscreen()"></i>
+                <i title="toogle insight (ctrl-> | ctrl-<)" class="fa toggleInsight" 
                     ng-class="{'fa-chevron-right': withInsight, 'fa-chevron-left': !withInsight}"
                     ng-click="toogleInsight()">
-                    <span class="toggleInsight">&nbsp;</span>
                 </i>
-                <i title="save snippet (ctrl-s)" class="fa" ng-click="save()" 
+                <i title="save snippet (ctrl-s)" class="fa saveSnippet" ng-click="save()" 
                     ng-class="saveMySnippetCss()">
-                    <span class="saveSnippet">&nbsp;</span>
                 </i>
-                <i title="toogle my snippets (ctrl-o)" class="fa" 
+                <i title="toogle my snippets (ctrl-o)" class="fa toggleMySnippets"
                     ng-class="{'fa-folder-o' : !viewingMySnippets(), 'fa-folder-open-o': viewingMySnippets()}"
                     ng-click="toogleMySnippets()">
-                    <span class="toggleMySnippets">&nbsp;</span>
                 </i>
-                <i title="clear all (ctrl-del)" class="fa fa-eraser" ng-click="clear()">
-                    <span class="clearCode">&nbsp;</span>
-                </i>
-                <i title="login" class="fa fa-sign-in" ng-show="!loggedIn()" ng-click="login()">
-                    <span class="login">&nbsp;</span>
-                </i>
-                <i title="logout (ctrl-l)" class="fa fa-sign-out" ng-show="loggedIn()" ng-click="logOut()">
-                    
-                </i>
-                <i title="inverse theme colors (ctrl-i)" class="fa"
+                <i title="clear all (ctrl-del)" class="fa fa-eraser clearCode" ng-click="clear()"></i>
+                <i title="login" class="fa fa-sign-in login" ng-show="!loggedIn()" ng-click="login()"></i>
+                <i title="logout (ctrl-l)" class="fa fa-sign-out logout" ng-show="loggedIn()" ng-click="logOut()"></i>
+                <i title="inverse theme colors (ctrl-i)" class="fa theme"
                     ng-class="{'fa-circle-o': !isLigth(), 'fa-circle': isLigth()}"
                     ng-click="toogleTheme()">
-                    <span class="theme">&nbsp;</span>
                 </i>
             </div>
             <!--div class="fa handle" ng-click="toogleSideMenu()"

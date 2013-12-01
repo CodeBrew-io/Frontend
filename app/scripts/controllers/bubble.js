@@ -66,6 +66,18 @@ app.controller('bubble', function code($scope, $rootScope) {
 				, leftOffset: 75
 				, active: true
 			}
+			,{selector: '.login'
+				, message: "You can login to save your snippets"
+				, side: anchorSide.right
+				, leftOffset: 75
+				, active: true
+			}
+			,{selector: '.theme'
+				, message: "You can toogle solarized dark/solarized light"
+				, side: anchorSide.right
+				, leftOffset: 75
+				, active: true
+			}
 		]
 	};
 
