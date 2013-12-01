@@ -1,6 +1,6 @@
 <header ng-controller="header" ng-init="init()">
     <div class="brand">CodeBrew</div>
-    <div class="btn-group profile" ng-show="loggedIn()" ng-class="{ 'open': profileOpen }">
+    <div class="btn-group profile" ng-show="loggedIn()" ng-class="{ 'open': profileOpen }" clickblur="closeProfile()">
         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" ng-click="toogleProfile()">
             <img class="img-rounded" ng-src="{{ user().codeBrewUser.avatarUrl }}">{{ user().codeBrewUser.userName }}<span class="caret"></span>
         </button>

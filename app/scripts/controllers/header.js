@@ -9,7 +9,7 @@ app.controller('header', function header($scope, $rootScope, user, snippets, sca
 	}
 
 	$scope.profileOpen = false;
-	$scope.outProfile = function(){
+	$scope.closeProfile = function(){
 		$scope.profileOpen = false;
 	}
 	$scope.toogleProfile = function(){
