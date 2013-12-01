@@ -260,12 +260,20 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 
 	// saving
 	keyboardManager.bind('ctrl+s', function(e) {
-		$scope.save();
+		if ($scope.loggedIn() == true) {
+			$scope.save();
+		} else {
+			$scope.login();
+		}
 	}, {'stop':true});
 
 	// toggle my snippets
 	keyboardManager.bind('ctrl+o', function(e) {
-		$scope.toogleMySnippets();
+		if ($scope.loggedIn() == true) {
+			$scope.toogleMySnippets();
+		} else {
+			$scope.login();
+		}
 	}, {'stop':true});
 
 	// clear code
