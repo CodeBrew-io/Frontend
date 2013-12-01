@@ -1,25 +1,49 @@
+<div class="bubble" ng-class="arrowSide" ng-init="bubbleInit()" ng-show="show">
+    <span class="info">{{ bubbleText }}</span>
+    <div class="navigation">
+        <a ng-click="previous()" ng-class="head()">{{ tutorialText.previous }}</a>
+        <a ng-click="skip()">{{ tutorialText.skip }}</a>
+        <a ng-click="next()" ng-class="last()">{{ tutorialText.next }}</a>
+    </div>
+</div>
+
+
 <div ng-controller="code" ng-init="init()" class="app">
     <div class="code" ng-class="{'expandedWidth': withInsight==false, 'expandedHeight' : withConsole==false}">
         <!--div class="sideMenu"-->
             <div class="expand-collapse" ng-class="{ 'active': showingSideMenu, 'inactive': !showingSideMenu}">
 
-                <i title="fullscreen (f11)" class="fa fa-expand" ng-click="fullscreen()"></i>
+                <i title="fullscreen (f11)" class="fa fa-expand" ng-click="fullscreen()">
+                    <span class="fullscreen">&nbsp;</span>
+                </i>
                 <i title="toogle insight (ctrl-> | ctrl-<)" class="fa" 
                     ng-class="{'fa-chevron-right': withInsight, 'fa-chevron-left': !withInsight}"
-                    ng-click="toogleInsight()"></i>
+                    ng-click="toogleInsight()">
+                    <span class="toggleInsight">&nbsp;</span>
+                </i>
                 <i title="save snippet (ctrl-s)" class="fa" ng-click="save()" 
                     ng-class="saveMySnippetCss()">
+                    <span class="saveSnippet">&nbsp;</span>
                 </i>
                 <i title="toogle my snippets (ctrl-o)" class="fa" 
                     ng-class="{'fa-folder-o' : !viewingMySnippets(), 'fa-folder-open-o': viewingMySnippets()}"
                     ng-click="toogleMySnippets()">
+                    <span class="toggleMySnippets">&nbsp;</span>
                 </i>
-                <i title="clear all (ctrl-del)" class="fa fa-eraser" ng-click="clear()"></i>
-                <i title="login" class="fa fa-sign-in" ng-show="!loggedIn()" ng-click="login()"></i>
-                <i title="logout (ctrl-l)" class="fa fa-sign-out" ng-show="loggedIn()" ng-click="logOut()"></i>
+                <i title="clear all (ctrl-del)" class="fa fa-eraser" ng-click="clear()">
+                    <span class="clearCode">&nbsp;</span>
+                </i>
+                <i title="login" class="fa fa-sign-in" ng-show="!loggedIn()" ng-click="login()">
+                    <span class="login">&nbsp;</span>
+                </i>
+                <i title="logout (ctrl-l)" class="fa fa-sign-out" ng-show="loggedIn()" ng-click="logOut()">
+                    
+                </i>
                 <i title="inverse theme colors (ctrl-i)" class="fa"
                     ng-class="{'fa-circle-o': !isLigth(), 'fa-circle': isLigth()}"
-                    ng-click="toogleTheme()"></i>
+                    ng-click="toogleTheme()">
+                    <span class="theme">&nbsp;</span>
+                </i>
             </div>
             <!--div class="fa handle" ng-click="toogleSideMenu()"
                 ng-class="{'fa-chevron-up': showingSideMenu, 'fa-chevron-down': !showingSideMenu}" >
@@ -38,6 +62,7 @@
     <div class="console cm-s-solarized cm-s-{{ getThemeShort() }}">
         <div class="handle">
             <div class="menu">
+                <span class="chevron">&nbsp;</span>
                 <i class="fa fa-eraser" ng-show="!consoleIsEmpty()" ng-click="clearConsole()"></i>
                 <i class="fa" ng-class="{'fa-chevron-down': withConsole, 'fa-chevron-up': !withConsole}"
                  ng-click="toogleConsole()"></i> 
