@@ -5,7 +5,7 @@
             <i title="toogle insight" class="fa" 
                 ng-class="{'fa-chevron-right': withInsight, 'fa-chevron-left': !withInsight}"
                 ng-click="toogleInsight()"></i>
-            <i title="save snippet" class="fa" ng-click="publish($event)" 
+            <i title="save snippet" class="fa" ng-click="save($event)" 
                 ng-class="{'fa-check saving':isSaving, 'fa-floppy-o': !isSaving}">
             </i>
             <i title="toogle my snippets" class= "fa" 
@@ -14,6 +14,7 @@
             </i>
             <i title="clear all" class="fa fa-eraser" ng-click="clear()"></i>
             <i title="login" class="fa fa-user" ng-show="!loggedIn()" ng-click="login()"></i>
+            <i title="logout" class="fa fa-power-off" ng-show="loggedIn()" ng-click="logOut()"></i>
             <div ng-class="getBubbleClass()" ng-show="show">
                 <span class="info">{{ tutorialText.messages[currentBubbleIndex] }}</span>
                 <div class="navigation">

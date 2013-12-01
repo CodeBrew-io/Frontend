@@ -1,4 +1,4 @@
-<form ng-controller="signIn" class="cb-modal signIn" name="signIn" ng-submit="save()" ng-init="init()" ng-show ="showSignIn">
+<form ng-controller="signIn" class="cb-modal signIn" name="signIn" ng-submit="save()" ng-init="init()" ng-show ="showSignIn()">
 	<div class="form-group" ng-class="{'has-success': signIn.userName.$valid, 'has-error': !signIn.userName.$valid}">
 		<label class="control-label">
 			Username

@@ -30,6 +30,10 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		}
 	}
 
+	$scope.logOut = function(){
+		user.logout();
+	};
+
 	$scope.optionsCode = {
 		extraKeys: {"Ctrl-Space": "autocomplete"},
 		fixedGutter: false,
@@ -149,16 +153,16 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		refreshMirrors();
 	}
 
-	$scope.publish = function(){
+	$scope.save = function(){
 		if($scope.isSaving) return;
 
-		user.afterSignIn(function(userName){
+		user.doAfterLogin(function(user){
 			$scope.isSaving = true;
 			snippets.save({"code": $scope.code}).$promise.then(function(data){
 				$scope.mySnippets = $scope.mySnippets.concat({
 					"id": data.id,
 					"code": $scope.code,
-					"user": userName
+					"user": user.codeBrewUser.userName
 				});
 				$timeout(function() { $scope.isSaving = false; }, 1000);
 			});
