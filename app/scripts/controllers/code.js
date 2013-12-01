@@ -205,7 +205,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	}
 
 	$scope.insertSnippet = function(snippet){
-		$scope.code = $scope.code + '\n' + snippet.code;
+		$scope.code += ($scope.code.length > 0 ? '\n' : '') + snippet.code;
 	};
 
 	$scope.deleteSnippet = function(snippet){
