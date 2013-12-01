@@ -1,4 +1,4 @@
-<div class="bubble" ng-class="arrowSide" ng-show="show">
+<div class="bubble" ng-class="arrowSide" ng-init="bubbleInit()" ng-show="show">
     <span class="info">{{ bubbleText }}</span>
     <div class="navigation">
         <a ng-click="previous()" ng-class="head()">{{ tutorialText.previous }}</a>
@@ -7,21 +7,30 @@
     </div>
 </div>
 
+
 <div ng-controller="code" ng-init="init()" class="app">
     <div class="code" ng-class="{'expandedWidth': withInsight==false, 'expandedHeight' : withConsole==false}">
         <div class="expand-collapse">
-            <i title="fullscreen (f11)" class="fa fa-expand" ng-click="fullscreen()"></i>
+            <i title="fullscreen (f11)" class="fa fa-expand" ng-click="fullscreen()">
+                <span class="fullscreen">&nbsp;</span>
+            </i>
             <i title="toogle insight" class="fa" 
                 ng-class="{'fa-chevron-right': withInsight, 'fa-chevron-left': !withInsight}"
-                ng-click="toogleInsight()"></i>
+                ng-click="toogleInsight()">
+                <span class="toggleInsight">&nbsp;</span>
+            </i>
             <i title="save snippet" class="fa" ng-click="publish($event)" 
                 ng-class="{'fa-check saving':isSaving, 'fa-floppy-o': !isSaving}">
+                <span class="saveSnippet">&nbsp;</span>
             </i>
             <i title="toogle my snippets" class= "fa" 
                 ng-class="{'fa-folder-o' : !viewingMySnippets(), 'fa-folder-open-o': viewingMySnippets()}"
                 ng-click="toogleMySnippets()">
+                <span class="toggleMySnippets">&nbsp;</span>
             </i>
-            <i title="clear all" class="fa fa-eraser" ng-click="clear()"></i>
+            <i title="clear all" class="fa fa-eraser" ng-click="clear()">
+                <span class="clearCode">&nbsp;</span>
+            </i>
         </div>
         <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
     </div><div class="insight"  ng-show="withInsight" ng-class="{'expandedHeight' : withConsole==false}">

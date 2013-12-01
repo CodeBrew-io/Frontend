@@ -17,24 +17,56 @@ app.controller('bubble', function code($scope, $rootScope) {
 		next: 'next',
 		bubbleInfoList: [
 			{selector: '.code'
-				, message: "You can get the anwser to a quick question by writing Scala code into this editor"
+				, message: "At the left, we've got a code editor so we can write some cool Scala stuff!"
 				, side: anchorSide.left
-				, codeEditor: "List(1,2,3).map(_ + 2)"
+				, codeEditor: "List(1,2,3).map(_ + 2)\nprintln(\"Hello, World!\")"
+				, halfHeight: true
 			}
 			,{selector: '.insight'
-				, message: "The code is evaluated and displayed in the insight view"
+				, message: "At the right, the code is evaluated and displayed in the insight view."
 				, side: anchorSide.right
 				, codeInsight: "List(3, 4, 5)"
+				, consoleOutput: "Hello, World!"
+				, halfHeight: true
 			}
 			,{selector: '.console .handle .menu .chevron'
-				, message: "The output console can be open by clicking on the bottom right icon of the screen"
+				, message: "The output console can be toggled by clicking on the bottom right icon of the screen.\nIt can also be cleared if the eraser is clicked."
 				, side: anchorSide.bottom
 			}
 			,{selector: '.search-area'
-				, message: "You can use the search bar to find Scala documentation or to look for snippet code examples"
+				, message: "You can use the search bar to find Scala documentation or to look for snippet of code example written by you or other members."
 				, side: anchorSide.top
 			}
-			//,{selector: '.icon', message: "You can use the icons to enter the fullscreen mode or to hide the insight view"}
+			,{selector: '.fullscreen'
+				, message: "You can toggle the view in fullscreen."
+				, side: anchorSide.right
+				, leftOffset: 75
+				, active: true
+			}
+			,{selector: '.toggleInsight'
+				, message: "You can hide the insight view at the right."
+				, side: anchorSide.right
+				, leftOffset: 75
+				, active: true
+			}
+			,{selector: '.saveSnippet'
+				, message: "You can save your cool scala code."
+				, side: anchorSide.right
+				, leftOffset: 75
+				, active: true
+			}
+			,{selector: '.toggleMySnippets'
+				, message: "After saving your snippets, you can manage them by clicking this icon."
+				, side: anchorSide.right
+				, leftOffset: 75
+				, active: true
+			}
+			,{selector: '.clearCode'
+				, message: "You can clear all the code in the editor at the left."
+				, side: anchorSide.right
+				, leftOffset: 75
+				, active: true
+			}
 		]
 	};
 
@@ -78,7 +110,15 @@ app.controller('bubble', function code($scope, $rootScope) {
 							$rootScope.$emit('setInsight', bubbleInfo.codeInsight);
 						}
 
-						_setAbsolutePosition(element, elemOffset, bubbleInfo.side)
+						if (bubbleInfo.consoleOutput !== undefined) {
+							$rootScope.$emit('setConsole', bubbleInfo.consoleOutput);
+						}
+
+						if (bubbleInfo.active == true) {
+
+						}
+
+						_setAbsolutePosition(element, elemOffset, bubbleInfo);
 					}
 				}
 			}
@@ -86,12 +126,14 @@ app.controller('bubble', function code($scope, $rootScope) {
 	}
 
 	// for now, this function will be junk, only to test and understand where should be place stuff
-	function _setAbsolutePosition(element, newOffset, sideAnchor) {
+	function _setAbsolutePosition(element, newOffset, bubbleInfo) {
 		var bubbleWidth = _getElementTotalWidth($scope.bubbleJqueryElement);
 		var bubbleHeight = _getElementTotalHeight($scope.bubbleJqueryElement) - 25; // because the margin-bottom is too much
 
 		var elementWidth = _getElementTotalWidth(element);
 		var elementHeight = _getElementTotalHeight(element);
+
+		var sideAnchor = bubbleInfo.side;
 
 		if (sideAnchor == anchorSide.top) {
 			$scope.arrowSide = 'top';
@@ -100,7 +142,17 @@ app.controller('bubble', function code($scope, $rootScope) {
 		} else if (sideAnchor == anchorSide.right) {
 			$scope.arrowSide = 'right';
 			newOffset.left -= bubbleWidth;
-			newOffset.top = elementHeight / 2;
+
+			if (bubbleInfo.halfHeight == true) {
+				newOffset.top = elementHeight / 2;
+			
+			} else {
+				newOffset.top -= elementHeight / 2;
+			}
+
+			if (bubbleInfo.leftOffset != undefined && bubbleInfo.leftOffset !== null) {
+				newOffset.left -= bubbleInfo.leftOffset;
+			}
 			
 		} else if (sideAnchor == anchorSide.bottom) {
 			$scope.arrowSide = '';
@@ -109,7 +161,10 @@ app.controller('bubble', function code($scope, $rootScope) {
 		} else if (sideAnchor == anchorSide.left) {
 			$scope.arrowSide = 'left';
 			newOffset.left += elementWidth;
-			newOffset.top = elementHeight / 2;
+
+			if (bubbleInfo.halfHeight == true) {
+				newOffset.top = elementHeight / 2;
+			}
 		}
 
 		// we check whether the bubble is going outside the window.
@@ -118,7 +173,6 @@ app.controller('bubble', function code($scope, $rootScope) {
 
 		if (newOffset.left + bubbleWidth > windowWidth) {
 			newOffset.left = windowWidth - bubbleWidth - 10; // window's padding
-		
 		} 
 
 		$scope.bubbleJqueryElement.offset(newOffset);
@@ -153,6 +207,16 @@ app.controller('bubble', function code($scope, $rootScope) {
 		if ($scope.bubbleJqueryElement === null || $scope.bubbleJqueryElement === undefined) {
 			$scope.bubbleJqueryElement = $('.bubble');
 		}
+	}
+
+	// When we resize the screen, the bubble should follow its element.
+	$(window).resize(function() {
+		_setBubbleData($scope.currentBubbleIndex);
+	});
+
+	$scope.bubbleInit = function() {
+		$scope.currentBubbleIndex = 0;
+		_setBubbleData(0);
 	}
 
 	// set the previous bubble as current index

@@ -26,6 +26,12 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		$scope.insight = insight;
 	});
 
+	// to be able to set the console's output from the rootScope
+	$rootScope.$on('setConsole', function(event, output) {
+		$scope.console = output;
+		$scope.toogleConsole();
+	});
+
 	snippets.current().then(function(data){
 		$scope.code = data.code;
 	});
