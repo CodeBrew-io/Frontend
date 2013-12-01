@@ -256,7 +256,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	// toggle Insight (make insight appear or disappear)
 	keyboardManager.bind('ctrl+,', function(e) {
 		$scope.toogleInsight();
-	}, {'stop':true});
+	});
 
 	// saving
 	keyboardManager.bind('ctrl+s', function(e) {
@@ -271,7 +271,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	// clear code
 	keyboardManager.bind('ctrl+delete', function(e) {
 		$scope.clear();
-	}, {'stop':true});
+	});
 
 	// logout
 	keyboardManager.bind('ctrl+l', function(e) {
@@ -280,10 +280,10 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		} else {
 			$scope.login();
 		}
-	}, {'stop':true});
+	});
 
 	// inverse color
 	keyboardManager.bind('ctrl+i', function(e) {
 		$scope.toogleTheme();
-	}, {'stop':true});
+	});
 });
