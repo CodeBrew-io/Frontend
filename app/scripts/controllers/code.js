@@ -28,6 +28,17 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		$scope.code = "";
 	}
 
+	// Assing the value of the icon "Save my snippet"'s CSS'
+	$scope.saveMySnippetCss = function() {
+		var saveIconCss = $scope.isSaving ? ' fa-check saving' : ' fa-floppy-o';
+
+		if ($scope.code.length < 1) {
+			saveIconCss += ' disable';
+		}
+
+		return saveIconCss;
+	}
+
 	$scope.optionsCode = {
 		extraKeys: {"Ctrl-Space": "autocomplete"},
 		fixedGutter: false,
@@ -148,16 +159,20 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	}
 
 	$scope.publish = function($event){
-		if (!$scope.isSaving) {
-			$scope.isSaving = true;
-			snippets.save({"code": $scope.code}).$promise.then(function(data){
-				$scope.mySnippets = $scope.mySnippets.concat({
-					"id": data.id,
-					"code": $scope.code,
-					"user": user.get().codeBrewUser.userName
+		// We want to be able to save a snippet only if it's not empty.
+		if ($scope.code.length > 0) {
+			if (!$scope.isSaving) {
+				$scope.isSaving = true;
+
+				snippets.save({"code": $scope.code}).$promise.then(function(data){
+					$scope.mySnippets = $scope.mySnippets.concat({
+						"id": data.id,
+						"code": $scope.code,
+						"user": user.get().codeBrewUser.userName
+					});
+					$timeout(function() { $scope.isSaving = false; }, 1000);
 				});
-				$timeout(function() { $scope.isSaving = false; }, 1000);
-			})
+			}
 		}
 	}
 

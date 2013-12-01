@@ -6,7 +6,7 @@
                 ng-click="toogleInsight()"></i>
             <i class="fa fa-expand" ng-click="fullscreen()"></i>
             <i class="fa" ng-show="loggedIn()" ng-click="publish($event)" 
-                ng-class="{'fa-check saving':isSaving, 'fa-floppy-o': !isSaving}">
+                ng-class="saveMySnippetCss()">
             </i>
             <i class= "fa" 
                 ng-class="{'fa-folder-o' : !viewingMySnippets(), 'fa-folder-open-o': viewingMySnippets()}"
