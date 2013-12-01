@@ -88,7 +88,7 @@ app.controller('bubble', function code($scope, $rootScope) {
 	// for now, this function will be junk, only to test and understand where should be place stuff
 	function _setAbsolutePosition(element, newOffset, sideAnchor) {
 		var bubbleWidth = _getElementTotalWidth($scope.bubbleJqueryElement);
-		var bubbleHeight = _getElementTotalWidth($scope.bubbleJqueryElement);
+		var bubbleHeight = _getElementTotalHeight($scope.bubbleJqueryElement) - 25; // because the margin-bottom is too much
 
 		var elementWidth = _getElementTotalWidth(element);
 		var elementHeight = _getElementTotalHeight(element);
@@ -115,16 +115,11 @@ app.controller('bubble', function code($scope, $rootScope) {
 		// we check whether the bubble is going outside the window.
 		var windowElement = $(window);
 		var windowWidth = windowElement.width();
-		var windowHeight = windowElement.height();
 
 		if (newOffset.left + bubbleWidth > windowWidth) {
 			newOffset.left = windowWidth - bubbleWidth - 10; // window's padding
 		
 		} 
-
-		if (newOffset.top + bubbleHeight > windowHeight) {
-			newOffset.top = windowHeight - bubbleHeight;
-		}
 
 		$scope.bubbleJqueryElement.offset(newOffset);
 	}
