@@ -37,7 +37,7 @@
         </div>
         <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
     </div><!-- 
-  --><div class="insight"  ng-show="withInsight" ng-class="{'expandedHeight' : withConsole==false}">
+  --><div class="insight cm-s-solarized cm-s-{{ getThemeShort() }}"  ng-show="withInsight" ng-class="{'expandedHeight' : withConsole==false}">
         <div class="mirror" ng-show="!viewingMySnippets()" ng-class="{ 'fetching': fetching}">
             <textarea ui-codemirror="optionsInsight" ng-model="insight"></textarea>
         </div>

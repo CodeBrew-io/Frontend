@@ -99,8 +99,27 @@ less version: gui
     .CodeMirror-selected {
       background: @base02;
     }
+
     .disable {
       color: @base03 !important;
+    }
+
+    .activeline {
+      background: rgba(255, 255, 255, 0.10);
+
+    }
+
+    &.sideMenu,
+    &.user-snippet, 
+    &.console .handle,
+    .insight { 
+      background-color:@base02;
+    }
+
+    &.user-snippet {
+      li {
+        background-color: @base03;
+      }
     }
   }
 
@@ -108,11 +127,28 @@ less version: gui
     .cm-matchhighlight {
       border-bottom: 2px solid @base2;
     }
-    .CodeMirror-selected {
-      background: @base2;
+
+    .insight {
+      background-color: @base02;
     }
+
+
+    .CodeMirror-selected {
+      background-color: @base2;
+    }
+
     .disable {
       color: @base00 !important;
+    }
+
+    .activeline {
+      background: rgba(0, 0, 0, 0.10);
+    }
+
+    &.sideMenu,
+    &.user-snippet, 
+    &.console .handle { 
+      background-color:@base2;
     }
   }
 
@@ -159,30 +195,6 @@ less version: gui
   */
   .activeline {
     margin-left: -20px;
-  }
-
-  &.cm-s-dark .activeline {
-    background: rgba(255, 255, 255, 0.10);
-
-  }
-  &.cm-s-light .activeline {
-    background: rgba(0, 0, 0, 0.10);
-  }
-
-  &.cm-s-light.console .handle {
-    background-color:@base2;
-  }
-
-  &.cm-s-dark.console .handle {
-    background-color:@base02;
-  }
-
-  &.cm-s-light.sideMenu {
-    background-color:@base2;
-  }
-
-  &.cm-s-dark.sideMenu {
-    background-color:@base02;
   }
 
   .output {
