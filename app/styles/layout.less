@@ -7,6 +7,9 @@ html, body {
 
 @header-height: 56px;
 
+@darkHeader: #073642;
+@darkSearch: #002b36;
+
 .app {
 	height: calc(~"100% -"@header-height);
 }
@@ -111,6 +114,15 @@ header {
 	position: relative;
 
 	height: @header-height;
+
+	&.dark {
+		color: red;
+		background-color: @darkHeader;
+
+		.search-area input[type=text] {
+			background-color: @darkSearch;
+		}
+	}
 
 	.brand, .avatar, .username {
 		vertical-align: middle;
