@@ -1,5 +1,5 @@
-<div ng-controller="header" >
-    <header ng-init="init()">
+<div ng-controller="header">
+    <header ng-class="getThemeShort()">
         <div class="brand" title="About Codebrew.io" ng-click="toogleContentPage()">CodeBrew</div>
         <img ng-show="loggedIn()" class="avatar img-rounded" ng-src="{{ user().codeBrewUser.avatarUrl }}">
         <p ng-show="loggedIn()" class="username">{{ user().codeBrewUser.fullName }} ({{ user().codeBrewUser.userName }})</p>

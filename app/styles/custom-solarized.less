@@ -22,6 +22,7 @@ less version: gui
   @cyan:      #2aa198;
   @green:     #859900;
 
+  
   line-height: 1.45em;
   font-size: 18px;
   font-family: Menlo,Monaco,"Andale Mono","lucida console","Courier New", monospace !important;
@@ -98,14 +99,64 @@ less version: gui
     .CodeMirror-selected {
       background: @base02;
     }
+
+    .disable {
+      color: @base03 !important;
+    }
+
+    .activeline {
+      background: rgba(255, 255, 255, 0.10);
+
+    }
+
+    h1 {
+      color: white;
+    }
+
+    &.sideMenu,
+    &.user-snippet, 
+    &.console .handle,
+    .insight { 
+      background-color:@base02;
+    }
+
+    &.user-snippet {
+      li {
+        background-color: @base03;
+      }
+    }
   }
 
   &.cm-s-light {
     .cm-matchhighlight {
       border-bottom: 2px solid @base2;
     }
+
+    .insight {
+      background-color: @base02;
+    }
+
+
     .CodeMirror-selected {
-      background: @base2;
+      background-color: @base2;
+    }
+
+    .disable {
+      color: @base00 !important;
+    }
+
+    .activeline {
+      background: rgba(0, 0, 0, 0.10);
+    }
+
+    h1 {
+      color: black;
+    }
+
+    &.sideMenu,
+    &.user-snippet, 
+    &.console .handle { 
+      background-color:@base2;
     }
   }
 
@@ -154,27 +205,7 @@ less version: gui
     margin-left: -20px;
   }
 
-  &.cm-s-dark .activeline {
-    background: rgba(255, 255, 255, 0.10);
-
-  }
-  &.cm-s-light .activeline {
-    background: rgba(0, 0, 0, 0.10);
-  }
-
-  &.cm-s-light.console .handle {
-    background-color:@base2;
-  }
-
-  &.cm-s-dark.console .handle {
-    background-color:@base02;
-  }
-
-  &.cm-s-light.sideMenu {
-    background-color:@base2;
-  }
-
-  &.cm-s-dark.sideMenu {
-    background-color:@base02;
+  .output {
+    color: @green;
   }
 }

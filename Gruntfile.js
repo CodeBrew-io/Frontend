@@ -132,7 +132,6 @@ module.exports = function (grunt) {
           src: [
             '<%= yeoman.dist %>/scripts/{,*/}*.js',
             '<%= yeoman.dist %>/styles/{,*/}*.css',
-            '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
             '<%= yeoman.dist %>/styles/fonts/*'
           ]
         }
@@ -151,51 +150,20 @@ module.exports = function (grunt) {
         dirs: ['<%= yeoman.dist %>']
       }
     },
-    imagemin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.{png,jpg,jpeg}',
-          dest: '<%= yeoman.dist %>/images'
-        }]
-      }
-    },
-    svgmin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.svg',
-          dest: '<%= yeoman.dist %>/images'
-        }]
-      }
-    },
-    htmlmin: {
-      dist: {
-        options: {
-          /*removeCommentsFromCDATA: true,
-          // https://github.com/yeoman/grunt-usemin/issues/44
-          //collapseWhitespace: true,
-          collapseBooleanAttributes: true,
-          removeAttributeQuotes: true,
-          removeRedundantAttributes: true,
-          useShortDoctype: true,
-          removeEmptyAttributes: true,
-          removeOptionalTags: true*/
-        },
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>',
-          src: ['*.html', 'views/*.html'],
-          dest: '<%= yeoman.dist %>'
-        }]
-      }
-    },
     // Put files not handled in other tasks here
     copy: {
       dist: {
         files: [{
+          expand: true, 
+          cwd: '<%= yeoman.app %>',
+          src: 'index.html', 
+          dest: '<%= yeoman.dist %>'
+        },{
+          expand: true, 
+          cwd: '<%= yeoman.app %>/views/',
+          src: ['**'], 
+          dest: '<%= yeoman.dist %>/views/'
+        },{
           expand: true,
           dot: true,
           cwd: '<%= yeoman.app %>',
@@ -206,12 +174,10 @@ module.exports = function (grunt) {
             'styles/fonts/*'
           ]
         }, {
-          expand: true,
-          cwd: '.tmp/images',
-          dest: '<%= yeoman.dist %>/images',
-          src: [
-            'generated/*'
-          ]
+          expand: true, 
+          cwd: '<%= yeoman.app %>/images/',
+          src: ['**'], 
+          dest: '<%= yeoman.dist %>/images/'
         }, {
           expand: true, 
           cwd: '<%= yeoman.app %>/bower_components/font-awesome/fonts/', 
@@ -237,10 +203,7 @@ module.exports = function (grunt) {
       ],
       dist: [
         'less:dist',
-        'copy:styles',
-        'imagemin',
-        'svgmin',
-        'htmlmin'
+        'copy:styles'
       ]
     },
     karma: {

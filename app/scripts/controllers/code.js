@@ -1,20 +1,15 @@
-app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fullscreen, snippets, user, throttle) {
+app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fullscreen, snippets, user, throttle, keyboardManager) {
 	'use strict';
 	var errorWidgetLines = [];
 	var errorMarkedTexts = [];
 	var cmLeft, cmRight = null;
 	var viewingMySnippets = false;
 
-	$scope.code = "";
+	$scope.code = null;
+
 	$scope.mySnippets = [];
 	$scope.loggedIn = user.loggedIn;
 	$scope.fetching = scalaEval.fetching;
-
-	$rootScope.$on('selectedCode', function(event, code){
-		if(code){
-			$scope.code = [$scope.code, code].join('\n\n').trim();
-		}
-	});
 
 	snippets.current().then(function(data){
 		$scope.code = data.code;
@@ -33,9 +28,11 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	// Assing the value of the icon "Save my snippet"'s CSS'
 	$scope.saveMySnippetCss = function() {
 		var saveIconCss = $scope.isSaving ? ' fa-check saving' : ' fa-floppy-o';
-
-		if ($scope.code.length < 1 || errorWidgetLines.length > 0) 
-		{
+		if(angular.isDefined($scope.code) && $scope.code !== null) {
+			if($scope.code.length == 0 || errorWidgetLines.length > 0) {
+				saveIconCss += ' disable';	
+			}
+		} else {
 			saveIconCss += ' disable';
 		}
 
@@ -51,6 +48,70 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	$scope.toogleTheme = snippets.toogleTheme;
 	$scope.isLigth = snippets.isLigth;
 
+	$scope.$watch('code', function(){
+		if($scope.code == null) return;
+		
+		var cm = $scope.cmLeft;
+		snippets.saveLocal($scope.code);
+		throttle.event(function() {
+			scalaEval.insight($scope.code).then(function(data){
+				$scope.insight = data.insight;
+				if (data.output){
+					if (!$scope.manuallyClosedConsole){
+						$scope.withConsole = true;
+					}
+					$scope.console = data.output;
+				}else{
+					$scope.console = "";
+				}
+
+				clearErrorWidgetLines();
+				clearErrorSquigglyLines();
+				if (data.errors){
+					data.errors.forEach(function(value) {	
+						errorWidgetLines.push(addErrorWidgetLines(value));							
+						errorMarkedTexts.push(addErrorSquigglyLines(value));
+					});
+				}
+				/* Make the squiggly line in the code editor for error message */    
+			    function addErrorSquigglyLines(value) {
+			    	var cur = cm.getDoc().posFromIndex(value.position);
+					var currentLine = $scope.code.split("\n")[cur.line];
+			    	var markedText = cm.markText(
+			    		{line: cur.line, ch: cur.ch}, 
+			    		{line: cur.line, ch: currentLine.length},
+			    		{className: "error"}
+			    	);
+					return markedText;
+					
+			  	}
+			  	function clearErrorSquigglyLines(){
+			  		errorMarkedTexts.forEach(function (value){
+			  			value.clear();
+			  		});
+				    errorMarkedTexts = [];
+			  	}
+			  	function addErrorWidgetLines(value){
+			  		var cur = cm.getDoc().posFromIndex(value.position);
+					var currentLine = $scope.code.split("\n")[cur.line];
+			  		var msg = document.createElement("div");
+			      	var icon = msg.appendChild(document.createElement("i"));
+			      	icon.className = "fa fa-exclamation-circle lint-error-icon";
+			      	msg.appendChild(document.createTextNode(value.message));
+			      	msg.className = "lint-error";
+					var errorLineWidget = cm.addLineWidget(cur.line, msg);
+					return errorLineWidget;
+			  	}
+			  	function clearErrorWidgetLines(){
+			  		errorWidgetLines.forEach(function (value){
+			  			cm.removeLineWidget(value);
+			  		});
+				    errorWidgetLines = [];
+			  	}
+			});
+		});
+	});
+
 	$scope.optionsCode = {
 		extraKeys: {"Ctrl-Space": "autocomplete"},
 		fixedGutter: false,
@@ -61,67 +122,6 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		autofocus: true,
 		autoCloseBrackets: true,
 		highlightSelectionMatches: { showToken: false },
-		onChange: function(cm) {
-			snippets.saveLocal($scope.code);
-			throttle.event(function() {
-				scalaEval.insight($scope.code).then(function(data){
-					$scope.insight = data.insight;
-					if (data.output){
-						if (!$scope.manuallyClosedConsole){
-							$scope.withConsole = true;
-						}
-						$scope.console = data.output;
-					}else{
-						$scope.console = "";
-					}
-
-					clearErrorWidgetLines();
-					clearErrorSquigglyLines();
-					if (data.errors){
-						data.errors.forEach(function(value) {	
-							errorWidgetLines.push(addErrorWidgetLines(value));							
-							errorMarkedTexts.push(addErrorSquigglyLines(value));
-						});
-					}
-					/* Make the squiggly line in the code editor for error message */    
-				    function addErrorSquigglyLines(value) {
-				    	var cur = cm.getDoc().posFromIndex(value.position);
-						var currentLine = $scope.code.split("\n")[cur.line];
-				    	var markedText = cm.markText(
-				    		{line: cur.line, ch: cur.ch}, 
-				    		{line: cur.line, ch: currentLine.length},
-				    		{className: "error"}
-				    	);
-						return markedText;
-						
-				  	}
-				  	function clearErrorSquigglyLines(){
-				  		errorMarkedTexts.forEach(function (value){
-				  			value.clear();
-				  		});
-					    errorMarkedTexts = [];
-				  	}
-				  	function addErrorWidgetLines(value){
-				  		var cur = cm.getDoc().posFromIndex(value.position);
-						var currentLine = $scope.code.split("\n")[cur.line];
-				  		var msg = document.createElement("div");
-				      	var icon = msg.appendChild(document.createElement("i"));
-				      	icon.className = "fa fa-exclamation-circle lint-error-icon";
-				      	msg.appendChild(document.createTextNode(value.message));
-				      	msg.className = "lint-error";
-						var errorLineWidget = cm.addLineWidget(cur.line, msg);
-						return errorLineWidget;
-				  	}
-				  	function clearErrorWidgetLines(){
-				  		errorWidgetLines.forEach(function (value){
-				  			cm.removeLineWidget(value);
-				  		});
-					    errorWidgetLines = [];
-				  	}
-
-				});
-			});
-		},
 		onScroll: function(cm) {
 			if ($scope.cmLeft === null) {
 				$scope.cmLeft = cm;
@@ -136,6 +136,16 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 			$scope.cmLeft = cm;
 		}
 	};
+
+	$rootScope.$on('selectedCode', function(event, code){
+		if(code){
+			$scope.code = [$scope.code, code].join('\n\n').trim();
+		}
+	});
+
+	$rootScope.$on('setCode', function(event, code){
+		$scope.code = code;
+	});
 
 	$scope.optionsInsight = {
 		fixedGutter: false,
@@ -167,8 +177,11 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	$scope.withInsight = true;
 	$scope.toogleInsight = function() {
 		$scope.withInsight = !$scope.withInsight;
-		refreshMirrors();
 	}
+
+	$scope.$watch('withInsight',function(){
+		refreshMirrors();
+	});
 
 	$scope.save = function(){
 		// We want to be able to save a snippet only if it's not empty.
@@ -205,7 +218,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	}
 
 	$scope.insertSnippet = function(snippet){
-		$scope.code = $scope.code + '\n' + snippet.code;
+		$scope.code += ($scope.code.length > 0 ? '\n' : '') + snippet.code;
 	};
 
 	$scope.deleteSnippet = function(snippet){
@@ -224,7 +237,6 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		if (!$scope.withConsole){
 			$scope.manuallyClosedConsole = true;
 		}
-		refreshMirrors();
 	}	
 
 	$scope.consoleIsEmpty = function () {
@@ -235,6 +247,10 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		$scope.console = "";
 		$scope.lastExecutionOutput = "";
 	}
+
+	$scope.$watch('withConsole',function(){
+		refreshMirrors();
+	})
 
 	$scope.login = user.login;
 
@@ -249,4 +265,60 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	$scope.toogleSideMenu = function(){
 		$scope.showingSideMenu = !$scope.showingSideMenu;
 	}
+
+	// adding the keyboard's shortcuts
+	//________________________________________
+
+	// toggle Insight (make insight appear or disappear)
+	keyboardManager.bind('ctrl+y', function(e) {
+		$scope.withInsight = !$scope.withInsight;
+	});
+
+	// saving
+	keyboardManager.bind('ctrl+s', function(e) {
+		if ($scope.loggedIn() == true) {
+			$scope.save();
+		} else {
+			$scope.login();
+		}
+	}, {'stop':true});
+
+	// toggle my snippets
+	keyboardManager.bind('ctrl+o', function(e) {
+		if ($scope.loggedIn() == true) {
+			$scope.toogleMySnippets();
+		} else {
+			$scope.login();
+		}
+	}, {'stop':true});
+
+	// clear code
+	keyboardManager.bind('ctrl+delete', function(e) {
+		$scope.clear();
+	});
+
+	// logout
+	keyboardManager.bind('ctrl+l', function(e) {
+		if ($scope.loggedIn()) {
+			$scope.logOut();
+		} else {
+			$scope.login();
+		}
+	});
+
+	// inverse color
+	keyboardManager.bind('ctrl+i', function(e) {
+		$scope.toogleTheme();
+	});
+
+	// make the console appear
+	keyboardManager.bind('ctrl+up', function(e) {
+		$scope.withConsole = true;
+	});
+
+	// make the console disappear
+	keyboardManager.bind('ctrl+down', function(e) {
+		$scope.withConsole = false;
+	});
+
 });

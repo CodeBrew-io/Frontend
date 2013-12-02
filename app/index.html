@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="/images/favicon.ico">
 
     <title>CodeBrew - Scala worksheet in your browser</title>
     <meta name="description" content="Codebrew.io is an interactive scala IDE in the cloud. Use the editor to run and share your code snippets online. Codebrew.io provides you with autocompletion, scaladoc and insights on your algorithm."
@@ -11,12 +12,12 @@
     <meta property="og:title" content="New year's resolution: Learn functionnal programming">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://codebrew.io/images/scala-logo.png">
-    <meta property="og:url" content="https://codebrew.io/tutorials/new-year">
+    <meta property="og:url" content="https://codebrew.io/">
     <meta property="og:description" content="Learn functionnal programming with the help of a good code editor, scaladoc, user snippets,
     autocompletion, compilation errors and more!">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:url" content="https://codebrew.io/tutorials/new-year">
+    <meta name="twitter:url" content="https://codebrew.io/">
     <meta name="twitter:title" content="New year's resolution: Learn functionnal programming">
     <meta name="twitter:image" content="https://codebrew.io/images/scala-logo.png">
 
@@ -24,7 +25,7 @@
 
     <meta name="viewport" content="width=device-width">
 
-    <!-- build:css css/libs.css -->
+    <!-- build:css /styles/libs.css -->
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.css">
     <link rel="stylesheet" href="/bower_components/codemirror/lib/codemirror.css">
@@ -38,7 +39,7 @@
     <ng-include src="'/views/header.html'"></ng-include>
     <ng-include src="'/views/code.html'"></ng-include>
 
-    <!-- build:js scripts/libs.js -->
+    <!-- build:js /scripts/libs.js -->
     <script src="/bower_components/jquery/jquery.js"></script>
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/angular-resource/angular-resource.js"></script>
@@ -54,7 +55,7 @@
     <script src="/bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
     <!-- endbuild -->
 
-    <!-- build:js({.tmp,app}) scripts/app.js -->
+    <!-- build:js({.tmp,app}) /scripts/app.js -->
     <script src="/scripts/app.js"></script>
     <script src="/scripts/services/scaladoc.js"></script>
     <script src="/scripts/services/snippets.js"></script>

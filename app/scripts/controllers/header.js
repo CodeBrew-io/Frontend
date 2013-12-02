@@ -26,6 +26,8 @@ app.controller('header', function header($scope, $rootScope, user, snippets, sca
 	$scope.snippets = [];
 	$scope.all = [];
 
+	$scope.getThemeShort = snippets.getThemeShort;
+
 	$scope.search = function(term){
 		if(term == '') {
 			$scope.docs = [];
