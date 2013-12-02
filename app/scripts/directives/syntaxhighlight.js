@@ -2,13 +2,13 @@
 /**
  * Binds a CodeMirror widget to a <textarea> element.
  */
-app.directive('syntaxhighlight', function($timeout) {
+app.directive('syntaxhighlight', function($timeout, snippets) {
 'use strict';
 
   return {
     restrict: 'E',
     require: '?ngModel',
-    template: '<pre class=\"cm-s-solarized cm-s-light\"></pre>',
+    template: '<pre class=\"cm-s-solarized cm-s-' + snippets.getThemeShort() + '\"></pre>',
     link: function (scope, elm, attrs, ngModel) {
 
       $timeout(function() {

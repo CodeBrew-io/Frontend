@@ -270,12 +270,8 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	//________________________________________
 
 	// toggle Insight (make insight appear or disappear)
-	keyboardManager.bind('ctrl+left', function(e) {
-		$scope.withInsight = true;
-	});
-
-	keyboardManager.bind('ctrl+right', function(e) {
-		$scope.withInsight = false;
+	keyboardManager.bind('ctrl+y', function(e) {
+		$scope.withInsight = !$scope.withInsight;
 	});
 
 	// saving
