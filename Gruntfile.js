@@ -132,7 +132,6 @@ module.exports = function (grunt) {
           src: [
             '<%= yeoman.dist %>/scripts/{,*/}*.js',
             '<%= yeoman.dist %>/styles/{,*/}*.css',
-            '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
             '<%= yeoman.dist %>/styles/fonts/*'
           ]
         }
@@ -149,16 +148,6 @@ module.exports = function (grunt) {
       html: ['<%= yeoman.dist %>/{,*/}*.html'],
       options: {
         dirs: ['<%= yeoman.dist %>']
-      }
-    },
-    imagemin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.{png,jpg,jpeg}',
-          dest: '<%= yeoman.dist %>/images'
-        }]
       }
     },
     // Put files not handled in other tasks here
@@ -185,12 +174,10 @@ module.exports = function (grunt) {
             'styles/fonts/*'
           ]
         }, {
-          expand: true,
-          cwd: '.tmp/images',
-          dest: '<%= yeoman.dist %>/images',
-          src: [
-            'generated/*'
-          ]
+          expand: true, 
+          cwd: '<%= yeoman.app %>/images/',
+          src: ['**'], 
+          dest: '<%= yeoman.dist %>/images/'
         }, {
           expand: true, 
           cwd: '<%= yeoman.app %>/bower_components/font-awesome/fonts/', 
@@ -216,8 +203,7 @@ module.exports = function (grunt) {
       ],
       dist: [
         'less:dist',
-        'copy:styles',
-        'imagemin'
+        'copy:styles'
       ]
     },
     karma: {
