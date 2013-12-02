@@ -1,5 +1,5 @@
-<div ng-controller="header" >
-    <header ng-init="init()">
+<div ng-controller="header">
+    <header>
         <div class="brand" title="About Codebrew.io" ng-click="toogleContentPage()">CodeBrew</div>
         <img ng-show="loggedIn()" class="avatar img-rounded" ng-src="{{ user().codeBrewUser.avatarUrl }}">
         <p ng-show="loggedIn()" class="username">{{ user().codeBrewUser.fullName }} ({{ user().codeBrewUser.userName }})</p>
@@ -34,9 +34,9 @@
             </typeahead>
         </div>
     </header>
-    <!--div class="content-holder" ng-class="{ 'active': showingContentPage, 'inactive': !showingContentPage}">
+    <div class="content-holder" ng-class="{ 'active': showingContentPage, 'inactive': !showingContentPage}">
         <div class="content" ng-class="{ 'active': showingContentPage, 'inactive': !showingContentPage}">
             <ng-include src="'/views/about.html'" ></ng-include>
         </div>
-    </div-->
+    </div>
 </div>

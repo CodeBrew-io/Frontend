@@ -28,7 +28,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	// Assing the value of the icon "Save my snippet"'s CSS'
 	$scope.saveMySnippetCss = function() {
 		var saveIconCss = $scope.isSaving ? ' fa-check saving' : ' fa-floppy-o';
-		if(angular.isDefined($scope.code)) {
+		if(angular.isDefined($scope.code) && $scope.code !== null) {
 			if($scope.code.length == 0 || errorWidgetLines.length > 0) {
 				saveIconCss += ' disable';	
 			}
