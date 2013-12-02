@@ -161,41 +161,20 @@ module.exports = function (grunt) {
         }]
       }
     },
-    svgmin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.svg',
-          dest: '<%= yeoman.dist %>/images'
-        }]
-      }
-    },
-    htmlmin: {
-      dist: {
-        options: {
-          /*removeCommentsFromCDATA: true,
-          // https://github.com/yeoman/grunt-usemin/issues/44
-          //collapseWhitespace: true,
-          collapseBooleanAttributes: true,
-          removeAttributeQuotes: true,
-          removeRedundantAttributes: true,
-          useShortDoctype: true,
-          removeEmptyAttributes: true,
-          removeOptionalTags: true*/
-        },
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>',
-          src: ['*.html', 'views/*.html'],
-          dest: '<%= yeoman.dist %>'
-        }]
-      }
-    },
     // Put files not handled in other tasks here
     copy: {
       dist: {
         files: [{
+          expand: true, 
+          cwd: '<%= yeoman.app %>',
+          src: 'index.html', 
+          dest: '<%= yeoman.dist %>'
+        },{
+          expand: true, 
+          cwd: '<%= yeoman.app %>/views/',
+          src: ['**'], 
+          dest: '<%= yeoman.dist %>/views/'
+        },{
           expand: true,
           dot: true,
           cwd: '<%= yeoman.app %>',
@@ -238,9 +217,7 @@ module.exports = function (grunt) {
       dist: [
         'less:dist',
         'copy:styles',
-        'imagemin',
-        'svgmin',
-        'htmlmin'
+        'imagemin'
       ]
     },
     karma: {
