@@ -1,17 +1,47 @@
 <h2>About CodeBrew.io</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut feugiat nunc, a aliquam leo. Aliquam dapibus, nunc sed dapibus sodales, nisl quam bibendum quam, sed pulvinar nunc justo eu metus. Nunc faucibus est quis tellus aliquet, sed ultrices risus ultrices. Cras ac mauris id elit placerat tempor. Sed semper, urna vitae cursus laoreet, nisl lacus vestibulum nulla, in feugiat dui urna at sem. Phasellus arcu diam, facilisis quis varius at, aliquet nec sapien. Nullam accumsan, sem vitae pulvinar placerat, enim risus interdum nunc, et volutpat ante nisi nec justo. Nunc in rutrum odio. Duis ornare molestie condimentum. Maecenas rutrum eu orci interdum gravida.</p>
+<p>Codebrew.io is an interactive scala IDE in the cloud. Use the editor to run and share your code snippets online. Codebrew.io provides you with autocompletion, scaladoc and insights on your algorithm.</p>
+
 <h2>References</h2>
-<p>Phasellus dapibus, neque nec viverra vulputate, est orci varius metus, sed luctus quam tellus fringilla nulla. Vivamus sodales justo sit amet dui mollis scelerisque. Etiam a mattis neque. Pellentesque eu elit at mi congue vestibulum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam aliquam iaculis vestibulum. Pellentesque sed purus vel metus mattis condimentum id vitae ipsum. Praesent iaculis nibh porttitor ullamcorper rhoncus. Maecenas imperdiet velit at sagittis mattis. Ut nec ante pulvinar, placerat massa eu, imperdiet nibh. Cras sed vulputate purus, et venenatis justo. Donec dictum, leo et rutrum interdum, mi libero iaculis neque, nec tristique lorem magna et felis. In rhoncus, velit sit amet adipiscing ornare, orci quam iaculis ante, non dapibus metus arcu dapibus magna. Integer arcu nibh, interdum non tincidunt nec, condimentum non odio. Curabitur id dictum urna.</p>
+<p>
+	<ul>
+		<li><a href="https://github.com/CodeBrew-io" target="_blank"><i class="fa fa-github"></i>Contribute to github.com/CodeBrew-io </a></li>
+		<li><a href="https://github.com/CodeBrew-io/Issues/issues/new" target="_blank"><i class="fa fa-github"></i>Submit new issue to github</a></li>
+	</ul>
+</p>
 <h2>About the team</h2>
-<p>Donec ultrices mattis sodales. Sed arcu metus, pellentesque elementum iaculis sit amet, fermentum sed quam. Maecenas vitae ipsum eget augue viverra tincidunt. Praesent laoreet dignissim quam ac mattis. Nam vel odio in felis tempus sollicitudin. Quisque a tincidunt mauris. Integer rutrum sapien sit amet nisl posuere mattis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus vulputate mi a lacinia tincidunt.</p>
+<p>CodeBrew.io was created at Polytechnique Montreal by a team of 5 software engineering students as their final year project.</p>
+<div class="centerAligner">
+		<div ng-repeat="teammate in teammates track by teammate.name" class="teammateBox">
+			<div class="centerAligner" ng-model="teammate">
+				{{teammate.name}}<br />
+				<a href="{{teammate.linkedin}}" ng-show="{{teammate.linkedin.length > 0}}" target="_blank"><i class="fa fa-linkedin-square"></i> </a>
+				<a href="{{teammate.github}}"  ng-show="{{teammate.github.length > 0}}"   target="_blank"><i class="fa fa-github-square"></i> </a>
+				<a href="{{teammate.twitter}}" ng-show="{{teammate.twitter.length > 0}}" target="_blank"><i class="fa fa-twitter-square"></i> </a>
+			</div>
+		</div>
+</div>
+
+
 <h2>Special thanks</h2>
-<p>Mauris nec odio id odio rhoncus sagittis eu dignissim mi. Maecenas velit ligula, interdum eu dignissim at, pretium nec sapien. Ut tincidunt, justo quis eleifend laoreet, velit quam iaculis felis, sit amet volutpat leo diam et nunc. Morbi at sodales eros. In ultrices magna sed pellentesque convallis. Quisque ultrices tortor quam, non sagittis ligula pellentesque vel. Etiam magna odio, varius vel mauris quis, dictum ultricies ante.</p>
-<div class="thanksBox">
-	<img class="specialThanksLogo" src="/images/polytechnique.png"/>
+<p>The CodeBrew.io team would like to thank our teacher in charge Olivier Gendreau (Ph.D.) for his support and his help through the semester.</p>
+<p>We would also like to thank Adriaan Moors (Ph.D.), Scala Tech lead @ TypeSafe, for his precious time since the start of this project.</p>
+<div class="centerAligner">
 
-	<img class="specialThanksLogo" src="/images/typesafe.png"/>
-
-	<div class="specialThanksLogo">
-		<span class="scalex">scalex</span><span class="scalexVersion">2</span>
-	</div>
+	<a href="http://www.polymtl.ca" target="_blank" class="thanksBox">
+		<div class="centerAligner">
+			<img class="specialThanksLogo" src="/images/polytechnique.png"/>
+		</div>
+	</a>
+	<a  href="http://www.typesafe.com" target="_blank" class="thanksBox">
+		<div class="centerAligner">
+			<img class="specialThanksLogo" src="/images/typesafe.jpg"/>
+		</div>
+	</a>
+	<a  href="http://www.scalex.org" target="_blank" class="thanksBox">
+		<div class="centerAligner">
+			<div class="specialThanksLogo">
+				<span class="scalex">scalex</span><span class="scalexVersion">2</span>
+			</div>
+		</div>
+	</a>
 </div>

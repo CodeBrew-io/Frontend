@@ -185,7 +185,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 
 	$scope.save = function(){
 		// We want to be able to save a snippet only if it's not empty.
-		if ($scope.code.length > 0 && errorWidgetLines.length == 0) {
+		if ($scope.code.length > 0) {
 			if($scope.isSaving) return;
 
 			user.doAfterLogin(function(user){
@@ -211,10 +211,11 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	}
 	$scope.toogleMySnippets = function(){
 		// login if need be
-		$scope.mySnippets = snippets.queryUser();
-		
-		viewingMySnippets = !viewingMySnippets;
-		refreshMirrors();
+		user.doAfterLogin(function(user){
+			$scope.mySnippets = snippets.queryUser();
+			viewingMySnippets = !viewingMySnippets;
+			refreshMirrors();
+		});
 	}
 
 	$scope.insertSnippet = function(snippet){
