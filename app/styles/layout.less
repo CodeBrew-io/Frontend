@@ -115,15 +115,6 @@ header {
 
 	height: @header-height;
 
-	&.dark {
-		color: red;
-		background-color: @darkHeader;
-
-		.search-area input[type=text] {
-			background-color: @darkSearch;
-		}
-	}
-
 	.brand, .avatar, .username {
 		vertical-align: middle;
 		display: inline-block;
@@ -249,6 +240,39 @@ header {
 				}
 			}
 			
+		}
+	}
+
+	&.dark {
+		background-color: @darkHeader;
+
+		.search-area {
+			input[type=text]  {
+				background-color: @darkSearch;
+			}
+
+			.search {
+				ul {
+					.text {
+						color: white;
+					}
+
+					pre {
+						background-color: @darkSearch !important;
+					}
+
+					.results {
+						background-color: @darkSearch !important;
+
+						&.active {
+							background-color: @darkHeader !important;
+							* {
+								background-color: @darkHeader !important;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }
