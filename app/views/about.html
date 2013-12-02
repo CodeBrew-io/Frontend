@@ -12,8 +12,8 @@
 <p>CodeBrew.io was created at Polytechnique Montreal by a team of 5 software engineering students as their final year project.</p>
 <div class="centerAligner">
 		<div ng-repeat="teammate in teammates track by teammate.name" class="teammateBox">
-			<div class="centerAligner" ng-model="teammate">
-				{{teammate.name}}<br />
+			<div class="centerAligner">
+				<div>{{teammate.name}}</div>
 				<a href="{{teammate.linkedin}}" ng-show="{{teammate.linkedin.length > 0}}" target="_blank"><i class="fa fa-linkedin-square"></i> </a>
 				<a href="{{teammate.github}}"  ng-show="{{teammate.github.length > 0}}"   target="_blank"><i class="fa fa-github-square"></i> </a>
 				<a href="{{teammate.twitter}}" ng-show="{{teammate.twitter.length > 0}}" target="_blank"><i class="fa fa-twitter-square"></i> </a>
@@ -32,7 +32,7 @@
 			<img class="specialThanksLogo" src="/images/polytechnique.png"/>
 		</div>
 	</a>
-	<a  href="http://www.typesafe.com" target="_blank" class="thanksBox">
+	<a href="http://www.typesafe.com" target="_blank" class="thanksBox">
 		<div class="centerAligner">
 			<img class="specialThanksLogo" src="/images/typesafe.jpg"/>
 		</div>
