@@ -13,6 +13,6 @@
   },
   "resolutions": {
     "angular": "~1.2.0-rc.3",
-    "codemirror": "~3.19.0"
+    "codemirror": "4f083e8d92fb6bfa527d61154ff9a0fc82b58f1a"
   }
 }
