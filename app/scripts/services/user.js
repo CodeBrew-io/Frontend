@@ -22,7 +22,7 @@ app.factory('user', function($resource, $window, $q) {
 	return {
 		doAfterLogin: function(f){
 			if(angular.isDefined(user.codeBrewUser)) {
-				return f(user.codeBrewUser.userName)
+				return f(user);
 			}
 
 			if(angular.isDefined(user.secureSocialUser)) {

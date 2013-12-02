@@ -7,6 +7,9 @@ html, body {
 
 @header-height: 56px;
 
+@darkHeader: #073642;
+@darkSearch: #002b36;
+
 .app {
 	height: calc(~"100% -"@header-height);
 }
@@ -237,6 +240,50 @@ header {
 				}
 			}
 			
+		}
+	}
+
+	&.dark {
+		background-color: @darkHeader;
+
+		.search-area {
+			input[type=text]  {
+				background-color: @darkSearch;
+			}
+
+			.search {
+				ul {
+					.text {
+						color: white;
+					}
+
+					li {
+						position: relative;
+					}
+
+					li .fa {
+						position: absolute;
+						top: 0;
+						right: 0;
+						margin: 5px 5px 0 0;
+					}
+
+					pre {
+						background-color: @darkSearch !important;
+					}
+
+					.results {
+						background-color: @darkSearch !important;
+
+						&.active {
+							background-color: @darkHeader !important;
+							* {
+								background-color: @darkHeader !important;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }

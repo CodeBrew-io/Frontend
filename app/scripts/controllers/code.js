@@ -314,4 +314,15 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	keyboardManager.bind('ctrl+i', function(e) {
 		$scope.toogleTheme();
 	});
+
+	// make the console appear
+	keyboardManager.bind('ctrl+up', function(e) {
+		$scope.withConsole = true;
+	});
+
+	// make the console disappear
+	keyboardManager.bind('ctrl+down', function(e) {
+		$scope.withConsole = false;
+	});
+
 });
