@@ -67,11 +67,11 @@ app.controller('header', function header($scope, $rootScope, user, snippets, sca
 		$scope.showingContentPage = !$scope.showingContentPage;
 	}
 
-	$scope.teammates = new Array(
+	$scope.teammates = [
 		{name: 'Jean-Remi Desjardins', linkedin: 'http://ca.linkedin.com/in/jedesah', github: 'https://github.com/jedesah', twitter: 'https://twitter.com/jrdesjardins'},
 		{name: 'Eric Comte Marois', linkedin: 'http://ca.linkedin.com/pub/éric-comte-marois/59/799/444', github: 'https://github.com/manbear', twitter: ''},
 		{name: 'Guillaume Masse', linkedin: 'http://ca.linkedin.com/in/masseguillaume', github: 'https://github.com/MasseGuillaume', twitter: 'https://twitter.com/MasseGuillaume'},
 		{name: 'Raouf Merouche', linkedin: 'http://ca.linkedin.com/in/merouche/', github: 'https://github.com/shmed', twitter: 'https://twitter.com/elshmed'},		
 		{name: 'Patrick Losier', linkedin: 'http://ca.linkedin.com/in/patricklosier', github: 'https://github.com/patlos', twitter: ''}
-	);
+	];
 });	

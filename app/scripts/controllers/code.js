@@ -121,6 +121,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		smartIndent: false,
 		autofocus: true,
 		autoCloseBrackets: true,
+		keyMap: "sublime",
 		highlightSelectionMatches: { showToken: false },
 		onScroll: function(cm) {
 			if ($scope.cmLeft === null) {
@@ -270,11 +271,6 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	// adding the keyboard's shortcuts
 	//________________________________________
 
-	// toggle Insight (make insight appear or disappear)
-	keyboardManager.bind('ctrl+y', function(e) {
-		$scope.withInsight = !$scope.withInsight;
-	});
-
 	// saving
 	keyboardManager.bind('ctrl+s', function(e) {
 		if ($scope.loggedIn() == true) {
@@ -293,33 +289,8 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 		}
 	}, {'stop':true});
 
-	// clear code
-	keyboardManager.bind('ctrl+delete', function(e) {
-		$scope.clear();
-	});
-
-	// logout
-	keyboardManager.bind('ctrl+l', function(e) {
-		if ($scope.loggedIn()) {
-			$scope.logOut();
-		} else {
-			$scope.login();
-		}
-	});
-
 	// inverse color
 	keyboardManager.bind('ctrl+i', function(e) {
 		$scope.toogleTheme();
 	});
-
-	// make the console appear
-	keyboardManager.bind('ctrl+up', function(e) {
-		$scope.withConsole = true;
-	});
-
-	// make the console disappear
-	keyboardManager.bind('ctrl+down', function(e) {
-		$scope.withConsole = false;
-	});
-
 });
