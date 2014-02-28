@@ -110,7 +110,7 @@ module.exports = function (grunt) {
     },
     open: {
       server: {
-        url: 'http://localhost:<%= connect.options.port %>/masgui/3JLZwuoqQROHc4DlnoliIQ'
+        url: 'http://localhost:<%= connect.options.port %>/'
       }
     },
     clean: {

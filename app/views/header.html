@@ -1,6 +1,6 @@
 <div ng-controller="header">
     <header ng-class="getThemeShort()">
-        <div class="brand" title="About Codebrew.io" ng-click="toogleContentPage()">CodeBrew</div>
+        <div class="brand" title="About Codebrew.io">CodeBrew</div>
         <img ng-show="loggedIn()" class="avatar img-rounded" ng-src="{{ user().codeBrewUser.avatarUrl }}">
         <p ng-show="loggedIn()" class="username">{{ user().codeBrewUser.fullName }} ({{ user().codeBrewUser.userName }})</p>
 
@@ -34,9 +34,4 @@
             </typeahead>
         </div>
     </header>
-    <div class="content-holder cm-s-solarized cm-s-{{ getThemeShort() }}" ng-class="{ 'active': showingContentPage, 'inactive': !showingContentPage}">
-        <div class="container content" ng-class="{ 'active': showingContentPage, 'inactive': !showingContentPage}">
-            <ng-include src="'/views/about.html'" ></ng-include>
-        </div>
-    </div>
 </div>
