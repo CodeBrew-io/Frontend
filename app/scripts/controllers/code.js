@@ -92,21 +92,28 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 
 				clearErrorWidgetLines();
 				clearErrorSquigglyLines();
-				if (data.errors){
-					data.errors.forEach(function(value) {	
-						errorWidgetLines.push(addErrorWidgetLines(value));							
-						errorMarkedTexts.push(addErrorSquigglyLines(value));
-					});
-				}
+
+				var compilerInfos = ["errors", "warnings", "infos"];
+				var annoying = "a pure expression does nothing in statement position; you may be omitting necessary parentheses";
+				compilerInfos.forEach(function(severity){
+					if (data[severity]){
+						data[severity].forEach(function(value) {	
+							if(value.message !== annoying) {
+								errorWidgetLines.push(addErrorWidgetLines(severity, value));							
+								errorMarkedTexts.push(addErrorSquigglyLines(severity, value));
+							}
+						});
+					}
+				})
 				/* Make the squiggly line in the code editor for error message */    
-			    function addErrorSquigglyLines(value) {
+			    function addErrorSquigglyLines(severity, value) {
 			    	var cm = $scope.cmLeft;
 			    	var cur = cm.getDoc().posFromIndex(value.position);
 					var currentLine = $scope.code.split("\n")[cur.line];
 			    	var markedText = cm.markText(
 			    		{line: cur.line, ch: cur.ch}, 
 			    		{line: cur.line, ch: currentLine.length},
-			    		{className: "error"}
+			    		{className: severity}
 			    	);
 					return markedText;
 					
@@ -117,13 +124,20 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 			  		});
 				    errorMarkedTexts = [];
 			  	}
-			  	function addErrorWidgetLines(value){
+			  	function addErrorWidgetLines(severity, value){
 			  		var cm = $scope.cmLeft;
 			  		var cur = cm.getDoc().posFromIndex(value.position);
 					var currentLine = $scope.code.split("\n")[cur.line];
 			  		var msg = document.createElement("div");
 			      	var icon = msg.appendChild(document.createElement("i"));
-			      	icon.className = "fa fa-exclamation-circle lint-error-icon";
+			      	icon.className = "fa lint-error-icon ";
+			      	if(severity == "errors") {
+						icon.className += "fa-times-circle";
+			      	} else if(severity == "warnings") {
+						icon.className += "fa-exclamation-triangle";
+			      	} else if(severity == "infos") {
+						icon.className += "fa-info-circle";
+			      	}
 			      	msg.appendChild(document.createTextNode(value.message));
 			      	msg.className = "lint-error";
 					var errorLineWidget = cm.addLineWidget(cur.line, msg);
