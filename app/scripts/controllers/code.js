@@ -5,7 +5,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	var cmLeft, cmRight = null;
 	var viewingMySnippets = false;
 
-	$scope.code = null;
+	$scope.code = "";
 
 	$scope.mySnippets = [];
 	$scope.loggedIn = user.loggedIn;
@@ -44,73 +44,8 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 	};
 
 	$scope.getThemeShort = snippets.getThemeShort;
-
 	$scope.toogleTheme = snippets.toogleTheme;
 	$scope.isLigth = snippets.isLigth;
-
-	$scope.$watch('code', function(){
-		if($scope.code == null) return;
-		
-		var cm = $scope.cmLeft;
-		snippets.saveLocal($scope.code);
-		throttle.event(function() {
-			scalaEval.insight($scope.code).then(function(data){
-				$scope.insight = data.insight;
-				if (data.output){
-					if (!$scope.manuallyClosedConsole){
-						$scope.withConsole = true;
-					}
-					$scope.console = data.output;
-				}else{
-					$scope.console = "";
-				}
-
-				clearErrorWidgetLines();
-				clearErrorSquigglyLines();
-				if (data.errors){
-					data.errors.forEach(function(value) {	
-						errorWidgetLines.push(addErrorWidgetLines(value));							
-						errorMarkedTexts.push(addErrorSquigglyLines(value));
-					});
-				}
-				/* Make the squiggly line in the code editor for error message */    
-			    function addErrorSquigglyLines(value) {
-			    	var cur = cm.getDoc().posFromIndex(value.position);
-					var currentLine = $scope.code.split("\n")[cur.line];
-			    	var markedText = cm.markText(
-			    		{line: cur.line, ch: cur.ch}, 
-			    		{line: cur.line, ch: currentLine.length},
-			    		{className: "error"}
-			    	);
-					return markedText;
-					
-			  	}
-			  	function clearErrorSquigglyLines(){
-			  		errorMarkedTexts.forEach(function (value){
-			  			value.clear();
-			  		});
-				    errorMarkedTexts = [];
-			  	}
-			  	function addErrorWidgetLines(value){
-			  		var cur = cm.getDoc().posFromIndex(value.position);
-					var currentLine = $scope.code.split("\n")[cur.line];
-			  		var msg = document.createElement("div");
-			      	var icon = msg.appendChild(document.createElement("i"));
-			      	icon.className = "fa fa-exclamation-circle lint-error-icon";
-			      	msg.appendChild(document.createTextNode(value.message));
-			      	msg.className = "lint-error";
-					var errorLineWidget = cm.addLineWidget(cur.line, msg);
-					return errorLineWidget;
-			  	}
-			  	function clearErrorWidgetLines(){
-			  		errorWidgetLines.forEach(function (value){
-			  			cm.removeLineWidget(value);
-			  		});
-				    errorWidgetLines = [];
-			  	}
-			});
-		});
-	});
 
 	$scope.optionsCode = {
 		extraKeys: {"Ctrl-Space": "autocomplete"},
@@ -137,6 +72,73 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, fu
 			$scope.cmLeft = cm;
 		}
 	};
+
+	$scope.$watch('code', function(){
+		if($scope.code == "") return;
+		
+		snippets.saveLocal($scope.code);
+		throttle.event(function() {
+			scalaEval.insight($scope.code).then(function(data){
+				// Insight => [{line: 1, result: "x"}, ...]
+				$scope.insight = ""; //data.insight;
+				if (data.output){
+					if (!$scope.manuallyClosedConsole){
+						$scope.withConsole = true;
+					}
+					$scope.console = data.output;
+				}else{
+					$scope.console = "";
+				}
+
+				clearErrorWidgetLines();
+				clearErrorSquigglyLines();
+				if (data.errors){
+					data.errors.forEach(function(value) {	
+						errorWidgetLines.push(addErrorWidgetLines(value));							
+						errorMarkedTexts.push(addErrorSquigglyLines(value));
+					});
+				}
+				/* Make the squiggly line in the code editor for error message */    
+			    function addErrorSquigglyLines(value) {
+			    	var cm = $scope.cmLeft;
+			    	var cur = cm.getDoc().posFromIndex(value.position);
+					var currentLine = $scope.code.split("\n")[cur.line];
+			    	var markedText = cm.markText(
+			    		{line: cur.line, ch: cur.ch}, 
+			    		{line: cur.line, ch: currentLine.length},
+			    		{className: "error"}
+			    	);
+					return markedText;
+					
+			  	}
+			  	function clearErrorSquigglyLines(){
+			  		errorMarkedTexts.forEach(function (value){
+			  			value.clear();
+			  		});
+				    errorMarkedTexts = [];
+			  	}
+			  	function addErrorWidgetLines(value){
+			  		var cm = $scope.cmLeft;
+			  		var cur = cm.getDoc().posFromIndex(value.position);
+					var currentLine = $scope.code.split("\n")[cur.line];
+			  		var msg = document.createElement("div");
+			      	var icon = msg.appendChild(document.createElement("i"));
+			      	icon.className = "fa fa-exclamation-circle lint-error-icon";
+			      	msg.appendChild(document.createTextNode(value.message));
+			      	msg.className = "lint-error";
+					var errorLineWidget = cm.addLineWidget(cur.line, msg);
+					return errorLineWidget;
+			  	}
+			  	function clearErrorWidgetLines(){
+			  		var cm = $scope.cmLeft;
+			  		errorWidgetLines.forEach(function (value){
+			  			cm.removeLineWidget(value);
+			  		});
+				    errorWidgetLines = [];
+			  	}
+			});
+		});
+	});
 
 	$rootScope.$on('selectedCode', function(event, code){
 		if(code){
