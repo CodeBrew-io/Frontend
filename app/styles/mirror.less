@@ -13,7 +13,6 @@
 	width: 600px;
 	resize: horizontal;
 	z-index: 2000;
-
 }
 
 .CodeMirror-hint {
@@ -27,15 +26,13 @@
 	}
 }
 
-.code, .insight {	
-/*	resize:both;
-	overflow:auto;*/
+.code {
 	position: relative;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 28px;
 
-	width: (100% / 2);
+	width: 100%;
 	height: 100%;
 
 	.user-snippet {
@@ -52,7 +49,7 @@
 			list-style: none;
 			position: relative;
 		}
-		syntaxhighlight:hover{
+		syntaxhighlight:hover {
 			cursor: pointer;
 		}
 		.crud {
@@ -62,17 +59,12 @@
 			right: 0;
 		}
 	}
-	&.expandedWidth {
-		width: 100%;
-	}
-}
 
-.code {
 	.sideMenu{
 		right: 0;
 		position: absolute;
-	    z-index: 100;
-	    border-bottom-left-radius:15px;
+		z-index: 100;
+		border-bottom-left-radius:15px;
 		.handle{
 			font-size:20px;
 			text-align:center;
@@ -82,17 +74,16 @@
 		.expand-collapse {
 			transition: max-height 0.5s;
 			-webkit-transition: max-height 0.5s;
+
 			overflow:hidden;
-			text-align:center;
-		    &.active{
-		    	max-height:500px;
-		    }
-		    &.inactive{
-		    	max-height:0px;
-		    }
+			&.active{
+				max-height:500px;
+			}
+			&.inactive{
+				max-height:0px;
+			}
 
 			i {
-				
 				display: block;
 				font-size: 32px;
 				color: @metal-blue;
@@ -103,64 +94,25 @@
 
 				&.saving {
 					color: green;
-
-					&:hover {
-						color: green;
-					}
-				}
-
-				.message {
-					top: 105px;
-					left: -55px;
-					position: absolute;
-					color: @metal-blue;
-					font-size: 12px;
 				}
 			}		
 		}
+	}
+
+	.insight {
+		margin-left: 15px;
+		border-bottom: 1px solid black;
 	}
 
 	.errors {
 		display: inline-block;
 		border-bottom: 1px dashed red;
 	}
-	.lint-error-icon {
-		margin-right: 5px;
-		margin-left: 5px;
-	}
-	.lint-error{
-		background: #ffa; 
-		color: #a00;
-	}
-
-}
-
-
-.insight {
-	.CodeMirror-vscrollbar {
-		visibility: hidden;
-	}
-
-	.icon-spin {
-		position: fixed;
-		left: (100% * 3) / 4;
-		top: (100% / 2);
-		color: black;
-		z-index: 1500;
-	}
-
-	&.view-disabled {
-		display: block;
-		background-color: black;
-		opacity: 0.9;
-		z-index: 1000;
-	}
-
-	& .mirror.fetching {
-		opacity: 0.95;
-	}
-
-	.mirror {
-		height: 100%;
+	.error-message {
+		color: red;
+		i {
+			margin-right: 5px;
+			margin-left: 5px;
+		}
 	}
 }

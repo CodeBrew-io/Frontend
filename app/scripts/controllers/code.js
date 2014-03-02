@@ -50,6 +50,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
 		smartIndent: false,
 		autofocus: true,
 		autoCloseBrackets: true,
+		styleActiveLine: true,
 		keyMap: "sublime",
 		highlightSelectionMatches: { showToken: false },
 		onLoad: function(cm_) { cm = cm_; }
@@ -82,10 +83,10 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
 					// scala code output
 					var currentLine = code[value.line - 1];
 					var pre = document.createElement("pre");
-					pre.className = "cm-s-solarized";
+					pre.className = "cm-s-solarized insight";
 					pre.attributes["ng-class"] = "cm-s-{snippets.getThemeShort()}";
 			      	CodeMirror.runMode(value.result, $scope.optionsCode.mode, pre);
-					cm.addWidget({line: (value.line - 2), ch: currentLine.length}, pre);
+					cm.addWidget({line: (value.line - 1), ch: currentLine.length}, pre, false, "over");
 					return pre;
 				});
 
@@ -100,6 +101,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
 
 				/* Make the squiggly line in the code editor for error message */    
 			    function addErrorSquigglyLines(severity, value) {
+			    	var cur = cm.getDoc().posFromIndex(value.position);
 			    	return cm.markText(
 			    		{line: cur.line, ch: cur.ch}, 
 			    		{line: cur.line, ch: Infinity},
@@ -111,7 +113,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
 			  		var msg = document.createElement("div");
 			  		var cur = cm.getDoc().posFromIndex(value.position);
 			      	var icon = msg.appendChild(document.createElement("i"));
-			      	icon.className = "fa lint-error-icon ";
+			      	icon.className = "fa ";
 			      	if(severity == "errors") {
 						icon.className += "fa-times-circle";
 			      	} else if(severity == "warnings") {
@@ -120,7 +122,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
 						icon.className += "fa-info-circle";
 			      	}
 			      	msg.appendChild(document.createTextNode(value.message));
-			      	msg.className = "lint-error";
+			      	msg.className = "error-message";
 
 					return cm.addLineWidget(cur.line, msg);
 			  	}

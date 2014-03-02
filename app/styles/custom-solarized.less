@@ -96,17 +96,21 @@ less version: gui
     .cm-matchhighlight {
       border-bottom: 2px solid @base02;
     }
+
+    .CodeMirror-gutters {
+      background-color: @base02;
+    }
+
     .CodeMirror-selected {
-      background: @base02;
+      background: rgba(255, 255, 255, 0.10);
     }
 
     .disable {
       color: @base03 !important;
     }
 
-    .activeline {
-      background: rgba(255, 255, 255, 0.10);
-
+    .CodeMirror-activeline-background {
+      background-color: @base02;
     }
 
     h1 {
@@ -114,9 +118,7 @@ less version: gui
     }
 
     &.sideMenu,
-    &.user-snippet, 
-    &.console .handle,
-    .insight { 
+    &.user-snippet { 
       background-color:@base02;
     }
 
@@ -132,21 +134,20 @@ less version: gui
       border-bottom: 2px solid @base2;
     }
 
-    .insight {
-      background-color: @base02;
+    .CodeMirror-gutters {
+      background-color: @base2;
     }
 
-
     .CodeMirror-selected {
-      background-color: @base2;
+      background: rgba(0, 0, 0, 0.10);
     }
 
     .disable {
       color: @base00 !important;
     }
 
-    .activeline {
-      background: rgba(0, 0, 0, 0.10);
+    .CodeMirror-activeline-background {
+      background-color: @base2;
     }
 
     h1 {
@@ -154,33 +155,16 @@ less version: gui
     }
 
     &.sideMenu,
-    &.user-snippet, 
-    &.console .handle{ 
+    &.user-snippet { 
       background-color:@base2;
     }
   }
 
-  /* Editor styling */
-
-  /* Gutter border and some shadow from it  */
   .CodeMirror-gutters {
     padding: 0 15px 0 10px;
     border-right: none;
   }
 
-  /* Gutter colors and line number styling based of color scheme (dark / light) */
-
-  /* Dark */
-  &.cm-s-dark .CodeMirror-gutters {
-    background-color: @base02;
-  }
-
-  /* Light */
-  &.cm-s-light .CodeMirror-gutters {
-    background-color: @base2;
-  }
-
-  /* Common */
   .CodeMirror-linenumber {
     color: @base00;
   }
@@ -189,20 +173,8 @@ less version: gui
     color: @base01;
   }
 
-  .CodeMirror-lines {
-    padding-left: 5px;
-  }
-
   .CodeMirror-lines .CodeMirror-cursor {
     border-left: 1px solid @base01;
-  }
-
-  /*
-  Active line. Negative margin compensates left padding of the text in the
-  view-port
-  */
-  .activeline {
-    margin-left: -20px;
   }
 
   .output {
