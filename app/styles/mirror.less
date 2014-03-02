@@ -1,8 +1,6 @@
 @import 'val.less';
 @import 'custom-solarized.less';
 
-@console-height: 200px;
-@handle-height: 27px;
 .CodeMirror, .CodeMirror-scroll {
     height: 100%;
 }
@@ -38,7 +36,7 @@
 	font-size: 28px;
 
 	width: (100% / 2);
-	height: calc(~"100% -"@console-height + @handle-height);
+	height: 100%;
 
 	.user-snippet {
 		overflow-y: scroll;
@@ -64,10 +62,6 @@
 			right: 0;
 		}
 	}
-	&.expandedHeight {
-		height: calc(~"100% -" @handle-height);
-	}
-
 	&.expandedWidth {
 		width: 100%;
 	}
@@ -126,7 +120,7 @@
 		}
 	}
 
-	.error {
+	.errors {
 		display: inline-block;
 		border-bottom: 1px dashed red;
 	}
@@ -168,27 +162,5 @@
 
 	.mirror {
 		height: 100%;
-	}
-}
-
-.console {
-
-	/*resize:both;*/
-	.output{
-		width:100%;
-		height:100%;
-		height:@console-height;
-		background-color: inherit;	
-		outline-color: transparent;	
-		border:none;
-		resize:none;
-	}
-
-	.handle{
-		width:100%;
-		height:@handle-height;
-		.menu{
-			text-align:right;
-		}
 	}
 }

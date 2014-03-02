@@ -1,8 +1,7 @@
 <div ng-controller="header">
     <header ng-class="getThemeShort()">
         <div class="brand" title="About Codebrew.io">CodeBrew</div>
-        <img ng-show="loggedIn()" class="avatar img-rounded" ng-src="{{ user().codeBrewUser.avatarUrl }}">
-        <p ng-show="loggedIn()" class="username">{{ user().codeBrewUser.userName }}</p>
+        <img ng-show="loggedIn()" class="avatar img-rounded" ng-src="{{ user().codeBrewUser.avatarUrl }}" alt="{{ user().codeBrewUser.userName }}">
 
         <div class="search-area" ng-class="{ 'active': !showingContentPage, 'inactive': showingContentPage}">
             <typeahead class="search" items="all"

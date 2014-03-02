@@ -2,16 +2,17 @@
   "name": "CodeBrew",
   "version": "0.0.0",
   "dependencies": {
-    "angular": "~1.2.0-rc.3",
-    "angular-resource": "~1.2.0-rc.3",
+    "angular": "~1.2.13",
+    "angular-resource": "~1.2.13",
     "bootstrap": "~3.0.0",
     "jquery": "~2.0.3",
     "font-awesome": "~4.0.1",
-    "codemirror": "#e9cc1e22e80cd22f2da41c42483eeaedffb36d20",
+    "codemirror": "#023532406d2ae3ccc098e44da9ce0a8ee3c35f0f",
     "angular-ui-codemirror": "~0.0.5",
-    "angular-mocks": "~1.2.0-rc.3"
+    "d3": "~3.4.3",
+    "threejs": "#8413a860aa95ed29c79cbb7f857c97d7880d260f"
   },
   "resolutions": {
-    "codemirror": "e9cc1e22e80cd22f2da41c42483eeaedffb36d20"
+    "codemirror": "023532406d2ae3ccc098e44da9ce0a8ee3c35f0f"
   }
 }

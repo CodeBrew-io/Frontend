@@ -10,7 +10,7 @@ app.factory('snippets', function($q, $resource, $timeout /* location, localStora
 	var hack = null;
 
 	if(!angular.isDefined(window.localStorage["theme"])) {
-		window.localStorage["theme"] = "light";
+		window.localStorage["theme"] = "dark";
 	}
 
 	return {
@@ -49,10 +49,8 @@ app.factory('snippets', function($q, $resource, $timeout /* location, localStora
 			} else {
 				// also async
 				var defer = $q.defer();
-				$timeout(function(){
-					defer.resolve({
-						code: window.localStorage["code"]
-					});
+				defer.resolve({
+					code: window.localStorage["code"]
 				});
 				return defer.promise;
 			}
