@@ -59,15 +59,9 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
 	$scope.$watch('code', function(){
 		snippets.saveLocal($scope.code);
 		
-		// clear insight
-		insightWidget.forEach(function(w){ 
-			w.parentElement.removeChild(w) 
-		});
-		insightWidget = [];
-
 		// clear line errors
 		errorWidgetLines.forEach(function (value){
-	  			cm.removeLineWidget(value);
+  			cm.removeLineClass(value);
 	  	});
 	  	errorWidgetLines = [];
 
@@ -78,16 +72,64 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
 
 		throttle.event(function() {
 			scalaEval.insight($scope.code).then(function(data){
+				// clear insight
+				insightWidget.forEach(function(w){ 
+					w.clear();
+				});
+				insightWidget = [];
+
 				var code = $scope.code.split("\n");
 				insightWidget = data.insight.map(function(value){
-					// scala code output
-					var currentLine = code[value.line - 1];
-					var pre = document.createElement("pre");
-					pre.className = "cm-s-solarized insight";
-					pre.attributes["ng-class"] = "cm-s-{snippets.getThemeShort()}";
-			      	CodeMirror.runMode(value.result, $scope.optionsCode.mode, pre);
-					cm.addWidget({line: (value.line - 1), ch: currentLine.length}, pre, false, "over");
-					return pre;
+					if(value.type == "CODE") {
+						// scala code output
+						var currentLine = code[value.line - 1];
+						var pre = document.createElement("pre");
+						pre.className = "cm-s-solarized insight";
+						pre.attributes["ng-class"] = "cm-s-{snippets.getThemeShort()}";
+				      	CodeMirror.runMode(value.result, $scope.optionsCode.mode, pre);
+						cm.addWidget({line: (value.line - 1), ch: currentLine.length}, pre, false, "over");
+						return {
+							clear: function(){ pre.parentElement.removeChild(pre); }
+						}
+					} else if (value.type == "JSON") {
+						var result = JSON.parse(value.result);
+						var data = result.data;
+						var width = 200;
+						var height = 200;
+
+						var xf = function(v){ return v[0] };
+						var yf = function(v){ return v[1] };
+
+						var minX = d3.min(data, xf);
+						var minY = d3.min(data, yf);
+						var maxX = d3.max(data, xf);
+						var maxY = d3.max(data, yf);
+
+						var scaleX = d3.scale.linear().
+							domain([minX, maxX]).
+							range([0, width])
+
+						var scaleY = d3.scale.linear().
+							domain([minY, maxY]).
+							range([height, 0])
+
+						var line = d3.svg.line().
+                        	x(function(v){ return scaleX(xf(v)); }).
+                        	y(function(v){ return scaleY(yf(v)); })
+
+                        var node = document.createElement("svg");
+						var svg =  d3.select(node).append("svg").
+                                    attr("width", width).
+                                    attr("height", height);
+
+						var plot = svg.append("path").
+                            attr("d", line(result.data)).
+                            attr("stroke", "blue").
+                            attr("stroke-width", 2).
+                            attr("fill", "none");
+
+						return cm.addLineWidget(value.line - 1, node);
+					}
 				});
 
 				["errors", "warnings", "infos"].forEach(function(severity){
@@ -102,9 +144,10 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
 				/* Make the squiggly line in the code editor for error message */    
 			    function addErrorSquigglyLines(severity, value) {
 			    	var cur = cm.getDoc().posFromIndex(value.position);
+			    	var currentLine = code[cur.line];
 			    	return cm.markText(
 			    		{line: cur.line, ch: cur.ch}, 
-			    		{line: cur.line, ch: Infinity},
+			    		{line: cur.line, ch: currentLine.length},
 			    		{className: severity}
 			    	);
 			  	}

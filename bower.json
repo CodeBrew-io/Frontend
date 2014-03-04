@@ -13,6 +13,7 @@
     "threejs": "#8413a860aa95ed29c79cbb7f857c97d7880d260f"
   },
   "resolutions": {
-    "codemirror": "023532406d2ae3ccc098e44da9ce0a8ee3c35f0f"
+    "codemirror": "023532406d2ae3ccc098e44da9ce0a8ee3c35f0f",
+    "angular": "~1.2.13"
   }
 }
