@@ -84,7 +84,9 @@ less version: gui
     }
     .CodeMirror-gutters {
       background-color: @base02;
-      border-right: 1px solid black;
+    }
+    .CodeMirror-gutter-filler {
+      background-color: @base02;
     }
     .CodeMirror-selected { 
       background: rgba(255, 255, 255, 0.10); 
@@ -106,6 +108,10 @@ less version: gui
       background-color: @base2;
     }
 
+    .CodeMirror-gutter-filler {
+      background-color: @base2;
+    }
+
     .CodeMirror-selected {
       background: rgba(0, 0, 0, 0.10);
     }
@@ -117,7 +123,6 @@ less version: gui
 
   .CodeMirror-gutters {
     padding: 0 15px 0 10px;
-    border-right: none;
   }
 
   .CodeMirror-linenumber {

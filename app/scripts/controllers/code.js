@@ -46,7 +46,8 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
 
 	$scope.optionsCode = {
 		extraKeys: {"Ctrl-Space": "autocomplete"},
-		fixedGutter: false,
+		fixedGutter: true,
+		coverGutterNextToScrollbar: true,
 		lineNumbers: true,
 		mode: 'text/x-scala',
 		theme: snippets.getTheme(),

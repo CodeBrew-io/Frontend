@@ -1,5 +1,30 @@
 @import 'custom-solarized.less';
 
+.CodeMirror, .CodeMirror-scroll {
+	height: 100%;
+}
+
+.CodeMirror {
+	tab-size: 3;
+}
+
+.CodeMirror-hints {
+	width: 600px;
+	resize: horizontal;
+	z-index: 2000;
+}
+
+.CodeMirror-hint {
+	max-width: none;
+	resize: none;
+
+	.autocomplete-result-name{
+	}
+	.autocomplete-result-signature{
+		opacity:0.5;
+	}
+}
+
 .cm-s-solarized {
 	.solarized-pallette;
 
@@ -7,43 +32,50 @@
 		border-right: 1px solid black;
 
 		h1 {
-	      color: white;
-	    }
-	    &.side-menu{
+			color: white;
+		}
+		&.side-menu{
 			// continous border trick - woot woot
 			right: -1px;
 			border-right:none;
 			border-bottom: 1px solid black;
 			border-left: 1px solid black;
 			margin-right: 1px;
-	    }
+		}
 
-	    &.side-menu,
-	    &.user-snippet { 
-	      background-color:@base02;
-	    }
+		&.side-menu,
+		&.user-snippet { 
+			background-color:@base02;
+		}
 
-	    &.user-snippet {
-	      li {
-	        background-color: @base03;
-	      }
-	    }
-	    .disable {
-	      color: @base03 !important;
-	    }
+		&.user-snippet {
+			pre {
+				border-right: none;
+			}
+			li {
+				background-color: @base03;
+			}
+		}
+		.disable {
+		  color: @base03 !important;
+		}
+
+		.CodeMirror-gutters {
+			border-right: 1px solid black;
+		}
 	}
 
 	&.cm-s-light {
 		h1 {
-	      color: black;
-	    }
+		  color: black;
+		}
 
-	    &.side-menu,
-	    &.user-snippet { 
-	      background-color: #eee8d5; //@base2;
-	    }
-	    .disable {
-	      color: @base00 !important;
-	    }
+		&.side-menu,
+		&.user-snippet { 
+			background-color: #eee8d5; //@base2;
+		}
+		.disable {
+			color: @base00 !important;
+		}
 	}
 }
