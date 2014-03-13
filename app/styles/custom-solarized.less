@@ -1,10 +1,10 @@
 /*
 Solarized theme for code-mirror: http://ethanschoonover.com/solarized
-Solarized color pallet: http://ethanschoonover.com/solarized/img/solarized-palette.png
+Solarized color pallette: http://ethanschoonover.com/solarized/img/solarized-palette.png
 less version: gui
 */
 
-.cm-s-solarized {
+.solarized-pallette {
   @base00:    #657b83;
   @base01:    #586e75;
   @base02:    #073642;
@@ -21,7 +21,11 @@ less version: gui
   @blue:      #268bd2;
   @cyan:      #2aa198;
   @green:     #859900;
+}
 
+.cm-s-solarized {
+
+  .solarized-pallette;
   
   line-height: 1.45em;
   font-size: 18px;
@@ -29,39 +33,22 @@ less version: gui
   color-profile: sRGB;
   rendering-intent: auto;
 
-  &.cm-s-dark {
-    color: @base0;
-    background-color:  @base03;
-  }
-  &.cm-s-light {
-    background-color: @base3;
-    color: @base00;
-  }
-
-  .CodeMirror-widget {
-    text-shadow: none;
-  }
+  .CodeMirror-widget { text-shadow: none; }
 
   .cm-keyword { color: @orange }
   .cm-atom { color: @magenta; }
   .cm-number { color: @magenta; }
   .cm-def { color: @cyan; }
-
   .cm-variable { color: @blue; }
   .cm-variable-2 { color: @yellow; }
   .cm-variable-3 { color: @violet; }
-
   .cm-property { color: @cyan; }
   .cm-operator {color: @violet;}
-
   .cm-comment { color: @base01; font-style:italic; }
-
   .cm-string { color: @green; }
   .cm-string-2 { color: @yellow; }
-
   .cm-meta { color: @green; }
-  .cm-error,
-  .cm-invalidchar {
+  .cm-error, .cm-invalidchar {
     color: @base01;
     border-bottom: 1px dotted @red;
   }
@@ -79,7 +66,6 @@ less version: gui
     border-top: 1px solid @base01;
     display: block;
   }
-
   .cm-link { color: @base1; cursor: pointer; }
   .cm-special { color: @violet; }
   .cm-em {
@@ -88,48 +74,30 @@ less version: gui
     text-decoration-style: dotted;
   }
   .cm-strong { color: #eee; }
-  .cm-tab:before {
-    color: @base01;
-  }
+  .cm-tab:before { color: @base01; }
 
   &.cm-s-dark {
-    .cm-matchhighlight {
-      border-bottom: 2px solid @base02;
+    color: @base0;
+    background-color:  @base03;
+    .cm-matchhighlight { 
+      border-bottom: 2px solid @base02; 
     }
-
     .CodeMirror-gutters {
       background-color: @base02;
+      border-right: 1px solid black;
     }
-
-    .CodeMirror-selected {
-      background: rgba(255, 255, 255, 0.10);
+    .CodeMirror-selected { 
+      background: rgba(255, 255, 255, 0.10); 
     }
-
-    .disable {
-      color: @base03 !important;
-    }
-
     .CodeMirror-activeline-background {
       background-color: @base02;
-    }
-
-    h1 {
-      color: white;
-    }
-
-    &.sideMenu,
-    &.user-snippet { 
-      background-color:@base02;
-    }
-
-    &.user-snippet {
-      li {
-        background-color: @base03;
-      }
     }
   }
 
   &.cm-s-light {
+    background-color: @base3;
+    color: @base00;
+
     .cm-matchhighlight {
       border-bottom: 2px solid @base2;
     }
@@ -142,22 +110,9 @@ less version: gui
       background: rgba(0, 0, 0, 0.10);
     }
 
-    .disable {
-      color: @base00 !important;
-    }
-
     .CodeMirror-activeline-background {
       background-color: @base2;
-    }
-
-    h1 {
-      color: black;
-    }
-
-    &.sideMenu,
-    &.user-snippet { 
-      background-color:@base2;
-    }
+    }    
   }
 
   .CodeMirror-gutters {
@@ -172,12 +127,8 @@ less version: gui
   .CodeMirror-gutter .CodeMirror-gutter-text {
     color: @base01;
   }
-
+  
   .CodeMirror-lines .CodeMirror-cursor {
     border-left: 1px solid @base01;
-  }
-
-  .output {
-    color: @green;
   }
 }

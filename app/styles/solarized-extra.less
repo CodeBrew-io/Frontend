@@ -1,0 +1,49 @@
+@import 'custom-solarized.less';
+
+.cm-s-solarized {
+	.solarized-pallette;
+
+	&.cm-s-dark {
+		border-right: 1px solid black;
+
+		h1 {
+	      color: white;
+	    }
+	    &.side-menu{
+			// continous border trick - woot woot
+			right: -1px;
+			border-right:none;
+			border-bottom: 1px solid black;
+			border-left: 1px solid black;
+			margin-right: 1px;
+	    }
+
+	    &.side-menu,
+	    &.user-snippet { 
+	      background-color:@base02;
+	    }
+
+	    &.user-snippet {
+	      li {
+	        background-color: @base03;
+	      }
+	    }
+	    .disable {
+	      color: @base03 !important;
+	    }
+	}
+
+	&.cm-s-light {
+		h1 {
+	      color: black;
+	    }
+
+	    &.side-menu,
+	    &.user-snippet { 
+	      background-color: #eee8d5; //@base2;
+	    }
+	    .disable {
+	      color: @base00 !important;
+	    }
+	}
+}

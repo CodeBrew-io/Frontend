@@ -1,6 +1,6 @@
 <div ng-controller="code" ng-init="init()" class="app">
-    <div class="code" ng-class="{'expandedWidth': !withInsight }">
-        <div class="sideMenu cm-s-solarized cm-s-{{ getThemeShort() }}">
+    <div class="code" ng-class="{'with-snippets': viewingMySnippets() }">
+        <div class="side-menu cm-s-solarized cm-s-{{ getThemeShort() }}">
             <div class="expand-collapse" ng-class="{ 'active': showingSideMenu, 'inactive': !showingSideMenu}">
                 <i title="save snippet (ctrl-s)" class="fa saveSnippet" ng-click="save()" 
                     ng-class="saveMySnippetCss()">
@@ -9,6 +9,7 @@
                     ng-class="{'fa-folder-o' : !viewingMySnippets(), 'fa-folder-open-o': viewingMySnippets()}"
                     ng-click="toogleMySnippets()">
                 </i>
+                <i title="search" class="fa fa-search" ng-click="search()"></i>
                 <i title="login" class="fa fa-sign-in login" ng-show="!loggedIn()" ng-click="login()"></i>
                 <i title="logout (ctrl-l)" class="fa fa-sign-out logout" ng-show="loggedIn()" ng-click="logOut()"></i>
                 <i title="inverse theme colors (ctrl-i)" class="fa theme"
@@ -19,5 +20,8 @@
                 <div class="fa handle" ng-class="{'fa-bars': !showingSideMenu, 'fa-chevron-up': showingSideMenu}" ng-click="toogleSideMenu()"></div>
         </div>
         <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
+    </div><!-- 
+  --><div class="user-snippet cm-s-solarized cm-s-{{ getThemeShort() }}" ng-show="viewingMySnippets()">
+        <ng-include src="'/views/mysnippets.html'"></ng-include>
     </div>
 </div>

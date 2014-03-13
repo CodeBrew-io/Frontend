@@ -1,10 +1,6 @@
 app.controller('header', function header($scope, $rootScope, user, snippets, scaladoc, throttle) {
 	'use strict';
 
-	$scope.user = user.get;
-
-	$scope.loggedIn = user.loggedIn;
-
 	$scope.logOut = function(){
 		user.logout();
 	};

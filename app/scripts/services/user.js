@@ -21,16 +21,18 @@ app.factory('user', function($resource, $window, $q) {
 
 	return {
 		doAfterLogin: function(f){
-			if(angular.isDefined(user.codeBrewUser)) {
-				return f(user);
-			}
+			user.$promise.then(function(){
+				if(angular.isDefined(user.codeBrewUser)) {
+					return f(user);
+				}
 
-			if(angular.isDefined(user.secureSocialUser)) {
-				popup('/user/signIn', 'signIn');
-			} else {
-				login();
-			}
-			afterLogin = f;
+				if(angular.isDefined(user.secureSocialUser)) {
+					popup('/user/signIn', 'signIn');
+				} else {
+					login();
+				}
+				afterLogin = f;
+			})
 		},
 		get: function(){ 
 			return user;

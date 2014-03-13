@@ -7,14 +7,15 @@ app.directive('syntaxhighlight', function($timeout, snippets) {
   return {
     restrict: 'E',
     require: '?ngModel',
-    template: '<pre class=\"cm-s-solarized cm-s-' + snippets.getThemeShort() + '\"></pre>',
+    scope: { shortTheme: "=shortTheme"},
+    template: '<pre class="cm-s-solarized cm-s-{{shortTheme}}"></pre>',
     link: function (scope, elm, attrs, ngModel) {
       $timeout(function() {
         var value = ngModel.$modelValue;
         var a_output = elm.find('pre');
         if (value){
           CodeMirror.runMode(value, attrs.syntaxtype , a_output[0]); 
-        }  
+        }
       });
     }
   }

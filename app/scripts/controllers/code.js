@@ -2,16 +2,19 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
 	'use strict';
 
 	var insightWidget = [];
-	var errorWidgetLines = [];
-	var errorMarkedTexts = [];
-
-	var viewingMySnippets = false;
+	var errorMessages = [];
+	var errorUnderlines = [];
 	var cm = null;
+	var viewingMySnippets = false;
 
 	$scope.code = "";
 	$scope.mySnippets = [];
 	$scope.loggedIn = user.loggedIn;
 	$scope.fetching = scalaEval.fetching;
+
+	$scope.user = user.get;
+
+	$scope.loggedIn = user.loggedIn;
 
 	snippets.current().then(function(data){
 		$scope.code = data.code;
@@ -20,7 +23,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
 	$scope.saveMySnippetCss = function() {
 		var saveIconCss = $scope.isSaving ? ' fa-check saving' : ' fa-floppy-o';
 		if(angular.isDefined($scope.code) && $scope.code !== "") {
-			if($scope.code.length == 0 || errorWidgetLines.length > 0) {
+			if($scope.code.length == 0) {
 				saveIconCss += ' disable';	
 			}
 		} else {
@@ -60,23 +63,24 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
 		snippets.saveLocal($scope.code);
 		
 		// clear line errors
-		errorWidgetLines.forEach(function (value){
-  			cm.removeLineClass(value);
+		errorMessages.forEach(function (value){
+  			value.clear();
 	  	});
-	  	errorWidgetLines = [];
+	  	errorMessages = [];
 
-		errorMarkedTexts.forEach(function (value){
+		errorUnderlines.forEach(function (value){
   			value.clear();
   		});
-  		errorMarkedTexts = [];
+  		errorUnderlines = [];
 
+		// clear insight
+		insightWidget.forEach(function(w){ 
+			w.clear();
+		});
+		insightWidget = [];
+		
 		throttle.event(function() {
 			scalaEval.insight($scope.code).then(function(data){
-				// clear insight
-				insightWidget.forEach(function(w){ 
-					w.clear();
-				});
-				insightWidget = [];
 
 				var code = $scope.code.split("\n");
 				insightWidget = data.insight.map(function(value){
@@ -87,7 +91,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
 						pre.className = "cm-s-solarized insight";
 						pre.attributes["ng-class"] = "cm-s-{snippets.getThemeShort()}";
 				      	CodeMirror.runMode(value.result, $scope.optionsCode.mode, pre);
-						cm.addWidget({line: (value.line - 1), ch: currentLine.length}, pre, false, "over");
+						cm.addWidget({line: (value.line - 1), ch: currentLine.length}, pre, true, "over");
 						return {
 							clear: function(){ pre.parentElement.removeChild(pre); }
 						}
@@ -117,7 +121,8 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
                         	x(function(v){ return scaleX(xf(v)); }).
                         	y(function(v){ return scaleY(yf(v)); })
 
-                        var node = document.createElement("svg");
+                        var node = document.createElement("div");
+                        node.className = "plot";
 						var svg =  d3.select(node).append("svg").
                                     attr("width", width).
                                     attr("height", height);
@@ -135,8 +140,9 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
 				["errors", "warnings", "infos"].forEach(function(severity){
 					if (data[severity]){
 						data[severity].forEach(function(value) {	
-							errorWidgetLines.push(addErrorWidgetLines(severity, value));							
-							errorMarkedTexts.push(addErrorSquigglyLines(severity, value));
+							console.log(value)
+							errorMessages.push(addErrorMessages(severity, value));							
+							errorUnderlines.push(addErrorSquigglyLines(severity, value));
 						});
 					}
 				});
@@ -152,7 +158,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
 			    	);
 			  	}
 
-			  	function addErrorWidgetLines(severity, value){
+			  	function addErrorMessages(severity, value){
 			  		var msg = document.createElement("div");
 			  		var cur = cm.getDoc().posFromIndex(value.position);
 			      	var icon = msg.appendChild(document.createElement("i"));
@@ -214,8 +220,10 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
 		user.doAfterLogin(function(user){
 			$scope.mySnippets = snippets.queryUser();
 			viewingMySnippets = !viewingMySnippets;
+			$timeout(function(){ cm.refresh(); })
 		});
 	}
+	$scope.toogleMySnippets();
 
 	$scope.insertSnippet = function(snippet){
 		$scope.code += ($scope.code.length > 0 ? '\n' : '') + snippet.code;
