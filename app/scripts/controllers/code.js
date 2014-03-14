@@ -74,6 +74,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
   		});
   		errorUnderlines = [];
 
+		
 		// clear insight
 		insightWidget.forEach(function(w){ 
 			w.clear();
@@ -92,7 +93,7 @@ app.controller('code', function code($scope, $rootScope, $timeout, scalaEval, sn
 						pre.className = "cm-s-solarized insight";
 						pre.attributes["ng-class"] = "cm-s-{snippets.getThemeShort()}";
 				      	CodeMirror.runMode(value.result, $scope.optionsCode.mode, pre);
-						cm.addWidget({line: (value.line - 1), ch: currentLine.length}, pre, true, "over");
+						cm.addWidget({line: (value.line - 1), ch: currentLine.length}, pre, false, "over");
 						return {
 							clear: function(){ pre.parentElement.removeChild(pre); }
 						}

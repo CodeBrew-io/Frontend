@@ -1,0 +1,65 @@
+.CodeMirror-dialog {
+  position: absolute;
+  left: 0; right: 0;
+  z-index: 15;
+  padding: .1em .8em;
+  overflow: hidden;
+}
+
+.CodeMirror-dialog-top {
+  top: 0;
+}
+
+.CodeMirror-dialog-bottom {
+  bottom: 0;
+}
+
+.CodeMirror-dialog input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 20em;
+  color: inherit;
+  font-family: monospace;
+}
+
+.CodeMirror-dialog button {
+  font-size: 70%;
+}
+
+.cm-s-solarized {
+	.solarized-pallette;
+
+	.cm-searching {
+		background: rgba(255, 255, 255, 0.10); 
+		// background: none;
+		border-bottom-style: solid;
+		border-bottom-width: 4px;
+	}
+
+	&.cm-s-dark {
+		.CodeMirror-dialog {
+			color: @base0;
+    		background-color: @base03;
+		}
+		.CodeMirror-dialog-top {
+			border-bottom: 1px solid black;
+		}
+		.CodeMirror-dialog-bottom {
+  			border-top: 1px solid black;
+  		}
+		.cm-searching {
+			border-bottom-color: @base02;
+		}
+	}
+
+	&.cm-s-light {
+		.CodeMirror-dialog {
+			background-color: @base3;
+    		color: @base00;
+		}
+		.cm-searching {
+			border-bottom-color: @base2;
+		}
+	}
+}

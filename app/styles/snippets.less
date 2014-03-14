@@ -32,12 +32,24 @@
 		cursor: pointer;
 	}
 	.crud {
-		margin: 5px;
-		position: absolute;
-		top: 0;
-		right: 0;
+		font-size: 26px;
+		padding: 10px;
+		border-bottom-left-radius:15px;
+
+		.link {
+			.hightlight();
+			text-decoration: none;
+		}
+		.delete {
+			.hightlight(red);
+			cursor: pointer;
+		}
 	}
 	pre {
+		min-height: 100px;
 		border: none;
+		white-space: pre;
+		word-wrap: normal;
+		overflow-y: auto;
 	}
 }

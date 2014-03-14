@@ -76,11 +76,16 @@ less version: gui
   .cm-strong { color: #eee; }
   .cm-tab:before { color: @base01; }
 
+  .cm-matchhighlight {
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+  }
+
   &.cm-s-dark {
     color: @base0;
     background-color:  @base03;
     .cm-matchhighlight { 
-      border-bottom: 2px solid @base02; 
+      border-bottom-color: @base02;
     }
     .CodeMirror-gutters {
       background-color: @base02;
@@ -101,7 +106,7 @@ less version: gui
     color: @base00;
 
     .cm-matchhighlight {
-      border-bottom: 2px solid @base2;
+      border-bottom-color: @base2;
     }
 
     .CodeMirror-gutters {

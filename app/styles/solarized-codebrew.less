@@ -1,5 +1,3 @@
-@import 'custom-solarized.less';
-
 .CodeMirror, .CodeMirror-scroll {
 	height: 100%;
 }
@@ -28,6 +26,12 @@
 .cm-s-solarized {
 	.solarized-pallette;
 
+	.crud {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+
 	&.cm-s-dark {
 		border-right: 1px solid black;
 
@@ -42,6 +46,12 @@
 			border-left: 1px solid black;
 			margin-right: 1px;
 		}
+		.crud {
+			background-color:@base02;
+			
+			border-bottom: 1px solid black;
+			border-left: 1px solid black;
+		}
 
 		&.side-menu,
 		&.user-snippet { 
@@ -50,10 +60,7 @@
 
 		&.user-snippet {
 			pre {
-				border-right: none;
-			}
-			li {
-				background-color: @base03;
+				border: 1px solid black;
 			}
 		}
 		.disable {
@@ -73,6 +80,9 @@
 		&.side-menu,
 		&.user-snippet { 
 			background-color: #eee8d5; //@base2;
+		}
+		.crud {
+			background-color:@base2;
 		}
 		.disable {
 			color: @base00 !important;
