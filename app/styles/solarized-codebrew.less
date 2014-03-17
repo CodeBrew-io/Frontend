@@ -26,66 +26,85 @@
 .cm-s-solarized {
 	.solarized-pallette;
 
+	border-right-style: solid;
+	border-right-width: 1px;
+
 	.crud {
 		position: absolute;
 		top: 0;
 		right: 0;
+
+		border-bottom-style: solid;
+		border-bottom-width: 1px;
+		border-left-style: solid;
+		border-left-width: 1px;
 	}
 
-	&.cm-s-dark {
-		border-right: 1px solid black;
+	&.side-menu{
+		// continous border trick - woot woot
+		right: -1px;
+		border-right:none;
+		border-bottom-style: solid;
+		border-bottom-width: 1px;
+		border-left-style: solid;
+		border-left-width: 1px;
+		margin-right: 1px;
+	}
+
+	&.user-snippet {
+		pre {
+			border-style: solid;
+			border-width: 1px;
+		}
+	}
+
+	.CodeMirror-gutters {
+		border-right-style: solid;
+		border-right-width: 1px;
+	}
+
+	.template(@background, @border, @text, @disable){
+		border-right-color: @border;
 
 		h1 {
-			color: white;
+			color: @text;
 		}
+
 		&.side-menu{
-			// continous border trick - woot woot
-			right: -1px;
-			border-right:none;
-			border-bottom: 1px solid black;
-			border-left: 1px solid black;
-			margin-right: 1px;
+			border-bottom-color: @border;
+			border-left-color: @border;
 		}
+		
 		.crud {
-			background-color:@base02;
-			
-			border-bottom: 1px solid black;
-			border-left: 1px solid black;
+			background-color: @background;
+			border-bottom-color: @border;
+			border-left-color: @border;
 		}
 
 		&.side-menu,
 		&.user-snippet { 
-			background-color:@base02;
+			background-color: @background;
 		}
 
 		&.user-snippet {
 			pre {
-				border: 1px solid black;
+				border-color: @border;
 			}
 		}
 		.disable {
-		  color: @base03 !important;
+		  color: @disable !important;
 		}
 
 		.CodeMirror-gutters {
-			border-right: 1px solid black;
+			border-right-color: @border;
 		}
 	}
 
-	&.cm-s-light {
-		h1 {
-		  color: black;
-		}
+	&.cm-s-dark {
+		.template(@base02, black, white, grey);
+	}
 
-		&.side-menu,
-		&.user-snippet { 
-			background-color: #eee8d5; //@base2;
-		}
-		.crud {
-			background-color:@base2;
-		}
-		.disable {
-			color: @base00 !important;
-		}
+	&.cm-s-light {
+		.template(@base2, grey, black, grey);
 	}
 }
