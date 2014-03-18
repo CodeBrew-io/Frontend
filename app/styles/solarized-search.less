@@ -1,13 +1,13 @@
 .CodeMirror-dialog {
   position: absolute;
   left: 0; right: 0;
-  z-index: 15;
+  z-index: 8;
   padding: .1em .8em;
   overflow: hidden;
 }
 
 .CodeMirror-dialog-top {
-  top: 0;
+  bottom: 0; // XXX: yep
 }
 
 .CodeMirror-dialog-bottom {
@@ -31,8 +31,7 @@
 	.solarized-pallette;
 
 	.cm-searching {
-		background: rgba(255, 255, 255, 0.10); 
-		// background: none;
+		background: none;
 		border-bottom-style: solid;
 		border-bottom-width: 4px;
 	}
@@ -43,11 +42,12 @@
     		background-color: @base03;
 		}
 		.CodeMirror-dialog-top {
-			border-bottom: 1px solid black;
+			border-top: 1px solid black;
 		}
 		.CodeMirror-dialog-bottom {
   			border-top: 1px solid black;
   		}
+
 		.cm-searching {
 			border-bottom-color: @base02;
 		}

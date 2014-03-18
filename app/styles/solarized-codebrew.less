@@ -63,16 +63,29 @@
 		border-right-width: 1px;
 	}
 
-	.template(@background, @border, @text, @disable){
+
+	&.cm-s-dark {
+		.template(@base02, @base0, black, grey);
+	}
+
+	&.cm-s-light {
+		.template(@base2, @base00, grey, grey);
+	}
+
+	.template(@background, @foreground, @border, @disable){
 		border-right-color: @border;
 
 		h1 {
-			color: @text;
+			color: @foreground;
 		}
 
 		&.side-menu{
 			border-bottom-color: @border;
 			border-left-color: @border;
+
+			i, a {
+				color: @foreground;
+			}
 		}
 		
 		.crud {
@@ -90,6 +103,10 @@
 			pre {
 				border-color: @border;
 			}
+
+			i, a {
+				color: @foreground;
+			}
 		}
 		.disable {
 		  color: @disable !important;
@@ -98,13 +115,5 @@
 		.CodeMirror-gutters {
 			border-right-color: @border;
 		}
-	}
-
-	&.cm-s-dark {
-		.template(@base02, black, white, grey);
-	}
-
-	&.cm-s-light {
-		.template(@base2, grey, black, grey);
 	}
 }
