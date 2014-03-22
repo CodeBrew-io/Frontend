@@ -1,3 +1,3 @@
 'use strict';
 
-var app = angular.module('CodeBrew', ['ui.codemirror', "ngResource"]);
+var app = angular.module('CodeBrew', ['ui.codemirror', 'ngResource', 'ngRoute']);

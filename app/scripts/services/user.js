@@ -1,4 +1,4 @@
-app.factory('user', function($resource, $window, $q) {
+app.factory('user', function($resource, $rootScope, $window, $q) {
 	var rest = $resource('/user',{}, {
 		"logout": { method: 'GET', url: '/logout'}
 	});
@@ -60,6 +60,9 @@ app.factory('user', function($resource, $window, $q) {
 				afterLogin(u);
 				afterLogin = null;
 			}
+		},
+		watch: function(f){
+			$rootScope.$watch('user', f);
 		}
 	};
 });

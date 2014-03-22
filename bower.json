@@ -4,16 +4,17 @@
   "dependencies": {
     "angular": "~1.2.13",
     "angular-resource": "~1.2.13",
+    "angular-route": "~1.2.13",
     "bootstrap": "~3.0.0",
     "jquery": "~2.0.3",
     "font-awesome": "~4.0.1",
-    "codemirror": "#023532406d2ae3ccc098e44da9ce0a8ee3c35f0f",
+    "codemirror": "#19541139b486b9dfc5605015c90c7a09878b4071",
     "angular-ui-codemirror": "~0.0.5",
     "d3": "~3.4.3",
     "threejs": "#8413a860aa95ed29c79cbb7f857c97d7880d260f"
   },
   "resolutions": {
-    "codemirror": "023532406d2ae3ccc098e44da9ce0a8ee3c35f0f",
+    "codemirror": "19541139b486b9dfc5605015c90c7a09878b4071",
     "angular": "~1.2.13"
   }
 }

@@ -71,7 +71,8 @@ module.exports = function (grunt) {
         {from: "^/([a-bd-zA-BD-Z_\-])([a-zA-Z_\-]*)/([0-9a-zA-Z_\-]*)$", to: "/index.html"}
       ],
       proxies: [{
-        context: ['/webjars', '/assets', '/user', '/login', '/logout', '/authenticate', '/not-authorized','/snippets', '/@evolutions'],
+        context: ['/webjars', '/assets', '/user', '/login', '/logout', 
+                  '/authenticate', '/not-authorized','/snippets', '/@evolutions'],
         port: 9000,
         host: 'localhost'
       }],
