@@ -1,5 +1,5 @@
-app.controller('search',function(user, $scope){
-	// var viewingMySnippets = false;
+app.controller('search',function(user, $scope, LANGUAGE){
+
 	$scope.mySnippets = [];
 
 	$scope.hasSnippets = function(){

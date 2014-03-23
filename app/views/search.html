@@ -1,20 +1,22 @@
-<header>
-    <img ng-show="loggedIn()" class="avatar img-rounded" ng-src="{{ user().codeBrewUser.avatarUrl }}" alt="{{ user().codeBrewUser.userName }}">
-    <h1>{{ user().codeBrewUser.userName }}</h1>
-</header>
-<ul>
-    <li ng-repeat="mySnippet in mySnippets track by mySnippet.id">
-        <syntaxhighlight short-theme="getThemeShort()" syntaxtype="text/x-scala" ng-model='mySnippet.code' ng-click="insertSnippet(mySnippet)">
-        </syntaxhighlight>
-        <ul class="crud">
-            <li>
-                <a class="fa fa-external-link link" href="/{{ mySnippet.user }}/{{ mySnippet.id }}" target="_blank">
-                </a>
-            </li>
-            <li>
-                <i class= "fa fa-times delete" ng-click="deleteSnippet(mySnippet)"></i>
-            </li>
-        </ul>
-    </li>
-</ul>
-<div ng-show="mySnippets.length == 0">You dont have any snippet</div>
+<section>
+    <header>
+        <img ng-show="loggedIn()" class="avatar img-rounded" ng-src="{{ user().codeBrewUser.avatarUrl }}" alt="{{ user().codeBrewUser.userName }}">
+        <h1>{{ user().codeBrewUser.userName }}</h1>
+    </header>
+    <ul>
+        <li ng-repeat="mySnippet in mySnippets track by mySnippet.id">
+            <syntaxhighlight short-theme="getThemeShort()" syntaxtype="text/x-scala" ng-model='mySnippet.code' ng-click="insertSnippet(mySnippet)">
+            </syntaxhighlight>
+            <ul class="crud">
+                <li>
+                    <a class="fa fa-external-link link" href="/{{ mySnippet.user }}/{{ mySnippet.id }}" target="_blank">
+                    </a>
+                </li>
+                <li>
+                    <i class= "fa fa-times delete" ng-click="deleteSnippet(mySnippet)"></i>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <div ng-show="mySnippets.length == 0">You dont have any snippet</div>
+</section>

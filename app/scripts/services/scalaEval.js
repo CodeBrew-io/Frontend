@@ -75,6 +75,6 @@ app.factory("scalaEval", function($q, $rootScope, $location) {
 				"position": position
 			}}, "autocomplete");
 		},
-		"fetching": fetching
+		"fetching": function(){ return fetching; }
 	};
 });

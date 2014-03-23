@@ -1,25 +1,26 @@
 app.controller('code', function code(
 	$scope, $rootScope, $timeout, $location,
-	scalaEval, insightRenderer, errorsRenderer, snippets, user, throttle, keyboardManager) {
+	scalaEval, insightRenderer, errorsRenderer,
+	snippets, user, throttle, keyboardManager, LANGUAGE) {
 
 	'use strict';
 
 	var cm = null;
 
 	$scope.code = "";
-	
 	$scope.loggedIn = user.loggedIn;
-	$scope.fetching = scalaEval.fetching;
-
 	$scope.user = user.get;
-
+	$scope.fetching = scalaEval.fetching;
 	$scope.loggedIn = user.loggedIn;
+	$scope.login = user.login;
+	$scope.getThemeShort = snippets.getThemeShort;
+	$scope.isLigth = snippets.isLigth;
 
 	snippets.current().then(function(data){
 		$scope.code = data.code;
 	});
 
-	$scope.saveMySnippetCss = function() {
+	$scope.saveCss = function() {
 		var saveIconCss = $scope.isSaving ? ' fa-check saving' : ' fa-floppy-o';
 		if(angular.isDefined($scope.code) && $scope.code !== "") {
 			if($scope.code.length == 0) {
@@ -28,7 +29,6 @@ app.controller('code', function code(
 		} else {
 			saveIconCss += ' disable';
 		}
-
 		return saveIconCss;
 	}
 
@@ -36,19 +36,19 @@ app.controller('code', function code(
 		user.logout();
 	};
 
-	$scope.getThemeShort = snippets.getThemeShort;
+
 	$scope.toogleTheme = function(){
 		cm.refresh();
 		snippets.toogleTheme();
 	}
-	$scope.isLigth = snippets.isLigth;
+	
 
 	$scope.optionsCode = {
 		extraKeys: {"Ctrl-Space": "autocomplete"},
 		fixedGutter: true,
 		coverGutterNextToScrollbar: true,
 		lineNumbers: true,
-		mode: 'text/x-scala',
+		mode: 'text/x-' + LANGUAGE,
 		theme: snippets.getTheme(),
 		smartIndent: false,
 		autofocus: true,
@@ -83,25 +83,20 @@ app.controller('code', function code(
 	});
 
 	$scope.save = function(){
-		// We want to be able to save a snippet only if it's not empty.
 		if ($scope.code.length > 0) {
 			if($scope.isSaving) return;
 
 			user.doAfterLogin(function(user){
 				$scope.isSaving = true;
-				snippets.save({"code": $scope.code}).$promise.then(function(data){
-					$scope.mySnippets = $scope.mySnippets.concat({
-						"id": data.id,
-						"code": $scope.code,
-						"user": user.codeBrewUser.userName
-					});
+				snippets.save({"code": $scope.code}).$promise.then(function(snippet){
+					// TODO: Append
+					//$scope.mySnippets = $scope.mySnippets.concat(snippet);
+					
 					$timeout(function() { $scope.isSaving = false; }, 1000);
 				});
 			});
 		}
 	}
-
-	$scope.login = user.login;
 
 	snippets.hack(function(t){
 		$timeout(function() {
@@ -114,10 +109,7 @@ app.controller('code', function code(
 		$scope.showingSideMenu = !$scope.showingSideMenu;
 	}
 
-	// adding the keyboard's shortcuts
-	//________________________________________
-
-	// saving
+	// Save
 	keyboardManager.bind('ctrl+s', function(e) {
 		if ($scope.loggedIn() == true) {
 			$scope.save();
@@ -126,7 +118,7 @@ app.controller('code', function code(
 		}
 	}, {'stop':true});
 
-	// toggle my snippets
+	// Search
 	keyboardManager.bind('ctrl+o', function(e) {
 		if ($scope.loggedIn() == true) {
 			$location.url("/Search");
@@ -135,7 +127,7 @@ app.controller('code', function code(
 		}
 	}, {'stop':true});
 
-	// inverse color
+	// Inverse colors
 	keyboardManager.bind('ctrl+i', function(e) {
 		$scope.toogleTheme();
 	});
