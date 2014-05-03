@@ -5,7 +5,9 @@ app.controller('code', function code(
 
 	'use strict';
 
-	var cm = null;
+	var cm = null,
+		code,
+		configEditing = false;;
 
 	$scope.code = "";
 	$scope.loggedIn = user.loggedIn;
@@ -15,6 +17,67 @@ app.controller('code', function code(
 	$scope.login = user.login;
 	$scope.getThemeShort = snippets.getThemeShort;
 	$scope.isLigth = snippets.isLigth;
+
+	$scope.teammates = [
+		{name: 'Jean-Remi Desjardins', linkedin: 'http://ca.linkedin.com/in/jedesah', github: 'https://github.com/jedesah', twitter: 'https://twitter.com/jrdesjardins'},
+		{name: 'Eric Comte Marois', linkedin: 'http://ca.linkedin.com/pub/éric-comte-marois/59/799/444', github: 'https://github.com/manbear', twitter: ''},
+		{name: 'Guillaume Masse', linkedin: 'http://ca.linkedin.com/in/masseguillaume', github: 'https://github.com/MasseGuillaume', twitter: 'https://twitter.com/MasseGuillaume'},
+		{name: 'Raouf Merouche', linkedin: 'http://ca.linkedin.com/in/merouche/', github: 'https://github.com/shmed', twitter: 'https://twitter.com/elshmed'},		
+		{name: 'Patrick Losier', linkedin: 'http://ca.linkedin.com/in/patricklosier', github: 'https://github.com/patlos', twitter: ''}
+	];
+
+	if(angular.isDefined(window.localStorage['codemirror'])) {
+		$scope.cmOptions = JSON.parse(window.localStorage['codemirror']);
+		console.log($scope.cmOptions);
+	} else {
+		$scope.cmOptions = {
+			"to config codemirror see": "http://codemirror.net/doc/manual.html#config",
+			extraKeys: {"Ctrl-Space": "autocomplete"},
+			fixedGutter: true,
+			coverGutterNextToScrollbar: true,
+			lineNumbers: true,
+			theme: 'solarized dark',
+			themes: ["solarized dark", "solarized light", "monokai", "ambiance", "eclipse", "mdn-like"],
+			smartIndent: false,
+			autoCloseBrackets: true,
+			styleActiveLine: true,
+			keyMap: "sublime",
+			highlightSelectionMatches: { showToken: false }
+		};
+	}
+
+	$scope.showAbout = false;
+	$scope.toogleAbout = function(){
+		$scope.showAbout = !$scope.showAbout;
+	};
+
+	function setMode(edit){
+		if(edit) {
+			code = $scope.code;
+			insightRenderer.clear();
+			errorsRenderer.clear();
+			$timeout(function(){
+				$scope.cmOptions.mode = 'application/json';
+				$scope.code = JSON.stringify($scope.cmOptions, null, '\t');
+			});
+		} else {
+			$scope.cmOptions.onLoad = function(cm_) { 
+				cm = cm_;
+				cm.focus();
+			}
+			$timeout(function(){
+				$scope.code = code;
+				$scope.cmOptions.mode = 'text/x-' + LANGUAGE;
+				window.localStorage['codemirror'] = JSON.stringify($scope.cmOptions);
+			});
+		}
+	}
+	setMode(false);
+
+	$scope.toogleEdit = function(){
+		configEditing = !configEditing;
+		setMode(configEditing);
+	};
 
 	snippets.current().then(function(data){
 		$scope.code = data.code;
@@ -36,40 +99,29 @@ app.controller('code', function code(
 		user.logout();
 	};
 
-
 	$scope.toogleTheme = function(){
 		cm.refresh();
 		snippets.toogleTheme();
 	}
-	
-
-	$scope.optionsCode = {
-		extraKeys: {"Ctrl-Space": "autocomplete"},
-		fixedGutter: true,
-		coverGutterNextToScrollbar: true,
-		lineNumbers: true,
-		mode: 'text/x-' + LANGUAGE,
-		theme: snippets.getTheme(),
-		smartIndent: false,
-		autofocus: true,
-		autoCloseBrackets: true,
-		styleActiveLine: true,
-		keyMap: "sublime",
-		highlightSelectionMatches: { showToken: false },
-		onLoad: function(cm_) { cm = cm_; }
-	};
 
 	$scope.$watch('code', function(){
-		snippets.saveLocal($scope.code);
-		insightRenderer.clear();
-		errorsRenderer.clear();
-		throttle.event(function() {
-			scalaEval.insight($scope.code).then(function(data){
-				var code = $scope.code.split("\n");
-				insightRenderer.render(cm, $scope.optionsCode.mode, code, data.insight);
-				errorsRenderer.render(cm, data, code);
+		if(configEditing) {
+			$scope.cmOptions = JSON.parse($scope.code);	
+		} else {
+			snippets.saveLocal($scope.code);
+			insightRenderer.clear();
+			errorsRenderer.clear();
+			
+			throttle.event(function() {
+				if(!configEditing) {
+					scalaEval.insight($scope.code).then(function(data){
+						var code = $scope.code.split("\n");
+						insightRenderer.render(cm, $scope.cmOptions.mode, code, data.insight);
+						errorsRenderer.render(cm, data, code);
+					});
+				}
 			});
-		});
+		}
 	});
 
 	$rootScope.$on('selectedCode', function(event, code){

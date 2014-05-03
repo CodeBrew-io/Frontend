@@ -2,24 +2,17 @@
     'with-snippets': viewingMySnippets() || viewingOthersSnippets,
     'fetching': fetching()
     }">
-    <div class="side-menu cm-s-solarized cm-s-{{ getThemeShort() }}">
-        <div class="expand-collapse" ng-class="{ 'active': showingSideMenu, 'inactive': !showingSideMenu}">
-            <i title="save snippet (ctrl-s)" class="fa saveSnippet" ng-click="save()" 
-                ng-class="saveCss()">
-            </i>
-            <a title="toogle my snippets (ctrl-o)" class="fa toggleMySnippets"
-                ng-class="{'fa-folder-o' : !viewingMySnippets(), 'fa-folder-open-o': viewingMySnippets()}"
-                href="#/Search">
-            </a>
-            <i title="search others snippets" class="fa fa-search" ng-click="toogleOthersSnippets()"></i>
-            <i title="login" class="fa fa-sign-in login" ng-show="!loggedIn()" ng-click="login()"></i>
-            <i title="logout (ctrl-l)" class="fa fa-sign-out logout" ng-show="loggedIn()" ng-click="logOut()"></i>
-            <i title="inverse theme colors (ctrl-i)" class="fa theme"
-                ng-class="{'fa-circle-o': !isLigth(), 'fa-circle': isLigth()}"
-                ng-click="toogleTheme()">
-            </i>
+    <ng-include ng-show="showAbout" src="'/views/about.html'"></ng-include>
+    <div class="code" ng-class="{'with-snippets': viewingMySnippets() }">
+        <div class="side-menu">
+            <div class="expand-collapse active">
+                <i class="fa fa-fw fa-cog edit" ng-click="toogleEdit()"></i>
+                <i class="fa fa-fw fa-question-circle" ng-click="toogleAbout()"></i>
+            </div>
         </div>
-        <div class="fa handle" ng-class="{'fa-bars': !showingSideMenu, 'fa-chevron-up': showingSideMenu}" ng-click="toogleSideMenu()"></div>
+        <textarea ui-codemirror="cmOptions" ng-model="code"></textarea>
+    </div><!-- 
+  --><div class="user-snippet " ng-show="viewingMySnippets()">
+        <ng-include src="'/views/snippets.html'"></ng-include>
     </div>
-    <textarea ui-codemirror="optionsCode" ng-model="code"></textarea>
 </section>
