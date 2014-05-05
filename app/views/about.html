@@ -1,37 +1,39 @@
-<h2>About CodeBrew.io</h2>
-<p>Codebrew.io is an interactive scala IDE in the cloud. Use the editor to run and share your code snippets online. Codebrew.io provides you with autocompletion, scaladoc and insights on your algorithm.</p>
+<section class="about">
+	<h2>About CodeBrew.io</h2>
+	<p>Codebrew.io is an interactive scala IDE in the cloud. Use the editor to run and share your code snippets online. Codebrew.io provides you with autocompletion, scaladoc and insights on your algorithm.</p>
 
-<h2>References</h2>
-<p>
+	<h2>References</h2>
+	<p>
+		<ul>
+			<li><a href="https://github.com/CodeBrew-io" target="_blank"><i class="fa fa-github"></i>Contribute to github.com/CodeBrew-io </a></li>
+			<li><a href="https://github.com/CodeBrew-io/Issues/issues/new" target="_blank"><i class="fa fa-github"></i>Submit new issue to github</a></li>
+		</ul>
+	</p>
+	<h2>About the team</h2>
+	<p>CodeBrew.io was created at Polytechnique Montreal by a team of 5 software engineering students as their final year project.</p>
 	<ul>
-		<li><a href="https://github.com/CodeBrew-io" target="_blank"><i class="fa fa-github"></i>Contribute to github.com/CodeBrew-io </a></li>
-		<li><a href="https://github.com/CodeBrew-io/Issues/issues/new" target="_blank"><i class="fa fa-github"></i>Submit new issue to github</a></li>
+		<li ng-repeat="teammate in teammates">
+			{{teammate.name}}
+			<a href="{{teammate.linkedin}}" ng-show="{{teammate.linkedin.length > 0}}" target="_blank"><i class="fa fa-linkedin-square"></i> </a>
+			<a href="{{teammate.github}}"  ng-show="{{teammate.github.length > 0}}"   target="_blank"><i class="fa fa-github-square"></i> </a>
+			<a href="{{teammate.twitter}}" ng-show="{{teammate.twitter.length > 0}}" target="_blank"><i class="fa fa-twitter-square"></i> </a>
+		</li>
 	</ul>
-</p>
-<h2>About the team</h2>
-<p>CodeBrew.io was created at Polytechnique Montreal by a team of 5 software engineering students as their final year project.</p>
-<ul>
-	<li ng-repeat="teammate in teammates">
-		{{teammate.name}}
-		<a href="{{teammate.linkedin}}" ng-show="{{teammate.linkedin.length > 0}}" target="_blank"><i class="fa fa-linkedin-square"></i> </a>
-		<a href="{{teammate.github}}"  ng-show="{{teammate.github.length > 0}}"   target="_blank"><i class="fa fa-github-square"></i> </a>
-		<a href="{{teammate.twitter}}" ng-show="{{teammate.twitter.length > 0}}" target="_blank"><i class="fa fa-twitter-square"></i> </a>
-	</li>
-</ul>
 
-<h2>Special thanks</h2>
-<p>The CodeBrew.io team would like to thank our teacher in charge Olivier Gendreau (Ph.D.) for his support and his help through the semester.</p>
-<p>We would also like to thank Adriaan Moors (Ph.D.), Scala Tech lead @ TypeSafe, for his precious time since the start of this project.</p>
+	<h2>Special thanks</h2>
+	<p>The CodeBrew.io team would like to thank our teacher in charge Olivier Gendreau (Ph.D.) for his support and his help through the semester.</p>
+	<p>We would also like to thank Adriaan Moors (Ph.D.), Scala Tech lead @ TypeSafe, for his precious time since the start of this project.</p>
 
-<ul>
-	<li>
-		<a href="http://www.polymtl.ca" target="_blank">
-			<img src="/images/polytechnique.png"/>
-		</a>
-	</li>
-	<li>
-		<a href="http://www.typesafe.com" target="_blank">
-			<img src="/images/typesafe.jpg"/>
-		</a>
-	</li>
-</ul>
+	<ul class="logos-thanks">
+		<li>
+			<a href="http://www.polymtl.ca" target="_blank">
+				<img src="/images/polytechnique.png"/>
+			</a>
+		</li>
+		<li>
+			<a href="http://www.typesafe.com" target="_blank">
+				<img src="/images/typesafe.jpg"/>
+			</a>
+		</li>
+	</ul>
+</section>

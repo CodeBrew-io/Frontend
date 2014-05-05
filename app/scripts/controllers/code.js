@@ -28,7 +28,6 @@ app.controller('code', function code(
 
 	if(angular.isDefined(window.localStorage['codemirror'])) {
 		$scope.cmOptions = JSON.parse(window.localStorage['codemirror']);
-		console.log($scope.cmOptions);
 	} else {
 		$scope.cmOptions = {
 			"to config codemirror see": "http://codemirror.net/doc/manual.html#config",
@@ -51,6 +50,15 @@ app.controller('code', function code(
 		$scope.showAbout = !$scope.showAbout;
 	};
 
+	function optionFix(){
+		$scope.cmOptions.onLoad = function(cm_) { 
+			cm = cm_;
+			cm.focus();
+		}
+		$scope.cmOptions.mode = 'text/x-' + LANGUAGE;
+	}
+	optionFix();
+
 	function setMode(edit){
 		if(edit) {
 			code = $scope.code;
@@ -61,18 +69,13 @@ app.controller('code', function code(
 				$scope.code = JSON.stringify($scope.cmOptions, null, '\t');
 			});
 		} else {
-			$scope.cmOptions.onLoad = function(cm_) { 
-				cm = cm_;
-				cm.focus();
-			}
+			optionFix();
 			$timeout(function(){
 				$scope.code = code;
-				$scope.cmOptions.mode = 'text/x-' + LANGUAGE;
 				window.localStorage['codemirror'] = JSON.stringify($scope.cmOptions);
 			});
 		}
 	}
-	setMode(false);
 
 	$scope.toogleEdit = function(){
 		configEditing = !configEditing;
@@ -80,6 +83,7 @@ app.controller('code', function code(
 	};
 
 	snippets.current().then(function(data){
+		console.log(data.code);
 		$scope.code = data.code;
 	});
 
