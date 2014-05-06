@@ -83,7 +83,6 @@ app.controller('code', function code(
 	};
 
 	snippets.current().then(function(data){
-		console.log(data.code);
 		$scope.code = data.code;
 	});
 
